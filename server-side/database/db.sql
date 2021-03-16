@@ -138,8 +138,7 @@ FOREIGN KEY(itemDetID,itemCatID) REFERENCES itemDetails(itemDetID,itemCatID)
 ); 
 
 INSERT INTO suppOrder(suppOrdID,suppID,itemDetID,itemCatID,suppOrdQty)  
-VALUES (1,1,1,1,3);
-
+VALUES (1,1,1,1,8),(2,2,2,1,8),(3,1,3,2,8),(4,2,4,2,8),(5,1,5,3,8),(6,2,6,3,8),(7,1,7,4,8),(8,2,8,4,8);
 
 
 
