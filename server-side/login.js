@@ -9,7 +9,7 @@ var bcrypt = require("bcrypt");
 var session = require("express-session");
 var jwt = require("jsonwebtoken");
 const { regularJWT, adminJWT } = require("./JWT");
-
+app.use(require("./configure"));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 //set up the session
 app.use(
   session({
-    key: "userId",
+    key: "userID",
     secret: "group47",
     resave: false,
     saveUninitialized: false,
@@ -27,10 +27,10 @@ app.use(
 
 //Login API request
 app.post("/login/", (req, res) => {
+  console.log(req);
   const sql = "SELECT * FROM userDetail WHERE userEmail =?";
   const userEmail = req.body.userEmail;
   const userPass = req.body.userPass;
-
   db.all(sql, userEmail, (err, result) => {
     if (err) {
       res.json({ err: err });
@@ -62,7 +62,7 @@ app.post("/login/", (req, res) => {
 });
 
 //Session - Login API request
-app.get("/logIn/", (req, res) => {
+app.get("/login/", (req, res) => {
   if (req.session.user) {
     res.send({ loggedIn: true, user: req.session.user });
   } else {
@@ -71,7 +71,7 @@ app.get("/logIn/", (req, res) => {
 });
 
 //Logout API request
-app.get("/logOut/", regularJWT, (req, res) => {
+app.get("/logout/", regularJWT, (req, res) => {
   req.session.destroy();
   res.sendStatus(200);
 });
