@@ -17,6 +17,7 @@ const regularJWT = (req, res, next) => {
   }
 };
 
+//This JWT is speically for admin so the admin can modify on the products
 const adminJWT = (req, res, next) => {
   const token = req.headers["x-access-token"];
   if (!token) {
