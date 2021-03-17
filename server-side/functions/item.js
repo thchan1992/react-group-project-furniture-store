@@ -4,6 +4,7 @@ var bodyParser = require("body-parser");
 var db = require("./../database/database.js");
 var app = express();
 app.use(cors());
+app.use(require("../configuration/corsConf"));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 var jwt = require("jsonwebtoken");
@@ -78,6 +79,30 @@ app.get("/item/showCater", (req, res) => {
   });
 });
 
+//delete the item picture in the backend
+app.delete("/deletePic/:itemDetID", (req, res) => {
+  const sql = "SELECT itemUrl FROM itemDetails WHERE itemDetID = ?";
+  const params = req.params.itemDetID;
+
+  db.get(sql, params, (err, result) => {
+    if (err) {
+      res.json({ error: err.message });
+      return;
+    }
+    //remove the first 20th string: http://localhost:8080
+    const str = result.itemrl.substr(21);
+    const path = "./image/" + str;
+    fs.unlink(path, (err) => {
+      if (err) {
+        res.json({ error: err });
+        return;
+      } else {
+        res.json({ message: "The picture has been deleted" });
+      }
+    });
+  });
+});
+
 //fetch a list of furniture
 app.get("/item/showItems/:sorting/:column/:itemCatName", (req, res) => {
   //decide whether it is in "desc" or "asc" order
@@ -107,15 +132,19 @@ app.put("/item/editProducts", (req, res) => {
   var itemDetID = req.body.itemDetID;
   var change = req.body.change;
   var params = [change, itemDetID];
-  db.all(`UPDATE itemDetails SET ${column} = ? WHERE itemDetID = ?`, params, (err) => {
+  db.all(
+    `UPDATE itemDetails SET ${column} = ? WHERE itemDetID = ?`,
+    params,
+    (err) => {
       if (err) {
-       res.status(400).json({ "error": res.message });
+        res.status(400).json({ error: res.message });
         return;
       }
       res.json({
-        message: "done"
+        message: "The item has been edited",
       });
-    });
-})
+    }
+  );
+});
 
 module.exports = app;

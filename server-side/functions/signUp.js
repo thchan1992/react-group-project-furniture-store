@@ -5,6 +5,8 @@ var app = express();
 var bcrypt = require("bcrypt");
 var saltRounds = 10;
 app.use(bodyParser.json());
+app.use(cors());
+app.use(require("../configuration/corsConf"));
 
 //API for signUP
 app.post("/signUp/", (req, res) => {
