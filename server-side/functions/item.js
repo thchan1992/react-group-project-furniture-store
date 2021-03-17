@@ -102,6 +102,20 @@ app.get("/item/showItems/:sorting/:column/:itemCatName", (req, res) => {
 });
 
 //update a furniture
-// to be coded by Viola
+app.put("/item/editProducts", (req, res) => {
+  var column = req.body.column;
+  var itemDetID = req.body.itemDetID;
+  var change = req.body.change;
+  var params = [change, itemDetID];
+  db.all(`UPDATE itemDetails SET ${column} = ? WHERE itemDetID = ?`, params, (err) => {
+      if (err) {
+       res.status(400).json({ "error": res.message });
+        return;
+      }
+      res.json({
+        message: "done"
+      });
+    });
+})
 
 module.exports = app;
