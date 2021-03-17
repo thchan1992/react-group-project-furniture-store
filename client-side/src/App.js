@@ -1,6 +1,7 @@
 import "./App.css";
 import Login from "./User/Login";
 import Item from "./Item/Item";
+import SignUp from "./User/SignUp";
 import AddItem from "./Item/AddItem";
 import { showCaterAPI } from "./Constants";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
@@ -21,17 +22,17 @@ const App = () => {
   //API call to render the list of catergory from the database
   //This will be shown on the nav bar
   useEffect(() => {
-    axios.get(showCaterAPI, { withCredentials: false }).then((response) => {
+    axios.get(showCaterAPI).then((response) => {
       setCaterList(response.data.result);
     });
   }, []);
 
   return (
     <div>
-      <h1>
+      <div>
         {userType == "A" && <h1>Admin Mode | User ID: {userID}</h1>}
         {userType == "C" && <h1>Welcome back | User ID: {userID}</h1>}
-      </h1>
+      </div>
       <BrowserRouter>
         <Navbar bg="light" expand="lg">
           <Navbar.Brand href="#home">Furniture</Navbar.Brand>
@@ -50,6 +51,11 @@ const App = () => {
               {userType == "A" && (
                 <Nav.Link as={Link} to="/AddItem">
                   Add a new Item
+                </Nav.Link>
+              )}
+              {userType == "" && (
+                <Nav.Link as={Link} to="/SignUp">
+                  Sign Up
                 </Nav.Link>
               )}
             </Nav>
@@ -76,7 +82,10 @@ const App = () => {
             </Route>
           ))}
           <Route exact path="/AddItem">
-            <AddItem />
+            <AddItem userType={userType} />
+          </Route>
+          <Route exact path="/SignUp">
+            <SignUp />
           </Route>
           <Route
             render={function () {

@@ -4,9 +4,9 @@ import Nav from "react-bootstrap/Nav";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const AddItem = () => {
+const AddItem = ({ userType }) => {
   // To be continued by Habon & Kavya
-  return <div>Testing</div>;
+  return <div>{userType == "A" && <div>testing</div>}</div>;
 };
 
 export default AddItem;

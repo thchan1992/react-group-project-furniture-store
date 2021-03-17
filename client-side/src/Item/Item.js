@@ -8,7 +8,7 @@ const Item = ({ itemCatName, userType }) => {
   // To be continued by Habon & Kavya
   return (
     <div>
-      {itemCatName} {userType}
+      {itemCatName} {userType == "A" && <div>edit part</div>}
     </div>
   );
 };
