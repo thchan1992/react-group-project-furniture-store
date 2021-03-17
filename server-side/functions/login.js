@@ -1,15 +1,15 @@
 var express = require("express");
 var cors = require("cors");
 var bodyParser = require("body-parser");
-var db = require("./database.js");
+var db = require("./../database/database.js");
 var app = express();
 app.use(cors());
 var cookieParser = require("cookie-parser");
 var bcrypt = require("bcrypt");
 var session = require("express-session");
 var jwt = require("jsonwebtoken");
-const { regularJWT, adminJWT } = require("./JWT");
-app.use(require("./configure"));
+const { regularJWT, adminJWT } = require("../configuration/JWT");
+app.use(require("../configuration/corsConf"));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -27,7 +27,7 @@ app.use(
 
 //Login API request
 app.post("/login/", (req, res) => {
-  console.log(req);
+  console.log(req.body);
   const sql = "SELECT * FROM userDetail WHERE userEmail =?";
   const userEmail = req.body.userEmail;
   const userPass = req.body.userPass;

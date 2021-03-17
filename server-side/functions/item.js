@@ -1,7 +1,7 @@
 var express = require("express");
 var cors = require("cors");
 var bodyParser = require("body-parser");
-var db = require("./database.js");
+var db = require("./../database/database.js");
 var app = express();
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -10,14 +10,14 @@ var jwt = require("jsonwebtoken");
 var multer = require("multer");
 var fs = require("fs");
 var path = require("path");
-const { regularJWT, adminJWT } = require("./JWT");
+const { regularJWT, adminJWT } = require("./../configuration/JWT");
 
 app.use(express.static("image"));
 
 //multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "image");
+    cb(null, "./image");
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + file.originalname);
