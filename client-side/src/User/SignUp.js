@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
-import { singUpAPI } from "../Constants";
+import { signUpAPI } from "../Constants";
 
 const SignUp = () => {
   const [userEmail, setUserEmail] = useState("");
@@ -41,7 +41,7 @@ const SignUp = () => {
           userType,
           userPass,
         };
-        axios.post(singUpAPI, newUser).then((response) => {
+        axios.post(signUpAPI, newUser).then((response) => {
           if (!response.data.error) {
             setIsFin(true);
             window.alert(response.data.message);

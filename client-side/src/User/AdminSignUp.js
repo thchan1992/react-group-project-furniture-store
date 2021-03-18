@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
-import { singUpAPI } from "../Constants";
+import { signUpAdminAPI } from "../Constants";
 
 const AdminSignUp = () => {
   const [userEmail, setUserEmail] = useState("");
@@ -29,14 +29,19 @@ const AdminSignUp = () => {
           userType,
           userPass,
         };
-        axios.post(singUpAPI, newUser).then((response) => {
-          if (!response.data.error) {
-            setIsFin(true);
-            window.alert(response.data.message);
-          } else {
-            window.alert(response.data.error);
-          }
-        });
+        axios
+          .post(signUpAdminAPI, newUser, {
+            //with the JWT - ignore
+            headers: { "x-access-token": localStorage.getItem("token") },
+          })
+          .then((response) => {
+            if (!response.data.error) {
+              setIsFin(true);
+              window.alert(response.data.message);
+            } else {
+              window.alert(response.data.error);
+            }
+          });
       } else {
         window.alert("Password verification failed");
       }
@@ -135,7 +140,6 @@ const AdminSignUp = () => {
               />
             </Col>
           </Form.Group>
-
           <Button onClick={handleSubmit}>Sign Up</Button>
         </div>
       )}

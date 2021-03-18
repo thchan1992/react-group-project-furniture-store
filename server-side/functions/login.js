@@ -42,7 +42,7 @@ app.post("/login/", (req, res) => {
         if (response) {
           const userID = result[0].userID;
           const userEmail = result[0].userEmail;
-          const userType = result[0].type;
+          const userType = result[0].userType;
           //create the token by using the userID, userEmail and userType
           const token = jwt.sign({ userID, userEmail, userType }, "Group47", {
             expiresIn: 300,
