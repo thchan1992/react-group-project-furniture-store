@@ -1,6 +1,8 @@
+var cors = require("cors");
 var express = require("express");
 var bodyParser = require("body-parser");
 var db = require("./../database/database.js");
+
 var app = express();
 var bcrypt = require("bcrypt");
 var saltRounds = 10;
