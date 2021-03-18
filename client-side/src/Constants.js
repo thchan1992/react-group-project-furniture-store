@@ -12,7 +12,9 @@ export const loginAPI = host + "/login/";
 export const logoutAPI = host + "/logout/";
 
 //User registration API
-export const singUpAPI = host + "/signUp/";
+export const signUpAPI = host + "/signUp/";
+
+export const signUpAdminAPI = signUpAPI + "/admin";
 
 //upload Image API
 export const uploadImageAPI = host + "/item/uploadImage/";

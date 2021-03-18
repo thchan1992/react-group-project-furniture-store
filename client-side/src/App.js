@@ -93,9 +93,11 @@ const App = () => {
           <Route exact path="/SignUp">
             <SignUp />
           </Route>
-          <Route exact path="/AdminSignUp">
-            <AdminSignUp />
-          </Route>
+          {userType == "A" && (
+            <Route exact path="/AdminSignUp">
+              <AdminSignUp />
+            </Route>
+          )}
           <Route
             render={function () {
               return <p>Page Not found</p>;
