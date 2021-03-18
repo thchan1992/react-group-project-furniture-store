@@ -41,7 +41,7 @@ const AdminSignUp = () => {
         window.alert("Password verification failed");
       }
     } else {
-      window.alert("Make sure all field to be filled");
+      window.alert("Make sure all field to be filled.");
     }
   };
 
