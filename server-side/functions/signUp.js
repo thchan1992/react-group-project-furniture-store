@@ -20,6 +20,7 @@ app.post("/signUp/", (req, res) => {
   const lastName = req.body.lastName;
   const userAddress = req.body.lastName;
   const userPass = req.body.userPass;
+  console.log(userPass);
 
   bcrypt.hash(userPass, saltRounds, (err, hash) => {
     if (err) {

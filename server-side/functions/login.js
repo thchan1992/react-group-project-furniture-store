@@ -8,7 +8,7 @@ var cookieParser = require("cookie-parser");
 var bcrypt = require("bcrypt");
 var session = require("express-session");
 var jwt = require("jsonwebtoken");
-const { regularJWT, adminJWT } = require("../configuration/JWT");
+const { regularJWT, adminJWT } = require("../configuration/jwtConf");
 app.use(require("../configuration/corsConf"));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));

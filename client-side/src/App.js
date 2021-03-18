@@ -3,6 +3,7 @@ import Login from "./User/Login";
 import Item from "./Item/Item";
 import SignUp from "./User/SignUp";
 import AddItem from "./Item/AddItem";
+import AdminSignUp from "./User/AdminSignUp";
 import { showCaterAPI } from "./Constants";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
@@ -58,6 +59,11 @@ const App = () => {
                   Sign Up
                 </Nav.Link>
               )}
+              {userType == "A" && (
+                <Nav.Link as={Link} to="/AdminSignUp">
+                  Create an Admin account
+                </Nav.Link>
+              )}
             </Nav>
 
             <Form inline>
@@ -86,6 +92,9 @@ const App = () => {
           </Route>
           <Route exact path="/SignUp">
             <SignUp />
+          </Route>
+          <Route exact path="/AdminSignUp">
+            <AdminSignUp />
           </Route>
           <Route
             render={function () {
