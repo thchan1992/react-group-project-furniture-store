@@ -1,0 +1,4 @@
+.flex-container {
+  /* This makes all the component staying on the same line */
+  display: flex;
+}

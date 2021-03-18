@@ -64,9 +64,8 @@ const Login = ({ setUserID, setUserType }) => {
       )}
       {isLogin == false && (
         <Form.Group className="flex-container">
-          <Form.Label className="text-style-item">user name:</Form.Label>
           <Form.Control
-            style={{ height: "20px", width: "100px" }}
+            style={{ width: "150px" }}
             type="text"
             placeholder="Email"
             id="userEmail"
@@ -74,9 +73,8 @@ const Login = ({ setUserID, setUserType }) => {
             value={userEmail}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <Form.Label className="text-style-item">password</Form.Label>
           <Form.Control
-            style={{ height: "20px", width: "100px" }}
+            style={{ width: "150px" }}
             type="text"
             placeholder="Password"
             id="userPass"

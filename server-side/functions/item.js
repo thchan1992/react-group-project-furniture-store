@@ -11,7 +11,7 @@ var jwt = require("jsonwebtoken");
 var multer = require("multer");
 var fs = require("fs");
 var path = require("path");
-const { regularJWT, adminJWT } = require("./../configuration/JWT");
+const { regularJWT, adminJWT } = require("./../configuration/jwtConf");
 
 app.use(express.static("image"));
 

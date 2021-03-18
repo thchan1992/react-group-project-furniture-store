@@ -27,7 +27,7 @@ const adminJWT = (req, res, next) => {
       if (err) {
         res.json({ auth: false, message: "you failed to authenticate1" });
       } else {
-        if (decode.userType == "A") {
+        if (decoded.userType == "A") {
           req.userID = decoded.userID;
           next();
         } else
