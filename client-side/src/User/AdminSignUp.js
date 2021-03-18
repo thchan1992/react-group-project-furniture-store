@@ -5,32 +5,20 @@ import Col from "react-bootstrap/Col";
 import axios from "axios";
 import { singUpAPI } from "../Constants";
 
-const SignUp = () => {
+const AdminSignUp = () => {
   const [userEmail, setUserEmail] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [addr1, setAddr1] = useState("");
-  const [addr2, setAddr2] = useState("");
-  const [city, setCity] = useState("");
-  const [postcode, setPostcode] = useState("");
   const [userPass, setUserPass] = useState("");
   const [verPass, setVerPass] = useState("");
   const [isFin, setIsFin] = useState(false);
 
   const handleSubmit = () => {
-    if (
-      userEmail &&
-      firstName &&
-      lastName &&
-      addr1 &&
-      addr2 &&
-      city &&
-      postcode
-    ) {
+    if (userEmail && firstName && lastName) {
       if (userPass == userPass) {
-        const userAddress = addr1 + " " + addr2 + " " + city + " " + postcode;
         const userID = new Date().getTime();
-        const userType = "C";
+        const userType = "A";
+        const userAddress = "N/A";
         const newUser = {
           userID,
           userType,
@@ -53,17 +41,22 @@ const SignUp = () => {
         window.alert("Password verification failed");
       }
     } else {
-      window.alert("Make sure all field to be filled");
+      window.alert("Make sure all field to be filled.");
     }
   };
 
   return (
     <div>
-      {isFin == true && <h1>Registration Finished, please log in</h1>}
+      {isFin == true && (
+        <h1>
+          Admin account registration Finished, the new admin account is ready to
+          use
+        </h1>
+      )}
       {isFin == false && (
         <div>
           <br />
-          <h1>User Registration</h1>
+          <h1>Admin Registration</h1>
           <Form.Group as={Form.Row}>
             <Form.Label column sm={1}>
               First Name
@@ -113,67 +106,6 @@ const SignUp = () => {
 
           <Form.Group as={Form.Row}>
             <Form.Label column sm={1}>
-              Address Line 1
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                style={{ height: "40px", width: "200px" }}
-                type="text"
-                name="addr1"
-                id="addr1"
-                value={addr1}
-                onChange={(e) => setAddr1(e.target.value)}
-              />{" "}
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Form.Row}>
-            <Form.Label column sm={1}>
-              Address Line 2 (Optional)
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                style={{ height: "40px", width: "200px" }}
-                type="text"
-                name="addr2"
-                id="addr2"
-                value={addr2}
-                onChange={(e) => setAddr2(e.target.value)}
-              />{" "}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Form.Row}>
-            <Form.Label column sm={1}>
-              City
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                style={{ height: "40px", width: "200px" }}
-                type="text"
-                name="city"
-                id="city"
-                value={city}
-                onChange={(e) => setCity(e.target.value)}
-              />{" "}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Form.Row}>
-            <Form.Label column sm={1}>
-              Post Code
-            </Form.Label>
-            <Col sm={10}>
-              <Form.Control
-                style={{ height: "40px", width: "200px" }}
-                type="text"
-                name="postcode"
-                id="postcode"
-                value={postcode}
-                onChange={(e) => setPostcode(e.target.value)}
-              />{" "}
-            </Col>
-          </Form.Group>
-          <Form.Group as={Form.Row}>
-            <Form.Label column sm={1}>
               Password
             </Form.Label>
             <Col sm={10}>
@@ -211,4 +143,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default AdminSignUp;
