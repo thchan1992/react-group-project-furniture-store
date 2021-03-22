@@ -6,7 +6,7 @@ var app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(require("./configuration/corsConf"));
-
+app.use(express.static("image"));
 //Import the local module
 
 // Port
@@ -19,6 +19,7 @@ app.get("/", (req, res, next) => {
   res.json({ message: "Server running" });
 });
 app.use(express.json());
+
 app.use(require("./functions/login"));
 app.use(require("./functions/item"));
 app.use(require("./functions/signUp"));
