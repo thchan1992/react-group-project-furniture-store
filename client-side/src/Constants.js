@@ -14,7 +14,7 @@ export const logoutAPI = host + "/logout/";
 //User registration API
 export const signUpAPI = host + "/signUp/";
 
-export const signUpAdminAPI = signUpAPI + "/admin";
+export const signUpAdminAPI = signUpAPI + "admin";
 
 //upload Image API
 export const uploadImageAPI = host + "/item/uploadImage/";
@@ -27,3 +27,6 @@ export const addItemAPI = host + "/item/addItem/";
 
 //Show a list of product
 export const showItemsAPI = host + "/item/showItems/";
+
+//Modify item
+export const editItemAPI = host + "/item/editProducts";
