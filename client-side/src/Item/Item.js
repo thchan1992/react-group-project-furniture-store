@@ -11,12 +11,13 @@ import {
   delImageAPI,
   addItemAPI,
   uploadImageAPI,
+  showSearchAPI,
 } from "../Constants";
 import axios from "axios";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 
-const Item = ({ itemCatName, userType }) => {
+const Item = ({ itemCatName, userType, keyword }) => {
   const [sorting, setSorting] = useState("ASC");
   const [column, setColumn] = useState("itemName");
   const [edColumn, setEdColumn] = useState("");
@@ -34,24 +35,33 @@ const Item = ({ itemCatName, userType }) => {
 
   //function that updates the changes made to the item.
   const updateItem = (itemDetID, edColumn, change) => {
-    const column = edColumn;
-    const newData = {
-      column,
-      itemDetID,
-      change,
-    };
-    //API that edits the attributes.
-    axios
-      .put(editItemAPI, newData, {
-        headers: {
-          "x-access-token": localStorage.getItem("token"),
-        },
-      })
-      .then((response) => {
-        window.alert(response.data.message);
-        setIsLoading(true);
-        //refresh the browser
-      });
+    if (change != "") {
+      const column = edColumn;
+      const newData = {
+        column,
+        itemDetID,
+        change,
+      };
+      //API that edits the attributes.
+      axios
+        .put(editItemAPI, newData, {
+          headers: {
+            "x-access-token": localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          console.log(response);
+          window.alert(response.data.message);
+          setItemName("");
+          setImage(null);
+          setItemDesp("");
+          setItemThreshold("");
+          setChange("");
+          setIsLoading(true);
+        });
+    } else {
+      window.alert("No Value inserted");
+    }
   };
 
   //function to modify the product image
@@ -86,11 +96,20 @@ const Item = ({ itemCatName, userType }) => {
 
   //Function to fetch the sorted items
   const fetchItem = () => {
-    axios
-      .get(showItemsAPI + sorting + "/" + column + "/" + itemCatName)
-      .then((response) => {
-        setItemList(response.data.result);
-      });
+    if (!keyword) {
+      axios
+        .get(showItemsAPI + sorting + "/" + column + "/" + itemCatName)
+        .then((response) => {
+          setItemList(response.data.result);
+        });
+    } else {
+      axios
+        .get(showSearchAPI + sorting + "/" + column + "/" + keyword)
+        .then((response) => {
+          setItemList(response.data.result);
+        });
+      setIsLoading(false);
+    }
   };
 
   //use Effect to fetch item list.

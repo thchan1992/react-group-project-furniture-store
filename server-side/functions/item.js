@@ -106,8 +106,28 @@ app.delete("/deletePic/:itemDetID", adminJWT, (req, res) => {
   });
 });
 
+//A search API
+app.get("/item/search/:sorting/:column/:keyword", (req, res) => {
+  var sorting = req.params.sorting;
+  var column = req.params.column;
+  var sql =
+    "SELECT itemDetails.itemDetID, itemDetails.itemCatID, itemPrice, itemThreshold, itemQty, itemName, itemDesp, itemCategory.itemCatID, itemCatName, itemUrl FROM itemDetails INNER JOIN itemCategory ON itemCategory.itemCatID = itemDetails.itemCatID WHERE itemName LIKE ? AND itemThreshold != 0 ORDER BY " +
+    column +
+    " " +
+    sorting;
+
+  var keyword = "%" + req.params.keyword + "%";
+  db.all(sql, keyword, (err, result) => {
+    if (err) {
+      res.json({ error: err.message });
+      return;
+    }
+    res.json({ result });
+  });
+});
+
 //fetch a list of furniture
-app.get("/item/showItems/:sorting/:column/:itemCatName", (req, res) => {
+app.get("/item/showItems/:sorting/:column/:itemCatName/", (req, res) => {
   //decide whether it is in "desc" or "asc" order
   var sorting = req.params.sorting;
   //sorting based on what column (itemPrice, itemName or suppName)
@@ -148,7 +168,7 @@ app.put("/item/editProducts", adminJWT, (req, res) => {
     params,
     (err) => {
       if (err) {
-        res.status(400).json({ error: res.message });
+        res.json({ error: res.message });
         return;
       }
       res.json({

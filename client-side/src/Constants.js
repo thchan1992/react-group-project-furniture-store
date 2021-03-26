@@ -28,5 +28,7 @@ export const addItemAPI = host + "/item/addItem/";
 //Show a list of product
 export const showItemsAPI = host + "/item/showItems/";
 
+export const showSearchAPI = host + "/item/search/";
+
 //Modify item
 export const editItemAPI = host + "/item/editProducts";
