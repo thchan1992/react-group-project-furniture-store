@@ -35,7 +35,7 @@ const Item = ({ itemCatName, userType, keyword }) => {
 
   //function that updates the changes made to the item.
   const updateItem = (itemDetID, edColumn, change) => {
-    if (!change) {
+    if (change != "") {
       const column = edColumn;
       const newData = {
         column,
@@ -56,10 +56,12 @@ const Item = ({ itemCatName, userType, keyword }) => {
           setImage(null);
           setItemDesp("");
           setItemThreshold("");
+          setChange("");
           setIsLoading(true);
         });
+    } else {
+      window.alert("No Value inserted");
     }
-    window.alert("No Value inserted");
   };
 
   //function to modify the product image
