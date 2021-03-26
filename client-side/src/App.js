@@ -20,7 +20,7 @@ const App = () => {
   const [userType, setUserType] = useState("");
   const [caterList, setCaterList] = useState([]);
   const [keyword, setKeyword] = useState("");
-  const [showSearch, setSearch] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
   //API call to render the list of catergory from the database
   //This will be shown on the nav bar
@@ -47,23 +47,44 @@ const App = () => {
                   as={Link}
                   to={"/" + data.itemCatName}
                   key={data.itemCatID}
+                  onClick={() => {
+                    setShowSearch(false);
+                  }}
                 >
                   {data.itemCatName}
                 </Nav.Link>
               ))}
               {userType == "A" && (
-                <Nav.Link as={Link} to="/AddItem">
+                <Nav.Link
+                  as={Link}
+                  to="/AddItem"
+                  onClick={() => {
+                    setShowSearch(false);
+                  }}
+                >
                   Add New Item
                 </Nav.Link>
               )}
               {userType == "" && (
-                <Nav.Link as={Link} to="/SignUp">
+                <Nav.Link
+                  as={Link}
+                  to="/SignUp"
+                  onClick={() => {
+                    setShowSearch(false);
+                  }}
+                >
                   Sign Up
                 </Nav.Link>
               )}
               {userType == "A" && (
-                <Nav.Link as={Link} to="/AdminSignUp">
-                  Create an Admin Account
+                <Nav.Link
+                  as={Link}
+                  to="/AdminSignUp"
+                  onClick={() => {
+                    setShowSearch(false);
+                  }}
+                >
+                  Create an Admin Account.
                 </Nav.Link>
               )}
             </Nav>
@@ -76,7 +97,7 @@ const App = () => {
               {showSearch === true && (
                 <FormControl
                   type="text"
-                  placeholder="Search"
+                  placeholder="search product name"
                   className="mr-sm-2"
                   value={keyword}
                   name="keyword"
@@ -90,14 +111,14 @@ const App = () => {
                   variant="outline-success"
                   onClick={() => {
                     if (showSearch == false) {
-                      setSearch(true);
+                      setShowSearch(true);
                     } else {
-                      setSearch(false);
+                      setShowSearch(false);
                     }
                   }}
                 >
-                  {showSearch === true && <>Hide Search Bar</>}
-                  {showSearch === false && <>Search Bar</>}
+                  {showSearch === true && <>Hide Search Function</>}
+                  {showSearch === false && <>Open Search Function</>}
                 </Button>
               </Nav.Link>
             </Form>
