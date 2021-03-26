@@ -44,14 +44,13 @@ const App = () => {
                 <Nav.Link
                   as={Link}
                   to={"/" + data.itemCatName}
-                  key={data.itemCatID}
-                >
+                  key={data.itemCatID}>
                   {data.itemCatName}
                 </Nav.Link>
               ))}
               {userType == "A" && (
                 <Nav.Link as={Link} to="/AddItem">
-                  Add a new Item
+                  Add New Item
                 </Nav.Link>
               )}
               {userType == "" && (
@@ -61,7 +60,7 @@ const App = () => {
               )}
               {userType == "A" && (
                 <Nav.Link as={Link} to="/AdminSignUp">
-                  Create an Admin account
+                  Create an Admin Account
                 </Nav.Link>
               )}
             </Nav>

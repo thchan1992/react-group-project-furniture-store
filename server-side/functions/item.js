@@ -88,7 +88,8 @@ app.delete("/deletePic/:itemDetID", (req, res) => {
       return;
     }
     //remove the first 20th string: http://localhost:8080
-    const str = result.itemrl.substr(21);
+
+    const str = result.itemUrl.substr(21);
     const path = "./image/" + str;
     fs.unlink(path, (err) => {
       if (err) {

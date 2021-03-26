@@ -58,7 +58,7 @@ app.post("/signUp/admin", adminJWT, (req, res) => {
   const lastName = req.body.lastName;
   const userAddress = req.body.lastName;
   const userPass = req.body.userPass;
-  console.log(userPass);
+  console.log(userEmail);
 
   bcrypt.hash(userPass, saltRounds, (err, hash) => {
     if (err) {

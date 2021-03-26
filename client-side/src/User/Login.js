@@ -57,8 +57,7 @@ const Login = ({ setUserID, setUserType }) => {
         <Button
           onClick={() => {
             handleLogOut();
-          }}
-        >
+          }}>
           Log Out
         </Button>
       )}
@@ -85,8 +84,7 @@ const Login = ({ setUserID, setUserType }) => {
           <Button
             onClick={() => {
               handleLogin();
-            }}
-          >
+            }}>
             log in
           </Button>
         </Form.Group>
