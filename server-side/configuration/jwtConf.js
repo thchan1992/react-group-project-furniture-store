@@ -25,7 +25,11 @@ const adminJWT = (req, res, next) => {
   } else {
     jwt.verify(token, "Group47", (err, decoded) => {
       if (err) {
-        res.json({ auth: false, message: "you failed to authenticate1" });
+        res.json({
+          auth: false,
+          message: "you failed to authenticate1",
+          error: err,
+        });
       } else {
         if (decoded.userType == "A") {
           req.userID = decoded.userID;

@@ -40,38 +40,48 @@ const Item = ({ itemCatName, userType }) => {
       itemDetID,
       change,
     };
-    console.log(newData);
     //API that edits the attributes.
-    axios.put(editItemAPI, newData).then((response) => {
-      window.alert(response.data.message);
-      setIsLoading(true);
-      //refresh the browser
-    });
+    axios
+      .put(editItemAPI, newData, {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        window.alert(response.data.message);
+        setIsLoading(true);
+        //refresh the browser
+      });
   };
 
+  //function to modify the product image
   const updateImage = async (itemDetID) => {
     //API that deletes the current product image
-    await axios.delete(delImageAPI + itemDetID).then((response) => {
-      console.log(response);
-
-      //create a new FormData for storing the new image
-      const fd = new FormData();
-      //append the new image to the fd
-
-      fd.append("image", image);
-      axios
-        .post(uploadImageAPI, fd, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((response) => {
-          const itemUrl = host + "/" + response.data.fileName;
-          const column = "itemUrl";
-
-          updateItem(itemDetID, column, itemUrl);
-        });
-    });
+    await axios
+      .delete(delImageAPI + itemDetID, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "x-access-token": localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        //create a new FormData for storing the new image
+        const fd = new FormData();
+        //append the new image to the fd
+        fd.append("image", image);
+        axios
+          .post(uploadImageAPI, fd, {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              "x-access-token": localStorage.getItem("token"),
+            },
+          })
+          .then((response) => {
+            const itemUrl = host + "/" + response.data.fileName;
+            const column = "itemUrl";
+            updateItem(itemDetID, column, itemUrl);
+          });
+      });
   };
 
   //Function to fetch the sorted items
@@ -102,7 +112,8 @@ const Item = ({ itemCatName, userType }) => {
             setSorting("ASC");
 
             setIsLoading(true);
-          }}>
+          }}
+        >
           Name (A to Z)
         </Dropdown.Item>
         <Dropdown.Item
@@ -112,7 +123,8 @@ const Item = ({ itemCatName, userType }) => {
             setColumn("itemName");
             setSorting("DESC");
             setIsLoading(true);
-          }}>
+          }}
+        >
           Name (Z to A)
         </Dropdown.Item>
         <Dropdown.Item
@@ -122,7 +134,8 @@ const Item = ({ itemCatName, userType }) => {
             setColumn("itemPrice");
             setSorting("ASC");
             setIsLoading(true);
-          }}>
+          }}
+        >
           Price (Low to High)
         </Dropdown.Item>
         <Dropdown.Item
@@ -132,7 +145,8 @@ const Item = ({ itemCatName, userType }) => {
             setColumn("itemPrice");
             setSorting("DESC");
             setIsLoading(true);
-          }}>
+          }}
+        >
           Price (High to Low)
         </Dropdown.Item>
       </DropdownButton>
@@ -146,7 +160,8 @@ const Item = ({ itemCatName, userType }) => {
             sm={{ span: 4 }}
             md={{ span: 3 }}
             lg={{ span: 2 }}
-            xl={{ span: 2 }}>
+            xl={{ span: 2 }}
+          >
             <ul>
               <img src={data.itemUrl} width="100%" />
             </ul>
@@ -168,7 +183,8 @@ const Item = ({ itemCatName, userType }) => {
                     variant="info"
                     onClick={() => {
                       updateImage(data.itemDetID);
-                    }}>
+                    }}
+                  >
                     Upload
                   </Button>
                 </div>
@@ -200,7 +216,8 @@ const Item = ({ itemCatName, userType }) => {
                     variant="info"
                     onClick={() => {
                       updateItem(data.itemDetID, edColumn, change);
-                    }}>
+                    }}
+                  >
                     Update
                   </Button>
                 </div>
@@ -229,7 +246,8 @@ const Item = ({ itemCatName, userType }) => {
                     variant="info"
                     onClick={() => {
                       updateItem(data.itemDetID, edColumn, change);
-                    }}>
+                    }}
+                  >
                     Update
                   </Button>
                 </div>
@@ -258,7 +276,8 @@ const Item = ({ itemCatName, userType }) => {
                     variant="info"
                     onClick={() => {
                       updateItem(data.itemDetID, edColumn, change);
-                    }}>
+                    }}
+                  >
                     Update
                   </Button>
                 </div>
@@ -287,7 +306,8 @@ const Item = ({ itemCatName, userType }) => {
                     variant="info"
                     onClick={() => {
                       updateItem(data.itemDetID, edColumn, change);
-                    }}>
+                    }}
+                  >
                     Update
                   </Button>
                 </div>
@@ -319,7 +339,8 @@ const Item = ({ itemCatName, userType }) => {
                     variant="info"
                     onClick={() => {
                       updateItem(data.itemDetID, edColumn, change);
-                    }}>
+                    }}
+                  >
                     Update
                   </Button>
                 </div>
