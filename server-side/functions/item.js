@@ -1,17 +1,22 @@
 var express = require("express");
-var cors = require("cors");
-var bodyParser = require("body-parser");
-var db = require("./../database/database.js");
 var app = express();
-app.use(cors());
+
+// var cors = require("cors");
+// app.use(cors());
+// var bodyParser = require("body-parser");
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+
+var db = require("./../database/database.js");
+
 app.use(require("../configuration/corsConf"));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+
 var jwt = require("jsonwebtoken");
+const { regularJWT, adminJWT } = require("./../configuration/jwtConf");
+
 var multer = require("multer");
 var fs = require("fs");
 var path = require("path");
-const { regularJWT, adminJWT } = require("./../configuration/jwtConf");
 
 //multer
 const storage = multer.diskStorage({
@@ -26,14 +31,14 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 //API request to upload the Image of the product
-app.post("/item/uploadImage/", upload.single("image"), (req, res) => {
+app.post("/item/uploadImage/", adminJWT, upload.single("image"), (req, res) => {
   const fileName = req.file.filename;
   //send the file name to the front end
   res.json({ fileName: fileName });
 });
 
 //API request to add the item
-app.post("/item/addItem/", (req, res) => {
+app.post("/item/addItem/", adminJWT, (req, res) => {
   const itemDetID = req.body.itemDetID;
   const itemCatID = req.body.itemCatID;
   const itemPrice = req.body.itemPrice;
@@ -78,7 +83,7 @@ app.get("/item/showCater", (req, res) => {
 });
 
 //delete the item picture in the backend
-app.delete("/deletePic/:itemDetID", (req, res) => {
+app.delete("/deletePic/:itemDetID", adminJWT, (req, res) => {
   const sql = "SELECT itemUrl FROM itemDetails WHERE itemDetID = ?";
   const params = req.params.itemDetID;
 
@@ -88,7 +93,6 @@ app.delete("/deletePic/:itemDetID", (req, res) => {
       return;
     }
     //remove the first 20th string: http://localhost:8080
-
     const str = result.itemUrl.substr(21);
     const path = "./image/" + str;
     fs.unlink(path, (err) => {
@@ -112,7 +116,7 @@ app.get("/item/showItems/:sorting/:column/:itemCatName", (req, res) => {
   var itemCatName = req.params.itemCatName;
 
   var sql =
-    "SELECT itemDetails.itemDetID, itemDetails.itemCatID, itemPrice, itemThreshold, itemQty, itemName, itemDesp, itemCategory.itemCatID, itemCatName, itemUrl FROM itemDetails INNER JOIN itemCategory ON itemCategory.itemCatID = itemDetails.itemCatID WHERE itemCatName = ? ORDER BY " +
+    "SELECT itemDetails.itemDetID, itemDetails.itemCatID, itemPrice, itemThreshold, itemQty, itemName, itemDesp, itemCategory.itemCatID, itemCatName, itemUrl FROM itemDetails INNER JOIN itemCategory ON itemCategory.itemCatID = itemDetails.itemCatID WHERE itemCatName = ? AND itemThreshold != 0 ORDER BY " +
     column +
     " " +
     sorting;
@@ -134,7 +138,7 @@ app.get("/item/showItems/:sorting/:column/:itemCatName", (req, res) => {
 });
 
 //update a furniture
-app.put("/item/editProducts", (req, res) => {
+app.put("/item/editProducts", adminJWT, (req, res) => {
   var column = req.body.column;
   var itemDetID = req.body.itemDetID;
   var change = req.body.change;
@@ -160,13 +164,17 @@ app.post("/item/addCater", (req, res) => {
   const itemCatName = req.body.itemCatName;
   var params = [itemCatID, itemCatName];
 
-  db.all("INSERT INTO itemCategory (itemCatID, itemCatName) VALUES (?, ?)", params, (err) => {
-    if (err) {
-      res.json({ error: err.message });
-      return;
+  db.all(
+    "INSERT INTO itemCategory (itemCatID, itemCatName) VALUES (?, ?)",
+    params,
+    (err) => {
+      if (err) {
+        res.json({ error: err.message });
+        return;
+      }
+      res.json({ message: "Category successfully added!" });
     }
-    res.json({ message: "Category successfully added!" });
-  });
+  );
 });
 
 module.exports = app;

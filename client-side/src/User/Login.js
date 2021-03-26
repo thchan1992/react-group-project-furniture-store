@@ -41,14 +41,18 @@ const Login = ({ setUserID, setUserType }) => {
   };
   //API call to see if the session is still vaild
   useEffect(() => {
-    axios.get(loginAPI).then((response) => {
-      console.log(response);
-      if (response.data.loggedIn == true) {
-        setUserID(response.data.user[0].userID);
-        setUserType(response.data.user[0].userType);
-        setIsLogin(true);
-      }
-    });
+    axios
+      .get(loginAPI, {
+        headers: { "x-access-token": localStorage.getItem("token") },
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.data.loggedIn == true) {
+          setUserID(response.data.user[0].userID);
+          setUserType(response.data.user[0].userType);
+          setIsLogin(true);
+        }
+      });
   }, []);
 
   return (
@@ -57,7 +61,8 @@ const Login = ({ setUserID, setUserType }) => {
         <Button
           onClick={() => {
             handleLogOut();
-          }}>
+          }}
+        >
           Log Out
         </Button>
       )}
@@ -84,7 +89,8 @@ const Login = ({ setUserID, setUserType }) => {
           <Button
             onClick={() => {
               handleLogin();
-            }}>
+            }}
+          >
             log in
           </Button>
         </Form.Group>

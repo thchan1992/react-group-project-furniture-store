@@ -33,6 +33,7 @@ const AddItem = ({ userType }) => {
       .post(uploadImageAPI, fd, {
         headers: {
           "Content-Type": "multipart/form-data",
+          "x-access-token": localStorage.getItem("token"),
         },
       })
       .then((response) => {
@@ -49,9 +50,15 @@ const AddItem = ({ userType }) => {
           itemDetID,
         };
         //API that adds the item details to the database
-        axios.post(addItemAPI, newItem).then((response) => {
-          window.alert(response.data.message);
-        });
+        axios
+          .post(addItemAPI, newItem, {
+            headers: {
+              "x-access-token": localStorage.getItem("token"),
+            },
+          })
+          .then((response) => {
+            window.alert(response.data.message);
+          });
       });
   };
 
@@ -76,12 +83,14 @@ const AddItem = ({ userType }) => {
               <DropdownButton
                 variant="dark"
                 title=""
-                onSelect={(e) => setItemCatID(e)}>
+                onSelect={(e) => setItemCatID(e)}
+              >
                 {itemCatList.map((data) => (
                   <Dropdown.Item
                     className="text-style-item-upperCase"
                     eventKey={data.itemCatID}
-                    key={data.itemCatID}>
+                    key={data.itemCatID}
+                  >
                     - {data.itemCatName} | {data.itemCatID}
                   </Dropdown.Item>
                 ))}

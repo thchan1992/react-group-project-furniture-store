@@ -1,18 +1,26 @@
 var express = require("express");
-var cors = require("cors");
-var bodyParser = require("body-parser");
-var db = require("./../database/database.js");
 var app = express();
-app.use(cors());
+
+// var cors = require("cors");
+// app.use(cors());
+// var bodyParser = require("body-parser");
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+
+//This is to enable the app.post log in function
+app.use(express.json());
+app.use(express.urlencoded());
+
+var db = require("./../database/database.js");
+app.use(require("../configuration/corsConf"));
+
 var cookieParser = require("cookie-parser");
+app.use(cookieParser());
 var bcrypt = require("bcrypt");
 var session = require("express-session");
+
 var jwt = require("jsonwebtoken");
 const { regularJWT, adminJWT } = require("../configuration/jwtConf");
-app.use(require("../configuration/corsConf"));
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 //set up the session
 app.use(
@@ -27,7 +35,6 @@ app.use(
 
 //Login API request
 app.post("/login/", (req, res) => {
-  console.log(req.body);
   const sql = "SELECT * FROM userDetail WHERE userEmail =?";
   const userEmail = req.body.userEmail;
   const userPass = req.body.userPass;
@@ -62,7 +69,7 @@ app.post("/login/", (req, res) => {
 });
 
 //Session - Login API request
-app.get("/login/", (req, res) => {
+app.get("/login/", regularJWT, (req, res) => {
   if (req.session.user) {
     res.send({ loggedIn: true, user: req.session.user });
   } else {

@@ -1,14 +1,17 @@
-var cors = require("cors");
 var express = require("express");
-var bodyParser = require("body-parser");
+var app = express();
+// var bodyParser = require("body-parser");
+// app.use(bodyParser.json());
+// var cors = require("cors");
+// app.use(cors());
+
 var db = require("./../database/database.js");
 
-var app = express();
+app.use(require("../configuration/corsConf"));
+
 var bcrypt = require("bcrypt");
 var saltRounds = 10;
-app.use(bodyParser.json());
-app.use(cors());
-app.use(require("../configuration/corsConf"));
+
 const { regularJWT, adminJWT } = require("../configuration/jwtConf");
 
 //API for signUP
@@ -58,7 +61,7 @@ app.post("/signUp/admin", adminJWT, (req, res) => {
   const lastName = req.body.lastName;
   const userAddress = req.body.lastName;
   const userPass = req.body.userPass;
-  console.log(userEmail);
+  console.log(userPass);
 
   bcrypt.hash(userPass, saltRounds, (err, hash) => {
     if (err) {
