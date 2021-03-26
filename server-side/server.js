@@ -24,3 +24,4 @@ app.use(require("./functions/login"));
 app.use(require("./functions/item"));
 app.use(require("./functions/signUp"));
 app.use(require("./functions/supplierDet"));
+app.use(require("./functions/userDetail"));

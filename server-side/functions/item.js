@@ -153,4 +153,19 @@ app.put("/item/editProducts", (req, res) => {
   );
 });
 
+// Create a new category
+app.post("/item/addCater", (req, res) => {
+  const itemCatID = req.body.itemCatID;
+  const itemCatName = req.body.itemCatName;
+  var params = [itemCatID, itemCatName];
+
+  db.all("INSERT INTO itemCategory (itemCatID, itemCatName) VALUES (?, ?)", params, (err) => {
+    if (err) {
+      res.json({ error: err.message });
+      return;
+    }
+    res.json({ message: "Category successfully added!" });
+  });
+});
+
 module.exports = app;
