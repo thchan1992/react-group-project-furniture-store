@@ -6,6 +6,7 @@ import axios from "axios";
 import { showCaterAPI, uploadImageAPI, host, addItemAPI } from "../Constants";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
+import { pk } from "../setPrimary";
 
 const AddItem = ({ userType }) => {
   const [itemPrice, setItemPrice] = useState(0);
@@ -38,7 +39,7 @@ const AddItem = ({ userType }) => {
       })
       .then((response) => {
         const itemUrl = host + "/" + response.data.fileName;
-        const itemDetID = new Date().getTime();
+        const itemDetID = pk;
         const newItem = {
           itemPrice,
           itemThreshold,

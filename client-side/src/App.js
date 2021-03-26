@@ -19,6 +19,8 @@ const App = () => {
   const [userID, setUserID] = useState("");
   const [userType, setUserType] = useState("");
   const [caterList, setCaterList] = useState([]);
+  const [keyword, setKeyword] = useState("");
+  const [showSearch, setSearch] = useState(false);
 
   //API call to render the list of catergory from the database
   //This will be shown on the nav bar
@@ -44,7 +46,8 @@ const App = () => {
                 <Nav.Link
                   as={Link}
                   to={"/" + data.itemCatName}
-                  key={data.itemCatID}>
+                  key={data.itemCatID}
+                >
                   {data.itemCatName}
                 </Nav.Link>
               ))}
@@ -70,12 +73,33 @@ const App = () => {
                 setUserID={(userID) => setUserID(userID)}
                 setUserType={(userType) => setUserType(userType)}
               />
-              <FormControl
-                type="text"
-                placeholder="Search"
-                className="mr-sm-2"
-              />
-              <Button variant="outline-success">Search</Button>
+              {showSearch === true && (
+                <FormControl
+                  type="text"
+                  placeholder="Search"
+                  className="mr-sm-2"
+                  value={keyword}
+                  name="keyword"
+                  onChange={(e) => {
+                    setKeyword(e.target.value);
+                  }}
+                />
+              )}
+              <Nav.Link as={Link} to={"/" + { keyword }}>
+                <Button
+                  variant="outline-success"
+                  onClick={() => {
+                    if (showSearch == false) {
+                      setSearch(true);
+                    } else {
+                      setSearch(false);
+                    }
+                  }}
+                >
+                  {showSearch === true && <>Hide Search Bar</>}
+                  {showSearch === false && <>Search Bar</>}
+                </Button>
+              </Nav.Link>
             </Form>
           </Navbar.Collapse>
         </Navbar>
@@ -83,9 +107,21 @@ const App = () => {
         <Switch>
           {caterList.map((data) => (
             <Route exact path={"/" + data.itemCatName} key={data.itemCatID}>
-              <Item itemCatName={data.itemCatName} userType={userType} />
+              <Item
+                itemCatName={data.itemCatName}
+                userType={userType}
+                keyword={null}
+              />
             </Route>
           ))}
+          <Route exact path={"/" + { keyword }}>
+            <Item
+              itemCatName={null}
+              userType={userType}
+              keyword={keyword}
+              key={new Date().getTime()}
+            />
+          </Route>
           <Route exact path="/AddItem">
             <AddItem userType={userType} />
           </Route>

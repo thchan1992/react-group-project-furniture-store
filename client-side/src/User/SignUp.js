@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import axios from "axios";
 import { signUpAPI } from "../Constants";
+import { pk } from "../setPrimary";
 
 const SignUp = () => {
   const [userEmail, setUserEmail] = useState("");
@@ -29,7 +30,7 @@ const SignUp = () => {
     ) {
       if (userPass == userPass) {
         const userAddress = addr1 + " " + addr2 + " " + city + " " + postcode;
-        const userID = new Date().getTime();
+        const userID = pk;
         const userType = "C";
         const newUser = {
           userID,
