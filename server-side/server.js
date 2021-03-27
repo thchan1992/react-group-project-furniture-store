@@ -25,3 +25,4 @@ app.use(require("./functions/item"));
 app.use(require("./functions/signUp"));
 app.use(require("./functions/supplierDet"));
 app.use(require("./functions/userDetail"));
+app.use(require("./functions/suppliersOrders"));
