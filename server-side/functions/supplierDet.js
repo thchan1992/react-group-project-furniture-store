@@ -40,4 +40,16 @@ app.put("/supplier/edit/", (req, res) => {
   });
 });
 
+// Fetch the details of a specific supplier
+app.get("/supplier/:suppID", (req, res) => {
+  var suppID = req.params.suppID
+  db.all("SELECT * FROM suppliers WHERE suppID = ?", suppID, (err, result) => {
+    if (err) {
+      res.json({ error: err.message });
+      return;
+    }
+    res.json({ result });
+  });
+});
+
 module.exports = app;
