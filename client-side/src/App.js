@@ -3,8 +3,9 @@ import Login from "./User/Login";
 import Item from "./Item/Item";
 import SignUp from "./User/SignUp";
 import AddItem from "./Item/AddItem";
+import SuppOrderList from "./Item/SuppOrderList";
 import AdminSignUp from "./User/AdminSignUp";
-import { showCaterAPI } from "./Constants";
+import { showCaterAPI, addSuppOrderAPI, showOrdHistoryAPI } from "./Constants";
 import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
@@ -12,6 +13,7 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import EmailJS from "./Item/EmailJS";
 
 import FormControl from "react-bootstrap/FormControl";
 
@@ -21,6 +23,7 @@ const App = () => {
   const [caterList, setCaterList] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  const itemData = { itemName: "React", itemDetIDs: 1234, itemQty: 5 };
 
   //API call to render the list of catergory from the database
   //This will be shown on the nav bar
@@ -36,6 +39,7 @@ const App = () => {
         {userType == "A" && <h1>Admin Mode | User ID: {userID}</h1>}
         {userType == "C" && <h1>Welcome back | User ID: {userID}</h1>}
       </div>
+
       <BrowserRouter>
         <Navbar bg="light" expand="lg">
           <Navbar.Brand href="#home">Furniture</Navbar.Brand>
@@ -49,8 +53,7 @@ const App = () => {
                   key={data.itemCatID}
                   onClick={() => {
                     setShowSearch(false);
-                  }}
-                >
+                  }}>
                   {data.itemCatName}
                 </Nav.Link>
               ))}
@@ -60,9 +63,28 @@ const App = () => {
                   to="/AddItem"
                   onClick={() => {
                     setShowSearch(false);
-                  }}
-                >
+                  }}>
                   Add New Item
+                </Nav.Link>
+              )}
+              {userType == "A" && (
+                <Nav.Link
+                  as={Link}
+                  to="/SuppOrderList"
+                  onClick={() => {
+                    setShowSearch(false);
+                  }}>
+                  Supplier Order List
+                </Nav.Link>
+              )}
+              {userType == "A" && (
+                <Nav.Link
+                  as={Link}
+                  to="/EmailJS"
+                  onClick={() => {
+                    setShowSearch(false);
+                  }}>
+                  Email
                 </Nav.Link>
               )}
               {userType == "" && (
@@ -71,8 +93,7 @@ const App = () => {
                   to="/SignUp"
                   onClick={() => {
                     setShowSearch(false);
-                  }}
-                >
+                  }}>
                   Sign Up
                 </Nav.Link>
               )}
@@ -82,8 +103,7 @@ const App = () => {
                   to="/AdminSignUp"
                   onClick={() => {
                     setShowSearch(false);
-                  }}
-                >
+                  }}>
                   Create an Admin Account.
                 </Nav.Link>
               )}
@@ -115,8 +135,7 @@ const App = () => {
                     } else {
                       setShowSearch(false);
                     }
-                  }}
-                >
+                  }}>
                   {showSearch === true && <>Hide Search Function</>}
                   {showSearch === false && <>Open Search Function</>}
                 </Button>
@@ -146,6 +165,16 @@ const App = () => {
           <Route exact path="/AddItem">
             <AddItem userType={userType} />
           </Route>
+          {userType == "A" && (
+            <Route exact path="/SuppOrderList">
+              <SuppOrderList userType={userType} />
+            </Route>
+          )}
+          {userType == "A" && (
+            <Route exact path="/EmailJS">
+              <EmailJS userType={userType} itemData={itemData} />
+            </Route>
+          )}
           <Route exact path="/SignUp">
             <SignUp />
           </Route>

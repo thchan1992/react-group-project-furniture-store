@@ -3,7 +3,14 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { showCaterAPI, uploadImageAPI, host, addItemAPI } from "../Constants";
+import {
+  showSuppAPI,
+  addSuppOrderAPI,
+  showCaterAPI,
+  uploadImageAPI,
+  host,
+  addItemAPI,
+} from "../Constants";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import { pk } from "../setPrimary";
@@ -17,11 +24,22 @@ const AddItem = ({ userType }) => {
   const [itemDesp, setItemDesp] = useState("");
   const [itemThreshold, setItemThreshold] = useState(0);
   const [itemCatList, setItemCatList] = useState([]);
+  const [suppOrdID, setSuppOrdID] = useState("");
+  const [suppID, setSuppID] = useState("");
+  const [itemDetID, setItemDetID] = useState("");
+  const [suppOrdQty, setSuppOrdQty] = useState("");
+  const [orderDate, setOrderDate] = useState("");
+  const [ordReceiveDate, setOrdReceiveDate] = useState("");
+  const [orderList, setOrderList] = useState("");
+  const [suppList, setSuppList] = useState([]);
 
   //use Effect to fetch item list.
   useEffect(() => {
     axios.get(showCaterAPI).then((response) => {
       setItemCatList(response.data.result);
+    });
+    axios.get(showSuppAPI).then((response) => {
+      setSuppList(response.data.result);
     });
   }, []);
 
@@ -41,7 +59,6 @@ const AddItem = ({ userType }) => {
         const itemUrl = host + "/" + response.data.fileName;
         const itemDetID = pk;
         const newItem = {
-          itemPrice,
           itemThreshold,
           itemQty,
           itemCatID,
@@ -49,7 +66,9 @@ const AddItem = ({ userType }) => {
           itemDesp,
           itemUrl,
           itemDetID,
+          itemPrice,
         };
+
         //API that adds the item details to the database
         axios
           .post(addItemAPI, newItem, {
@@ -57,6 +76,24 @@ const AddItem = ({ userType }) => {
               "x-access-token": localStorage.getItem("token"),
             },
           })
+          .then((response) => {
+            window.alert(response.data.message);
+          });
+        const suppOrdID = pk;
+
+        const newOrder = {
+          suppOrdID,
+          suppID,
+          itemDetID,
+          itemCatID,
+          suppOrdQty,
+          orderDate,
+          ordReceiveDate,
+        };
+        //API that adds the order details to the database
+        axios
+          .post(addSuppOrderAPI, newOrder)
+
           .then((response) => {
             window.alert(response.data.message);
           });
@@ -84,14 +121,12 @@ const AddItem = ({ userType }) => {
               <DropdownButton
                 variant="dark"
                 title=""
-                onSelect={(e) => setItemCatID(e)}
-              >
+                onSelect={(e) => setItemCatID(e)}>
                 {itemCatList.map((data) => (
                   <Dropdown.Item
                     className="text-style-item-upperCase"
                     eventKey={data.itemCatID}
-                    key={data.itemCatID}
-                  >
+                    key={data.itemCatID}>
                     - {data.itemCatName} | {data.itemCatID}
                   </Dropdown.Item>
                 ))}
@@ -183,6 +218,79 @@ const AddItem = ({ userType }) => {
                 accept="jpg png"
               />
             </Form.Group>
+          </Form.Group>
+
+          <Form.Group as={Form.Row}>
+            <Form.Label className="text-center" column sm={1}>
+              Supplier ID
+            </Form.Label>
+            <Col sm={10} className="flex-container">
+              <Form.Control
+                style={{ height: "40px", width: "170px" }}
+                readOnly
+                value={suppID}
+                placeholder="Select the Supplier ID"
+              />
+              <DropdownButton
+                variant="dark"
+                title=""
+                onSelect={(e) => setSuppID(e)}>
+                {suppList.map((data) => (
+                  <Dropdown.Item
+                    className="text-style-item-upperCase"
+                    eventKey={data.suppID}
+                    key={data.suppID}>
+                    - {data.suppName} | {data.suppID}
+                  </Dropdown.Item>
+                ))}
+              </DropdownButton>
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Form.Row}>
+            <Form.Label column sm={1}>
+              Supplier Order Quantity
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Control
+                style={{ height: "40px", width: "200px" }}
+                type="number"
+                name="suppOrderQty"
+                id="suppOrdQty"
+                value={suppOrdQty}
+                onChange={(e) => setSuppOrdQty(e.target.value)}
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Form.Row}>
+            <Form.Label column sm={1}>
+              Order Date
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Control
+                style={{ height: "40px", width: "200px" }}
+                type="date"
+                name="orderDate"
+                id="orderDate"
+                value={orderDate}
+                onChange={(e) => setOrderDate(e.target.value)}
+              />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Form.Row}>
+            <Form.Label column sm={1}>
+              Order Receive Date
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Control
+                style={{ height: "40px", width: "200px" }}
+                type="number"
+                name="ordReceiveDate"
+                id="ordReceiveDate"
+                value={ordReceiveDate}
+                onChange={(e) => setOrdReceiveDate(e.target.value)}
+              />
+            </Col>
             <Button onClick={handleSubmit}>upload</Button>
           </Form.Group>
         </div>
