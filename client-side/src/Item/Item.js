@@ -53,6 +53,7 @@ const Item = ({ itemCatName, userType, keyword }) => {
           console.log(response);
           window.alert(response.data.message);
           setItemName("");
+          setItemCatID("");
           setImage(null);
           setItemDesp("");
           setItemThreshold("");
@@ -131,8 +132,7 @@ const Item = ({ itemCatName, userType, keyword }) => {
             setSorting("ASC");
 
             setIsLoading(true);
-          }}
-        >
+          }}>
           Name (A to Z)
         </Dropdown.Item>
         <Dropdown.Item
@@ -142,8 +142,7 @@ const Item = ({ itemCatName, userType, keyword }) => {
             setColumn("itemName");
             setSorting("DESC");
             setIsLoading(true);
-          }}
-        >
+          }}>
           Name (Z to A)
         </Dropdown.Item>
         <Dropdown.Item
@@ -153,8 +152,7 @@ const Item = ({ itemCatName, userType, keyword }) => {
             setColumn("itemPrice");
             setSorting("ASC");
             setIsLoading(true);
-          }}
-        >
+          }}>
           Price (Low to High)
         </Dropdown.Item>
         <Dropdown.Item
@@ -164,8 +162,7 @@ const Item = ({ itemCatName, userType, keyword }) => {
             setColumn("itemPrice");
             setSorting("DESC");
             setIsLoading(true);
-          }}
-        >
+          }}>
           Price (High to Low)
         </Dropdown.Item>
       </DropdownButton>
@@ -179,8 +176,7 @@ const Item = ({ itemCatName, userType, keyword }) => {
             sm={{ span: 4 }}
             md={{ span: 3 }}
             lg={{ span: 2 }}
-            xl={{ span: 2 }}
-          >
+            xl={{ span: 2 }}>
             <ul>
               <img src={data.itemUrl} width="100%" />
             </ul>
@@ -202,8 +198,7 @@ const Item = ({ itemCatName, userType, keyword }) => {
                     variant="info"
                     onClick={() => {
                       updateImage(data.itemDetID);
-                    }}
-                  >
+                    }}>
                     Upload
                   </Button>
                 </div>
@@ -235,14 +230,13 @@ const Item = ({ itemCatName, userType, keyword }) => {
                     variant="info"
                     onClick={() => {
                       updateItem(data.itemDetID, edColumn, change);
-                    }}
-                  >
+                    }}>
                     Update
                   </Button>
                 </div>
               )}
             </ul>
-            <ul>Price : £{data.itemPrice}</ul>
+            <ul>Price : £ {data.itemPrice} </ul>
             <ul>
               {userType == "A" && (
                 <div>
@@ -265,8 +259,7 @@ const Item = ({ itemCatName, userType, keyword }) => {
                     variant="info"
                     onClick={() => {
                       updateItem(data.itemDetID, edColumn, change);
-                    }}
-                  >
+                    }}>
                     Update
                   </Button>
                 </div>
@@ -295,8 +288,7 @@ const Item = ({ itemCatName, userType, keyword }) => {
                     variant="info"
                     onClick={() => {
                       updateItem(data.itemDetID, edColumn, change);
-                    }}
-                  >
+                    }}>
                     Update
                   </Button>
                 </div>
@@ -325,8 +317,7 @@ const Item = ({ itemCatName, userType, keyword }) => {
                     variant="info"
                     onClick={() => {
                       updateItem(data.itemDetID, edColumn, change);
-                    }}
-                  >
+                    }}>
                     Update
                   </Button>
                 </div>
@@ -358,14 +349,22 @@ const Item = ({ itemCatName, userType, keyword }) => {
                     variant="info"
                     onClick={() => {
                       updateItem(data.itemDetID, edColumn, change);
-                    }}
-                  >
+                    }}>
                     Update
                   </Button>
                 </div>
               )}
             </ul>
             {userType == "A" && <ul>{data.itemCatID}</ul>}
+
+            <Button
+              size="sm"
+              variant="info"
+              onClick={() => {
+                updateItem(data.itemCatID, edColumn, change);
+              }}>
+              Update
+            </Button>
           </Col>
         ))}
       </Row>
