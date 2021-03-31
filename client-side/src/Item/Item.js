@@ -1,19 +1,8 @@
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Nav from "react-bootstrap/Nav";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import React, { useEffect, useState } from "react";
 import ShowItem from "./ShowItem";
-import {
-  showItemsAPI,
-  host,
-  editItemAPI,
-  delImageAPI,
-  addItemAPI,
-  uploadImageAPI,
-  showSearchAPI,
-} from "../Constants";
+import { showItemsAPI, showSearchAPI } from "../Constants";
 import axios from "axios";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
@@ -59,7 +48,6 @@ const Item = ({ itemCatName, userType, keyword }) => {
           onClick={() => {
             setColumn("itemName");
             setSorting("ASC");
-
             setIsLoading(true);
           }}
         >
@@ -104,18 +92,19 @@ const Item = ({ itemCatName, userType, keyword }) => {
         {itemList.map((data) => (
           <Col
             className="block-example border border-dark"
-            key={data.itemDetID}
             xs={{ span: 6 }}
             sm={{ span: 4 }}
             md={{ span: 3 }}
             lg={{ span: 2 }}
             xl={{ span: 2 }}
           >
-            <ShowItem
-              data={data}
-              userType={userType}
-              setIsLoading={setIsLoading}
-            />
+            <div key={data.itemDetID}>
+              <ShowItem
+                data={data}
+                userType={userType}
+                setIsLoading={setIsLoading}
+              />{" "}
+            </div>
           </Col>
         ))}
       </Row>
