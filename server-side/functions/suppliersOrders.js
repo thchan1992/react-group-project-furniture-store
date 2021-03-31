@@ -93,33 +93,47 @@ app.put("/suppliers/orderReceived", (req, res) => {
 });
 
 app.put("/suppliers/updateStock", (req, res) => {
-  var ordReceiveDate = req.body.ordReceiveDate;
-  var suppOrdID = req.body.suppOrdID;
-  var suppParams = [ordReceiveDate, suppOrdID];
-  console.log(suppParams);
   var itemDetID = req.body.itemDetID;
-  var itemQty = parseInt(req.body.itemQty);
-  var suppOrdQty = parseInt(req.body.suppOrdQty);
-  var newQty = itemQty + suppOrdQty;
-  var itemParams = [newQty, itemDetID];
-  console.log(itemParams);
-  db.run(
-    "UPDATE suppOrder SET ordReceiveDate = ? WHERE suppOrdID = ?",
-    suppParams,
-    (err) => {
+  db.get(
+    "SELECT itemQty from itemDetails WHERE itemDetID = ?",
+    itemDetID,
+    (err, result) => {
       if (err) {
         res.json({ error: err.message });
         return;
       } else {
+        console.log(result);
+        const itemQty = result.itemQty;
+        var ordReceiveDate = req.body.ordReceiveDate;
+        var suppOrdID = req.body.suppOrdID;
+        var suppParams = [ordReceiveDate, suppOrdID];
+
+        var suppOrdQty = req.body.suppOrdQty;
+        console.log(suppOrdQty, itemQty);
+        var newQty = itemQty + suppOrdQty;
+        console.log(newQty);
+        var itemParams = [newQty, itemDetID];
+
         db.run(
-          "UPDATE itemDetails SET itemQty = ? WHERE itemDetID =?",
-          itemParams,
+          "UPDATE suppOrder SET ordReceiveDate = ? WHERE suppOrdID = ?",
+          suppParams,
           (err) => {
             if (err) {
               res.json({ error: err.message });
               return;
             } else {
-              res.json({ message: "Date updated." });
+              db.run(
+                "UPDATE itemDetails SET itemQty = ? WHERE itemDetID =?",
+                itemParams,
+                (err) => {
+                  if (err) {
+                    res.json({ error: err.message });
+                    return;
+                  } else {
+                    res.json({ message: "Date updated." });
+                  }
+                }
+              );
             }
           }
         );
