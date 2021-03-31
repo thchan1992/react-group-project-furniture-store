@@ -20,6 +20,7 @@ import {
   updateRecDateAPI,
   showOrdHistoryAPI,
   editItemAPI,
+  updateStockAPI,
 } from "../Constants";
 import axios from "axios";
 
@@ -36,6 +37,7 @@ const SuppOrderList = ({ userType }) => {
   //   const [itemCatList, setItemCatList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [itemQty, setItemQty] = useState("");
+  //const [newQty, setNewQty] = useState("");
 
   // const options = {
   //   page: 1,
@@ -45,21 +47,25 @@ const SuppOrderList = ({ userType }) => {
   //   showTotal: true,
   // };
 
-  const updateDate = (suppOrdID) => {
+  const updateDateQty = (suppOrdID, itemDetID, itemQty) => {
     const newData = {
       suppOrdID,
-      change,
+      ordReceiveDate,
+      itemDetID,
+      itemQty,
     };
-    axios.put(updateRecDateAPI, newData).then((response) => {
-      console.log(response);
+    console.log(newData);
+    axios.put(updateStockAPI, newData).then((response) => {
+      console.log(response.data);
       window.alert(response.data.message);
-      setChange("");
+      setOrdReceiveDate("");
+      setItemQty("");
       setIsLoading(true);
     });
   };
 
-  // function that updates the changes made to the item.
-  const updateQty = (itemDetID, itemQty) => {
+  /* // function that updates the changes made to the item.
+  const updateQty = (itemQty, itemDetID) => {
     const change = itemQty;
     const column = "itemQty";
     const newData = {
@@ -77,7 +83,7 @@ const SuppOrderList = ({ userType }) => {
         setItemQty("");
         setIsLoading(true);
       });
-  };
+  }; */
 
   //Function to fetch the sorted items
   const fetchOrder = () => {
@@ -129,19 +135,22 @@ const SuppOrderList = ({ userType }) => {
                     placeholder="Edit Date"
                     name="ordReceiveDate"
                     id="ordReceiveDate"
-                    value={change}
+                    value={ordReceiveDate}
                     onChange={(e) => {
-                      setChange(e.target.value);
+                      setOrdReceiveDate(e.target.value);
                     }}
                   />
                   <Button
                     size="sm"
                     variant="info"
                     onClick={() => {
-                      updateDate(data.suppOrdID, change);
-                      updateQty(data.itemDetID, data.suppOrdQty);
-                    }}
-                  >
+                      updateDateQty(
+                        data.suppOrdID,
+                        data.itemDetID,
+                        data.suppOrdQty
+                      );
+                      //updateQty(data.itemDetID, data.suppOrdQty);
+                    }}>
                     Update
                   </Button>
                 </td>
