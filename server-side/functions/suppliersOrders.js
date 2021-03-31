@@ -81,12 +81,48 @@ app.put("/suppliers/orderReceived", (req, res) => {
     params,
     (err) => {
       if (err) {
-        res.status(400).json({ error: res.message });
+        res.json({ error: err.message });
         return;
       }
       res.json({
         message: "Date updated.",
       });
+    }
+  );
+});
+
+app.put("/suppliers/updateStock", (req, res) => {
+  var ordReceiveDate = req.body.ordReceiveDate;
+  var suppOrdID = req.body.suppOrdID;
+  var suppParams = [ordReceiveDate, suppOrdID];
+  console.log(suppParams);
+  var itemDetID = req.body.itemDetID;
+  var itemQty = parseInt(req.body.itemQty);
+  var suppOrdQty = parseInt(req.body.suppOrdQty);
+  var newQty = itemQty + suppOrdQty;
+  var itemParams = [newQty, itemDetID];
+  console.log(itemParams);
+  db.run(
+    "UPDATE suppOrder SET ordReceiveDate = ? WHERE suppOrdID = ?",
+    suppParams,
+    (err) => {
+      if (err) {
+        res.json({ error: err.message });
+        return;
+      } else {
+        db.run(
+          "UPDATE itemDetails SET itemQty = ? WHERE itemDetID =?",
+          itemParams,
+          (err) => {
+            if (err) {
+              res.json({ error: err.message });
+              return;
+            } else {
+              res.json({ message: "Date updated." });
+            }
+          }
+        );
+      }
     }
   );
 });
