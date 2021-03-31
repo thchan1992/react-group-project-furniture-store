@@ -135,18 +135,18 @@ app.get("/item/showItems/:sorting/:column/:itemCatName/", (req, res) => {
   //a list of items based on the catergory
   var itemCatName = req.params.itemCatName;
 
-  var sql =
-    "SELECT itemDetails.itemDetID, itemDetails.itemCatID, itemPrice, itemThreshold, itemQty, itemName, itemDesp, itemCategory.itemCatID, itemCatName, itemUrl FROM itemDetails INNER JOIN itemCategory ON itemCategory.itemCatID = itemDetails.itemCatID WHERE itemCatName = ? AND itemThreshold != 0 ORDER BY " +
-    column +
-    " " +
-    sorting;
-
-  //commet it out for later use after we build the auto order function
   // var sql =
-  //   "SELECT itemDetails.itemDetID, itemDetails.itemCatID, itemPrice, itemThreshold, itemQty, itemName, itemDesp, suppliers.suppID, suppName, itemCategory.itemCatID, itemCatName FROM itemDetails INNER JOIN itemCategory ON itemCategory.itemCatID = itemDetails.itemCatID INNER JOIN suppOrder ON itemDetails.itemDetID = suppOrder.itemDetID INNER JOIN suppliers ON suppOrder.suppID = suppliers.suppID WHERE itemCatName = ? ORDER BY " +
+  //   "SELECT itemDetails.itemDetID, itemDetails.itemCatID, itemPrice, itemThreshold, itemQty, itemName, itemDesp, itemCategory.itemCatID, itemCatName, itemUrl FROM itemDetails INNER JOIN itemCategory ON itemCategory.itemCatID = itemDetails.itemCatID WHERE itemCatName = ? AND itemThreshold != 0 ORDER BY " +
   //   column +
   //   " " +
   //   sorting;
+
+  //commet it out for later use after we build the auto order function
+  var sql =
+    "SELECT itemDetails.itemDetID, itemDetails.itemCatID, itemPrice, itemThreshold, itemQty, itemName, itemDesp, suppliers.suppID, suppName, itemCategory.itemCatID, itemCatName FROM itemDetails INNER JOIN itemCategory ON itemCategory.itemCatID = itemDetails.itemCatID INNER JOIN suppOrder ON itemDetails.itemDetID = suppOrder.itemDetID INNER JOIN suppliers ON suppOrder.suppID = suppliers.suppID WHERE itemCatName = ? ORDER BY " +
+    column +
+    " " +
+    sorting;
 
   db.all(sql, itemCatName, (err, result) => {
     if (err) {
