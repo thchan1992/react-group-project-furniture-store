@@ -37,10 +37,13 @@ export const editItemAPI = host + "/item/editProducts";
 export const addSuppOrderAPI = host + "/suppliers/newOrder";
 
 //Show Supplier List
-export const showSuppAPI = host + "/supplier/";
+export const showSuppAPI = host + "/suppliers/";
 
 //Updates Receive Date
 export const updateRecDateAPI = host + "/suppliers/orderReceived";
 
 //Show Order History
 export const showOrdHistoryAPI = host + "/suppliers/orderHistory";
+
+//update item stock
+export const updateStockAPI = host + "/suppliers/updateStock";

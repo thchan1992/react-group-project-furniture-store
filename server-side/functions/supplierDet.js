@@ -13,7 +13,7 @@ app.use(require("../configuration/corsConf"));
 var jwt = require("jsonwebtoken");
 const { regularJWT, adminJWT } = require("../configuration/jwtConf");
 
-app.get("/supplier/", (req, res) => {
+app.get("/suppliers/", (req, res) => {
   const sql = "SELECT * FROM suppliers";
   db.all(sql, (err, result) => {
     if (err) {
@@ -24,7 +24,7 @@ app.get("/supplier/", (req, res) => {
   });
 });
 
-app.put("/supplier/edit/", (req, res) => {
+app.put("/suppliers/edit/", (req, res) => {
   var column = req.body.column;
   var suppID = req.body.suppID;
   var change = req.body.change;
@@ -41,8 +41,8 @@ app.put("/supplier/edit/", (req, res) => {
 });
 
 // Fetch the details of a specific supplier
-app.get("/supplier/:suppID", (req, res) => {
-  var suppID = req.params.suppID
+app.get("/suppliers/:suppID", (req, res) => {
+  var suppID = req.params.suppID;
   db.all("SELECT * FROM suppliers WHERE suppID = ?", suppID, (err, result) => {
     if (err) {
       res.json({ error: err.message });
