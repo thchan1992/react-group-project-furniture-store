@@ -44,13 +44,14 @@ app.post("/suppliers/newOrder", (req, res) => {
 });
 
 // Fetch a list of all the orders made to the suppliers (orders history)
-app.get("/suppliers/orderHistory", (req, res) => {
+app.post("/suppliers/orderHistory", (req, res) => {
   db.all("SELECT * FROM suppOrder", (err, result) => {
     if (err) {
       res.json({ error: err.message });
       return;
+    } else {
+      res.json({ result });
     }
-    res.json({ result });
   });
 });
 

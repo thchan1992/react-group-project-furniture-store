@@ -81,7 +81,7 @@ const SuppOrderList = ({ userType }) => {
 
   //Function to fetch the sorted items
   const fetchOrder = () => {
-    axios.get(showOrdHistoryAPI).then((response) => {
+    axios.post(showOrdHistoryAPI).then((response) => {
       setOrderList(response.data.result);
     });
     //setIsLoading(false);
@@ -140,7 +140,8 @@ const SuppOrderList = ({ userType }) => {
                     onClick={() => {
                       updateDate(data.suppOrdID, change);
                       updateQty(data.itemDetID, data.suppOrdQty);
-                    }}>
+                    }}
+                  >
                     Update
                   </Button>
                 </td>
