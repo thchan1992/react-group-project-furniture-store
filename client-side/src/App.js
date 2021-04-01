@@ -14,6 +14,9 @@ import Nav from "react-bootstrap/Nav";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EmailJS from "./Item/EmailJS";
+import Supplier from "./Supplier/Supplier";
+import Category from "./Category/Category";
+import ShowUser from "./User/ShowUser";
 
 import FormControl from "react-bootstrap/FormControl";
 
@@ -53,7 +56,8 @@ const App = () => {
                   key={data.itemCatID}
                   onClick={() => {
                     setShowSearch(false);
-                  }}>
+                  }}
+                >
                   {data.itemCatName}
                 </Nav.Link>
               ))}
@@ -63,7 +67,8 @@ const App = () => {
                   to="/AddItem"
                   onClick={() => {
                     setShowSearch(false);
-                  }}>
+                  }}
+                >
                   Add New Item
                 </Nav.Link>
               )}
@@ -73,7 +78,8 @@ const App = () => {
                   to="/SuppOrderList"
                   onClick={() => {
                     setShowSearch(false);
-                  }}>
+                  }}
+                >
                   Supplier Order List
                 </Nav.Link>
               )}
@@ -83,7 +89,8 @@ const App = () => {
                   to="/EmailJS"
                   onClick={() => {
                     setShowSearch(false);
-                  }}>
+                  }}
+                >
                   Email
                 </Nav.Link>
               )}
@@ -93,7 +100,8 @@ const App = () => {
                   to="/SignUp"
                   onClick={() => {
                     setShowSearch(false);
-                  }}>
+                  }}
+                >
                   Sign Up
                 </Nav.Link>
               )}
@@ -103,8 +111,44 @@ const App = () => {
                   to="/AdminSignUp"
                   onClick={() => {
                     setShowSearch(false);
-                  }}>
+                  }}
+                >
                   Create an Admin Account.
+                </Nav.Link>
+              )}
+              {userType == "A" && (
+                <Nav.Link
+                  as={Link}
+                  to="/Supplier"
+                  onClick={() => {
+                    setShowSearch(false);
+                  }}
+                >
+                  Manage Supplier
+                </Nav.Link>
+              )}
+
+              {userType == "A" && (
+                <Nav.Link
+                  as={Link}
+                  to="/Category"
+                  onClick={() => {
+                    setShowSearch(false);
+                  }}
+                >
+                  Manage Category
+                </Nav.Link>
+              )}
+
+              {userType == "C" && (
+                <Nav.Link
+                  as={Link}
+                  to="/ShowUser"
+                  onClick={() => {
+                    setShowSearch(false);
+                  }}
+                >
+                  Manage Account
                 </Nav.Link>
               )}
             </Nav>
@@ -135,7 +179,8 @@ const App = () => {
                     } else {
                       setShowSearch(false);
                     }
-                  }}>
+                  }}
+                >
                   {showSearch === true && <>Hide Search Function</>}
                   {showSearch === false && <>Open Search Function</>}
                 </Button>
@@ -183,6 +228,25 @@ const App = () => {
               <AdminSignUp />
             </Route>
           )}
+
+          {userType == "A" && (
+            <Route exact path="/Supplier">
+              <Supplier />
+            </Route>
+          )}
+
+          {userType == "A" && (
+            <Route exact path="/Category">
+              <Category />
+            </Route>
+          )}
+
+          {userType == "C" && (
+            <Route exact path="/ShowUser">
+              <ShowUser userID={userID} />
+            </Route>
+          )}
+
           <Route
             render={function () {
               return <p>Page Not found</p>;

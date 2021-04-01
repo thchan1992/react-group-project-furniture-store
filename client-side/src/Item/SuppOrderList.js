@@ -47,12 +47,12 @@ const SuppOrderList = ({ userType }) => {
   //   showTotal: true,
   // };
 
-  const updateDateQty = (suppOrdID, itemDetID, itemQty) => {
+  const updateDateQty = (suppOrdID, itemDetID, suppOrdQty) => {
     const newData = {
       suppOrdID,
       ordReceiveDate,
       itemDetID,
-      itemQty,
+      suppOrdQty,
     };
     console.log(newData);
     axios.put(updateStockAPI, newData).then((response) => {
@@ -150,7 +150,8 @@ const SuppOrderList = ({ userType }) => {
                         data.suppOrdQty
                       );
                       //updateQty(data.itemDetID, data.suppOrdQty);
-                    }}>
+                    }}
+                  >
                     Update
                   </Button>
                 </td>

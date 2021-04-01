@@ -19,7 +19,7 @@ var saltRounds = 10;
 // Fetch the user details
 app.get("/account/personalDetails/:userID", (req, res) => {
   var userID = req.params.userID;
-  db.all("SELECT * FROM userDetail WHERE userID = ?", userID, (err, result) => {
+  db.get("SELECT * FROM userDetail WHERE userID = ?", userID, (err, result) => {
     if (err) {
       res.json({ error: err.message });
       return;

@@ -197,4 +197,20 @@ app.post("/item/addCater", (req, res) => {
   );
 });
 
+app.put("/item/editCater/", (req, res) => {
+  var column = req.body.column;
+  var itemCatID = req.body.itemCatID;
+  var change = req.body.change;
+
+  var params = [change, itemCatID];
+  const sql = `UPDATE itemCategory SET ${column} = ? WHERE itemCatID = ?`;
+  db.all(sql, params, (err) => {
+    if (err) {
+      res.json({ error: err.message });
+      return;
+    }
+    res.json({ message: "The category detail has been updated" });
+  });
+});
+
 module.exports = app;
