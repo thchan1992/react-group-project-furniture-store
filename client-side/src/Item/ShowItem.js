@@ -106,7 +106,7 @@ const ShowItem = ({ data, userType, setIsLoading }) => {
       <ul>
         {userType == "A" && (
           <div>
-            {" "}
+            {data.itemDetID}{" "}
             <Form.Group>
               <Form.Control
                 type="file"
@@ -120,7 +120,8 @@ const ShowItem = ({ data, userType, setIsLoading }) => {
               variant="info"
               onClick={() => {
                 updateImage(data.itemDetID);
-              }}>
+              }}
+            >
               Upload
             </Button>
           </div>
@@ -152,7 +153,8 @@ const ShowItem = ({ data, userType, setIsLoading }) => {
               variant="info"
               onClick={() => {
                 updateItem(data.itemDetID, edColumn, change);
-              }}>
+              }}
+            >
               Update
             </Button>
           </div>
@@ -181,7 +183,8 @@ const ShowItem = ({ data, userType, setIsLoading }) => {
               variant="info"
               onClick={() => {
                 updateItem(data.itemDetID, edColumn, change);
-              }}>
+              }}
+            >
               Update
             </Button>
           </div>
@@ -210,7 +213,8 @@ const ShowItem = ({ data, userType, setIsLoading }) => {
               variant="info"
               onClick={() => {
                 updateItem(data.itemDetID, edColumn, change);
-              }}>
+              }}
+            >
               Update
             </Button>
           </div>
@@ -239,7 +243,8 @@ const ShowItem = ({ data, userType, setIsLoading }) => {
               variant="info"
               onClick={() => {
                 updateItem(data.itemDetID, edColumn, change);
-              }}>
+              }}
+            >
               Update
             </Button>
           </div>
@@ -266,7 +271,8 @@ const ShowItem = ({ data, userType, setIsLoading }) => {
             <Button
               size="sm"
               variant="danger"
-              onClick={() => setItemThreshold(0)}>
+              onClick={() => setItemThreshold(0)}
+            >
               DELETE ITEM
             </Button>
             <Button
@@ -274,7 +280,8 @@ const ShowItem = ({ data, userType, setIsLoading }) => {
               variant="info"
               onClick={() => {
                 updateItem(data.itemDetID, edColumn, change);
-              }}>
+              }}
+            >
               Update
             </Button>
           </div>

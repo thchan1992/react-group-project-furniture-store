@@ -102,18 +102,13 @@ app.put("/suppliers/updateStock", (req, res) => {
         res.json({ error: err.message });
         return;
       } else {
-        console.log(result);
         const itemQty = result.itemQty;
         var ordReceiveDate = req.body.ordReceiveDate;
         var suppOrdID = req.body.suppOrdID;
         var suppParams = [ordReceiveDate, suppOrdID];
-
         var suppOrdQty = req.body.suppOrdQty;
-        console.log(suppOrdQty, itemQty);
         var newQty = itemQty + suppOrdQty;
-        console.log(newQty);
         var itemParams = [newQty, itemDetID];
-
         db.run(
           "UPDATE suppOrder SET ordReceiveDate = ? WHERE suppOrdID = ?",
           suppParams,

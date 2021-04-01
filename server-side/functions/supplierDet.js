@@ -53,3 +53,22 @@ app.get("/suppliers/:suppID", (req, res) => {
 });
 
 module.exports = app;
+
+app.post("/suppliers/addSupplier", (req, res) => {
+  var suppID = req.body.suppID;
+  var suppName = req.body.suppName;
+  var suppEmail = req.body.suppEmail;
+  var params = [suppID, suppName, suppEmail];
+  db.run(
+    "INSERT INTO suppliers (suppID, suppName, suppEmail) VALUES (?, ?, ?)",
+    params,
+    (err) => {
+      if (err) {
+        res.json({ error: err.message });
+        return;
+      } else {
+        res.json({ message: "The new supplier has been added" });
+      }
+    }
+  );
+});
