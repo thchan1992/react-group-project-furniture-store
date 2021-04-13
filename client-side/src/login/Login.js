@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
 import axios from "axios";
 import { loginAPI, logoutAPI } from "../Constants";
+import LoginForm from "./container/LoginForm";
 
 const Login = ({ setUserID, setUserType }) => {
   const [userEmail, setEmail] = useState("");
@@ -57,6 +57,24 @@ const Login = ({ setUserID, setUserType }) => {
 
   return (
     <div>
+      {isLogin == false && (
+        <div className="flex-container">
+          <LoginForm
+            userEmail={userEmail}
+            setEmail={setEmail}
+            userPass={userPass}
+            setUserPass={setUserPass}
+          />{" "}
+          <Button
+            style={{ height: "40px" }}
+            onClick={() => {
+              handleLogin();
+            }}
+          >
+            log in
+          </Button>
+        </div>
+      )}
       {isLogin == true && (
         <Button
           onClick={() => {
@@ -65,35 +83,6 @@ const Login = ({ setUserID, setUserType }) => {
         >
           Log Out
         </Button>
-      )}
-      {isLogin == false && (
-        <Form.Group className="flex-container">
-          <Form.Control
-            style={{ width: "150px" }}
-            type="text"
-            placeholder="Email"
-            id="userEmail"
-            name="userEmail"
-            value={userEmail}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <Form.Control
-            style={{ width: "150px" }}
-            type="text"
-            placeholder="Password"
-            id="userPass"
-            name="userPass"
-            value={userPass}
-            onChange={(e) => setUserPass(e.target.value)}
-          />{" "}
-          <Button
-            onClick={() => {
-              handleLogin();
-            }}
-          >
-            log in
-          </Button>
-        </Form.Group>
       )}
     </div>
   );

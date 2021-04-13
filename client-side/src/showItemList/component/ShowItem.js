@@ -10,12 +10,9 @@ import {
   showCaterAPI,
   showSuppOrderAPI,
   showSuppAPI,
-} from "../Constants";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
-import Col from "react-bootstrap/Col";
+} from "../../Constants";
 
-const ShowItem = ({ data, userType, setIsLoading }) => {
+const ShowItem = ({ data, userType, setIsLoading, userID }) => {
   const [edColumn, setEdColumn] = useState("");
   const [change, setChange] = useState("");
   const [itemPrice, setItemPrice] = useState();
@@ -28,6 +25,7 @@ const ShowItem = ({ data, userType, setIsLoading }) => {
   //const [itemCatList, setItemCatList] = useState([]);
   const [suppID, setSuppID] = useState();
   const [suppName, setSuppName] = useState("");
+  const [itemBasketQty, setItemBasketQty] = useState(0);
 
   const updateItem = (itemDetID, edColumn, change) => {
     if (change != "") {
@@ -94,6 +92,21 @@ const ShowItem = ({ data, userType, setIsLoading }) => {
             const column = "itemUrl";
             updateItem(itemDetID, column, itemUrl);
           });
+      });
+  };
+
+  const addBasketItem = () => {
+    if (itemBasketQty == 0) {
+      window.alert("item quanty cannot be 0");
+      return;
+    }
+    const itemDetID = data.itemDetID;
+    const newData = { itemBasketQty, itemDetID, userID };
+    axios
+      .put("http://localhost:8080/basket/addBasketItem", newData)
+      .then((response) => {
+        console.log(response);
+        window.alert(response.data.message);
       });
   };
 
@@ -167,7 +180,7 @@ const ShowItem = ({ data, userType, setIsLoading }) => {
             {" "}
             <Form.Control
               style={{ height: "30px", width: "150px" }}
-              type="text"
+              type="number"
               placeholder="Edit Price"
               name="itemPrice"
               id="itemPrice"
@@ -227,7 +240,7 @@ const ShowItem = ({ data, userType, setIsLoading }) => {
             {" "}
             <Form.Control
               style={{ height: "30px", width: "150px" }}
-              type="text"
+              type="number"
               placeholder="Edit Quantity"
               name="itemQty"
               id="itemQty"
@@ -257,7 +270,7 @@ const ShowItem = ({ data, userType, setIsLoading }) => {
             {" "}
             <Form.Control
               style={{ height: "30px", width: "150px" }}
-              type="text"
+              type="number"
               name="itemThreshold"
               placeholder="Edit Threshold"
               id="itemThreshold"
@@ -331,6 +344,24 @@ const ShowItem = ({ data, userType, setIsLoading }) => {
         <ul>
           Supplier Name : {data.suppID}|{data.suppName}
         </ul>
+      )}
+
+      {userType == "C" && (
+        <div>
+          {" "}
+          <Form.Control
+            style={{ height: "30px", width: "150px" }}
+            type="number"
+            name="itemBasketQty"
+            placeholder="item qty"
+            id="itemBasketQty"
+            value={itemBasketQty}
+            onChange={(e) => {
+              setItemBasketQty(e.target.value);
+            }}
+          />
+          <Button onClick={() => addBasketItem()}>Add to basket</Button>
+        </div>
       )}
       {/* <ul>
         {userType == "A" && (
