@@ -177,4 +177,65 @@ VALUES
 
 
 
+BEGIN;
+CREATE TABLE paymentDetail_new
+(
+    cardNumber INTEGER NOT NULL,
+    payMetID INTEGER NOT NULL,
+    userID INTEGER NOT NULL,
+    expire_Date TEXT NULL,
+    ccv INTEGER NULL,
+    funds INTEGER CHECK (funds >= 0),
+    PRIMARY KEY (cardNumber),
+    FOREIGN KEY (payMetID) REFERENCES paymentMethod(payMetID),
+    FOREIGN KEY (userID) REFERENCES userDetail(userID)
+);
+INSERT INTO paymentDetail_new SELECT * FROM paymentDetail;
+DROP TABLE paymentDetail;
+ALTER TABLE paymentDetail_new RENAME TO paymentDetail;
+COMMIT;
+
+
+
+BEGIN;
+CREATE TABLE itemDetails_new
+(
+    itemDetID INTEGER NOT NULL,
+    itemCatID INTEGER NOT NULL,
+    itemPrice INTEGER NULL,
+    itemThreshold INTEGER NULL,
+    itemQty INTEGER CHECK (itemQty >= 0),
+    itemName TEXT NULL,
+    itemDesp TEXT NULL,
+    itemUrl TEXT NULL,
+    PRIMARY KEY (itemDetID,itemCatID),
+    FOREIGN KEY (itemCatID) REFERENCES itemCategory(itemCatID)
+);
+INSERT INTO itemDetails_new SELECT * FROM itemDetails;
+DROP TABLE itemDetails;
+ALTER TABLE itemDetails_new RENAME TO itemDetails;
+COMMIT;
+
+
+BEGIN;
+CREATE TABLE sales_new
+(
+    basketItemID INTEGER NOT NULL,
+    userID INTEGER NOT NULL,
+    itemDetID INTEGER NOT NULL,
+    itemCatID INTEGER NULL,
+    itemPrice INTEGER NULL,
+    itemBasketQty INTEGER NULL,
+    deliveryDate TEXT NULL,
+    orderDate TEXT NULL,
+    PRIMARY KEY (basketItemID,userID,itemDetID)
+  
+);
+INSERT INTO sales_new SELECT * FROM sales;
+DROP TABLE sales;
+ALTER TABLE sales_new RENAME TO sales;
+COMMIT;
+
+
+
 

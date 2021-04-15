@@ -26,3 +26,6 @@ app.use(require("./functions/signUp"));
 app.use(require("./functions/supplierDet"));
 app.use(require("./functions/userDetail"));
 app.use(require("./functions/suppliersOrders"));
+app.use(require("./functions/basket"));
+app.use(require("./functions/payment"));
+app.use(require("./functions/sales"));

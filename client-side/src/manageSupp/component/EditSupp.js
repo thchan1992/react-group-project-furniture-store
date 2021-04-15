@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 
 import React, { useState } from "react";
 import axios from "axios";
-import { host } from "../Constants";
+import { host } from "../../Constants";
 
 const EditSupp = ({ data, setIsLoading }) => {
   const [suppName, setSuppName] = useState("");
