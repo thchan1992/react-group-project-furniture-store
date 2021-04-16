@@ -19,6 +19,7 @@ app.get("/sales/:basketItemID/:userID", (req, res) => {
     }
   );
 });
+
 app.get("/sales/totalCost/:basketItemID/:userID", (req, res) => {
   const basketItemID = req.params.basketItemID;
   db.get(
@@ -32,6 +33,29 @@ app.get("/sales/totalCost/:basketItemID/:userID", (req, res) => {
       res.json({ result });
     }
   );
+});
+
+//Get a sales report within a specified range of dates
+app.get("/sales/report/:sorting/:column/:dateFrom/:dateTo", (req, res) => {
+  var sorting = req.params.sorting;
+  var column = req.params.column;
+  var dateTo = req.params.dateTo;
+  var dateFrom = req.params.dateFrom;
+  var params = [dateFrom, dateTo];
+  var sql =
+    "SELECT * FROM sales WHERE orderDate BETWEEN ? AND ? ORDER BY " +
+    column +
+    " " +
+    sorting;
+
+  
+  db.all(sql, params, (err, result) => {
+    if (err) {
+      res.json({ error: err.message });
+      return;
+    }
+    res.json({ result });
+  });
 });
 
 module.exports = app;
