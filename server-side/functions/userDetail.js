@@ -77,4 +77,16 @@ app.put("/account/personalDetails/edit", (req, res) => {
   }
 });
 
+// Fetch the user's card payment details
+app.get("/account/paymentDetails/:userID", (req, res) => {
+  var userID = req.params.userID;
+  db.get("SELECT * FROM paymentDetail WHERE userID = ?", userID, (err, result) => {
+    if (err) {
+      res.json({ error: err.message });
+      return;
+    }
+    res.json({ result });
+  });
+});
+
 module.exports = app;

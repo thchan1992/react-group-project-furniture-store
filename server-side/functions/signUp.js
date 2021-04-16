@@ -22,7 +22,7 @@ app.post("/signUp/", (req, res) => {
   const userEmail = req.body.userEmail;
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
-  const userAddress = req.body.lastName;
+  const userAddress = req.body.userAddress;
   const userPass = req.body.userPass;
   console.log(userPass);
 
