@@ -9,6 +9,7 @@ const Confirmation = ({ userID }) => {
   const [deliveryDate, setDeliveryDate] = useState("");
   const [orderDate, setOrderDate] = useState("");
   const [orderRef, setOrderRef] = useState("");
+  const [restockList, setRestockList] = useState([]);
 
   useEffect(async () => {
     await axios
@@ -34,14 +35,24 @@ const Confirmation = ({ userID }) => {
                 console.log(response.data);
                 setTotalCost(response.data.result.totalCost);
                 axios
-                  .delete("http://localhost:8080/basket/delete/" + userID)
+                  .get("http://localhost:8080/item/checkThreshold/" + userID)
                   .then((response) => {
-                    console.log(response.data.message);
+                    console.log(response.data.result);
+                    //the restock list
+                    setRestockList(response.data.result);
+                    //this is where you call email js function.
+
+                    axios
+                      .delete("http://localhost:8080/basket/delete/" + userID)
+                      .then((response) => {
+                        console.log(response.data.message);
+                      });
                   });
               });
           });
       });
   }, []);
+  //email function
 
   return (
     <OrderDet
