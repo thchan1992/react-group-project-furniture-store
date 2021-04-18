@@ -11,8 +11,7 @@ const Header = ({ userType, caterList }) => {
         <Nav.Link
           as={Link}
           to={"/item/" + data.itemCatName}
-          key={data.itemCatID}
-        >
+          key={data.itemCatID}>
           {data.itemCatName}
         </Nav.Link>
       ))}
@@ -45,6 +44,9 @@ const Header = ({ userType, caterList }) => {
           </NavDropdown.Item>
           <NavDropdown.Item as={Link} to="/SuppOrderList">
             Supplier Order List
+          </NavDropdown.Item>
+          <NavDropdown.Item as={Link} to="/Sales">
+            Sales Report
           </NavDropdown.Item>
           <NavDropdown.Item as={Link} to="/EmailJS">
             Email
