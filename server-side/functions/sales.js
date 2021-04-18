@@ -48,7 +48,22 @@ app.get("/sales/report/:sorting/:column/:dateFrom/:dateTo", (req, res) => {
     " " +
     sorting;
 
-  
+  db.all(sql, params, (err, result) => {
+    if (err) {
+      res.json({ error: err.message });
+      return;
+    }
+    res.json({ result });
+  });
+});
+
+app.get("/sales/reportSummary/:dateTo/:dateFrom", (req, res) => {
+  var dateTo = req.params.dateTo;
+  var dateFrom = req.params.dateFrom;
+
+  var params = [dateTo, dateFrom];
+  var sql =
+    "select sum(itemPrice * itemBasketQty) AS sales, orderDate from sales group by orderDate having orderDate BETWEEN ? AND ? ORDER BY orderDate";
   db.all(sql, params, (err, result) => {
     if (err) {
       res.json({ error: err.message });

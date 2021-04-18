@@ -213,4 +213,17 @@ app.put("/item/editCater/", (req, res) => {
   });
 });
 
+app.get("/item/checkThreshold/:userID", (req, res) => {
+  var userID = req.params.userID;
+  var sql =
+    "select basket.itemDetID FROM basket INNER JOIN itemDetails ON basket.itemDetID = itemDetails.itemDetID WHERE userID = ? AND itemQty - itemBasketQty <= itemThreshold";
+  db.all(sql, userID, (err, result) => {
+    if (err) {
+      res.json({ error: err.message });
+      return;
+    }
+    res.json({ result });
+  });
+});
+
 module.exports = app;
