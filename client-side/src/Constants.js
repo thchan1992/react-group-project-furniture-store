@@ -47,3 +47,6 @@ export const showOrdHistoryAPI = host + "/suppliers/orderHistory";
 
 //update item stock
 export const updateStockAPI = host + "/suppliers/updateStock";
+
+//Show Sales Report
+export const showSalesAPI = host + "/sales/report";
