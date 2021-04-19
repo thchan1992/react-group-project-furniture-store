@@ -3,6 +3,7 @@ import SignUp from "../signup/SignUp";
 import AddItem from "../addItem/AddItem";
 import SuppOrderList from "../Item/SuppOrderList";
 import Sales from "../Item/Sales";
+import SalesSummary from "../Item/SalesSummary";
 import { Route, Switch } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import EmailJS from "../Item/EmailJS";
@@ -47,6 +48,11 @@ const Component = ({ userType, userID, keyword, caterList }) => {
       {userType == "A" && (
         <Route exact path="/Sales">
           <Sales userType={userType} />
+        </Route>
+      )}
+      {userType == "A" && (
+        <Route exact path="/SalesSummary">
+          <SalesSummary userType={userType} />
         </Route>
       )}
       {userType == "A" && (
