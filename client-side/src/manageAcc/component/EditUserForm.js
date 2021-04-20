@@ -40,7 +40,6 @@ const EditUserForm = ({
         showEd={showEd}
         updateUser={updateUser}
       />
-
       <EdUserTextbox
         name={"Last Name"}
         attriName={"lastName"}
@@ -55,7 +54,6 @@ const EditUserForm = ({
         showEd={showEd}
         updateUser={updateUser}
       />
-
       <EdUserTextbox
         name={"Email"}
         attriName={"userEmail"}
@@ -70,7 +68,6 @@ const EditUserForm = ({
         showEd={showEd}
         updateUser={updateUser}
       />
-
       <EdUserTextbox
         name={"Address"}
         attriName={"userAddress"}
@@ -84,8 +81,7 @@ const EditUserForm = ({
         data={user.userAddress}
         showEd={showEd}
         updateUser={updateUser}
-      />
-
+      />{" "}
       {showEd == true && (
         <Form.Group as={Form.Row}>
           <Form.Label column sm={1}>
@@ -94,7 +90,7 @@ const EditUserForm = ({
           <Col sm={10}>
             <Form.Control
               style={{ height: "40px", width: "200px" }}
-              type="password"
+              type="verify password"
               name="verPass"
               id="verPass"
               value={verPass}
@@ -103,23 +99,24 @@ const EditUserForm = ({
               }}
             />{" "}
           </Col>
+          <Col sm={10}>
+            <EdUserTextbox
+              name={"password"}
+              attriName={"userPass"}
+              attribute={userPass}
+              inputType={"password"}
+              setter={(e) => {
+                setUserPass(e.target.value);
+                setCol(e.target.name);
+                setChange(e.target.value);
+              }}
+              data={""}
+              showEd={showEd}
+              updateUser={updateUser}
+            />
+          </Col>
         </Form.Group>
       )}
-      <EdUserTextbox
-        name={"verify password"}
-        attriName={"userPass"}
-        attribute={userPass}
-        inputType={"password"}
-        setter={(e) => {
-          setUserPass(e.target.value);
-          setCol(e.target.name);
-          setChange(e.target.value);
-        }}
-        data={""}
-        showEd={showEd}
-        updateUser={updateUser}
-      />
-
       <Button
         onClick={() => {
           if (showEd == true) {

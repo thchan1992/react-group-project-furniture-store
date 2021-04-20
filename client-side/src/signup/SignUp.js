@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
 import axios from "axios";
 import { signUpAPI, signUpAdminAPI } from "../Constants";
 import { pk } from "../setPrimary";
 import SignUpForm from "./container/SignUpForm";
+import CredForm from "./container/CredForm";
 
 const SignUp = ({ userType }) => {
   const [userEmail, setUserEmail] = useState("");
@@ -18,6 +17,11 @@ const SignUp = ({ userType }) => {
   const [userPass, setUserPass] = useState("");
   const [verPass, setVerPass] = useState("");
   const [isFin, setIsFin] = useState(false);
+  const [payMetID, setPayMetID] = useState("");
+  const [payMetList, setPayMetList] = useState([]);
+  const [cardNumber, setCardNumber] = useState("");
+  const [expire_Date, setExpire_Date] = useState("");
+  const [ccv, setCcv] = useState("");
 
   const handleSubmit = () => {
     if (
@@ -32,7 +36,17 @@ const SignUp = ({ userType }) => {
       verPass &&
       userType != "A"
     ) {
-      handleCreateAcc();
+      axios
+        .get("http://localhost:8080/checkPayDet/" + cardNumber)
+        .then((response) => {
+          console.log("re", response);
+          if (response.data.result) {
+            window.alert("Credit card already exists");
+            return;
+          } else {
+            handleCreateAcc();
+          }
+        });
     } else if (
       userEmail &&
       firstName &&
@@ -61,6 +75,10 @@ const SignUp = ({ userType }) => {
         userAddress,
         userType,
         userPass,
+        payMetID,
+        cardNumber,
+        expire_Date,
+        ccv,
       };
       axios.post(signUpAPI, newUser).then((response) => {
         if (!response.data.error) {
@@ -108,6 +126,12 @@ const SignUp = ({ userType }) => {
     }
   };
 
+  useEffect(() => {
+    axios.get("http://localhost:8080/payMet/").then((response) => {
+      setPayMetList(response.data.result);
+    });
+  }, []);
+
   return (
     <div>
       {isFin == true && <h1>Registration Finished, please log in</h1>}
@@ -134,7 +158,17 @@ const SignUp = ({ userType }) => {
             verPass={verPass}
             setVerPass={setVerPass}
           />
-
+          <CredForm
+            payMetID={payMetID}
+            setPayMetID={setPayMetID}
+            cardNumber={cardNumber}
+            setCardNumber={setCardNumber}
+            expire_Date={expire_Date}
+            setExpire_Date={setExpire_Date}
+            ccv={ccv}
+            setCcv={setCcv}
+            payMetList={payMetList}
+          />
           <Button onClick={handleSubmit}>Sign Up</Button>
         </div>
       )}

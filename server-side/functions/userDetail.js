@@ -80,12 +80,43 @@ app.put("/account/personalDetails/edit", (req, res) => {
 // Fetch the user's card payment details
 app.get("/account/paymentDetails/:userID", (req, res) => {
   var userID = req.params.userID;
-  db.get("SELECT * FROM paymentDetail WHERE userID = ?", userID, (err, result) => {
+  db.get(
+    "SELECT * FROM paymentDetail WHERE userID = ?",
+    userID,
+    (err, result) => {
+      if (err) {
+        res.json({ error: err.message });
+        return;
+      }
+      res.json({ result });
+    }
+  );
+});
+
+app.put("/account/paymentEdit", (req, res) => {
+  const payMetID = req.body.payMetID;
+  const cardNumber = req.body.cardNumber;
+  const userID = req.body.userID;
+  const expire_Date = req.body.expire_Date;
+  const ccv = req.body.ccv;
+  const funds = 10000;
+  db.run("DELETE FROM paymentDetail WHERE userID = ?", userID, (err) => {
     if (err) {
       res.json({ error: err.message });
       return;
     }
-    res.json({ result });
+    params = [payMetID, cardNumber, userID, expire_Date, ccv, funds];
+    db.run(
+      "INSERT INTO paymentDetail (payMetID, cardNumber, userID, expire_Date, ccv, funds) VALUES (?,?,?,?,?,?)",
+      params,
+      (err) => {
+        if (err) {
+          res.json({ message: err.message });
+          return;
+        }
+        res.json({ message: "Card detail has been updated" });
+      }
+    );
   });
 });
 

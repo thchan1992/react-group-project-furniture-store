@@ -51,6 +51,8 @@ app.put("/payment/finalise", (req, res) => {
   const userID = req.body.userID;
   const deliveryDate = req.body.deliveryDate;
   const orderDate = req.body.orderDate;
+  const delivAddress = req.body.delivAddress;
+  console.log("Address ", delivAddress);
   //To finalise the order
   //pass the totalCost, userID
   //step 1, take the money
@@ -58,7 +60,7 @@ app.put("/payment/finalise", (req, res) => {
   //      if yes, put the money back, if no, do nothing
   //step 2, update the itemDetails itemQty
   //step 3, convert the basket data into sales table
-  finalisePay(userID, deliveryDate, orderDate, res);
+  finalisePay(userID, deliveryDate, orderDate, delivAddress, res);
 });
 
 app.get("/payment/getCostAndBaskID/:userID", (req, res) => {

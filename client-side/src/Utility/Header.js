@@ -11,7 +11,8 @@ const Header = ({ userType, caterList }) => {
         <Nav.Link
           as={Link}
           to={"/item/" + data.itemCatName}
-          key={data.itemCatID}>
+          key={data.itemCatID}
+        >
           {data.itemCatName}
         </Nav.Link>
       ))}
@@ -29,6 +30,11 @@ const Header = ({ userType, caterList }) => {
       {userType == "C" && (
         <Nav.Link as={Link} to="/Basket">
           Basket
+        </Nav.Link>
+      )}
+      {userType == "C" && (
+        <Nav.Link as={Link} to="/User/Order">
+          Order
         </Nav.Link>
       )}
       {userType == "A" && (

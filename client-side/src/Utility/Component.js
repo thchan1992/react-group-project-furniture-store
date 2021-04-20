@@ -13,6 +13,7 @@ import ShowUser from "../manageAcc/ShowUser";
 import Basket from "../basket/Basket";
 import Payment from "../paymentSys/Payment";
 import Confirmation from "../paymentSys/Confirmation";
+import ViewOrder from "../viewOrder/ViewOrder";
 
 const Component = ({ userType, userID, keyword, caterList }) => {
   const itemData = { itemName: "React", itemDetIDs: 1234, itemQty: 5 };
@@ -91,6 +92,9 @@ const Component = ({ userType, userID, keyword, caterList }) => {
       </Route>
       <Route exact path="/Basket/Payment/Confirmation">
         <Confirmation userID={userID} />
+      </Route>
+      <Route exact path="/User/Order">
+        <ViewOrder userID={userID} />
       </Route>
       <Route
         render={function () {
