@@ -92,7 +92,8 @@ function EmailJS(props) {
         type="text"
         id="amount"
         value={amount}
-        onChange={(e) => setAmount(e.target.value)}></input>
+        onChange={(e) => setAmount(e.target.value)}
+      ></input>
       <br />
       <label for="itemDetIDs">itemDetIDs</label>
       <br />
@@ -100,7 +101,8 @@ function EmailJS(props) {
         type="text"
         id="itemQty"
         value={itemQty}
-        onChange={(e) => setItemQty(e.target.value)}></input>
+        onChange={(e) => setItemQty(e.target.value)}
+      ></input>
       <br />
 
       <label for="suppID">Supplier ID</label>
@@ -109,7 +111,8 @@ function EmailJS(props) {
         type="text"
         id="suppID"
         value={suppID}
-        onChange={(e) => setSuppID(e.target.value)}></input>
+        onChange={(e) => setSuppID(e.target.value)}
+      ></input>
       <br />
 
       <label for="itemDetID">Item Detail ID</label>
@@ -118,7 +121,8 @@ function EmailJS(props) {
         type="text"
         id="itemDetID"
         value={itemDetID}
-        onChange={(e) => setItemDetID(e.target.value)}></input>
+        onChange={(e) => setItemDetID(e.target.value)}
+      ></input>
       <br />
 
       <label for="iemCatID">Item Category ID</label>
@@ -127,7 +131,8 @@ function EmailJS(props) {
         type="text"
         id="itemCatID"
         value={itemCatID}
-        onChange={(e) => setItemCatID(e.target.value)}></input>
+        onChange={(e) => setItemCatID(e.target.value)}
+      ></input>
       <br />
 
       <label for="suppOrdQty">Suplier Quantity</label>
@@ -136,7 +141,8 @@ function EmailJS(props) {
         type="text"
         id="suppOrdQty"
         value={suppOrdQty}
-        onChange={(e) => setSuppOrdQty(e.target.value)}></input>
+        onChange={(e) => setSuppOrdQty(e.target.value)}
+      ></input>
       <br />
 
       <label for="orderDate">Order Date</label>
@@ -145,7 +151,8 @@ function EmailJS(props) {
         type="text"
         id="orderDate"
         value={orderDate}
-        onChange={(e) => setOrderDate(e.target.value)}></input>
+        onChange={(e) => setOrderDate(e.target.value)}
+      ></input>
 
       <br />
       <label for="ordReceiveDate"> Receive Order Date</label>
@@ -154,7 +161,8 @@ function EmailJS(props) {
         type="text"
         id="ordReceiveDate"
         value={ordReceiveDate}
-        onChange={(e) => setOrdReceiveDate(e.target.value)}></input>
+        onChange={(e) => setOrdReceiveDate(e.target.value)}
+      ></input>
 
       <br />
 

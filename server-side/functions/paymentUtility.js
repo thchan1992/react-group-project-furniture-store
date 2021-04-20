@@ -1,6 +1,6 @@
 var db = require("./../database/database.js");
 
-const finalisePay = (userID, deliveryDate, orderDate, res) => {
+const finalisePay = (userID, deliveryDate, orderDate, delivAddress, res) => {
   //get the total cost of the basket and basket ID
   getCostAndID(userID, res, (totalCost, basketItemID) => {
     //reduce the fund
@@ -11,24 +11,32 @@ const finalisePay = (userID, deliveryDate, orderDate, res) => {
           if (tf == true) {
             //create sales
             const refund = totalCost;
-            createSales(refund, basketItemID, userID, res, (tf) => {
-              if (tf == true) {
-                updateBasketDate(
-                  refund,
-                  basketItemID,
-                  userID,
-                  deliveryDate,
-                  orderDate,
-                  res,
-                  (tf) => {
-                    if (tf == true) {
-                      res.json({ message: "Order done", result: true });
-                      return;
+            createSales(
+              refund,
+              basketItemID,
+              userID,
+
+              res,
+              (tf) => {
+                if (tf == true) {
+                  updateBasketDate(
+                    refund,
+                    basketItemID,
+                    userID,
+                    deliveryDate,
+                    orderDate,
+                    delivAddress,
+                    res,
+                    (tf) => {
+                      if (tf == true) {
+                        res.json({ message: "Order done", result: true });
+                        return;
+                      }
                     }
-                  }
-                );
+                  );
+                }
               }
-            });
+            );
           }
         });
       }
@@ -90,17 +98,19 @@ const updateBasketDate = (
   userID,
   deliveryDate,
   orderDate,
+  delivAddress,
   res,
   callback
 ) => {
-  const params = [orderDate, deliveryDate, basketItemID];
+  const params = [orderDate, deliveryDate, delivAddress, basketItemID];
   db.run(
-    " UPDATE sales SET orderDate = ?, deliveryDate = ? WHERE basketItemID = ?",
+    " UPDATE sales SET orderDate = ?, deliveryDate = ?, delivAddress = ? WHERE basketItemID = ?",
     params,
     (err) => {
       if (err) {
         reverseStock(basketItemID, userID, res);
         reverFund(userID, refund, res);
+        reverSales(basketItemID, res);
         res.json({
           error: err.message,
           message: "Server gone down, we have refunded your money.",
@@ -110,6 +120,15 @@ const updateBasketDate = (
       callback(true);
     }
   );
+};
+
+const reverSales = (basketItemID, res) => {
+  db.run("DELETE FROM sales WHERE basketItemID=?", basketItemID, (err) => {
+    if (err) {
+      res.json({ error: err.message });
+      return;
+    }
+  });
 };
 
 const reduceFunds = (totalCost, userID, res, callback) => {

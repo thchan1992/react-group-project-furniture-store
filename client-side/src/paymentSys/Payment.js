@@ -5,20 +5,42 @@ import Nav from "react-bootstrap/Nav";
 import { useHistory, Route } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Textbox from "../Utility/Textbox";
+import PaymentDet from "./component/PaymentDet";
 
 const Payment = ({ userID }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [totalCost, setTotalCost] = useState(null);
-  const [deliveryDate, setDeliveryDate] = useState(null);
-  const [orderDate, setOrderDate] = useState(null);
+  const [ship, setShip] = useState(5);
+  const [checkRe, setCheckRe] = useState(true);
+  const [checkEx, setCheckEx] = useState(false);
+  const [userDetail, setUserDetail] = useState("");
+  const [paymentDet, setPaymentDet] = useState("");
+  const [deliv, setDeliv] = useState(null);
+
+  const [showEdit, setShowEdit] = useState(false);
+  const [addr1, setAddr1] = useState(null);
+  const [addr2, setAddr2] = useState(null);
+  const [city, setCity] = useState(null);
+  const [postcode, setPostcode] = useState(null);
   const history = useHistory();
 
   const handleCheckout = async () => {
-    if (!orderDate || !deliveryDate) {
-      window.alert("no date");
-      return;
-    }
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, "0");
+    var mm = String(today.getMonth() + 1).padStart(2, "0");
+    var yyyy = today.getFullYear();
+    const orderDate = (yyyy + "-" + mm + "-" + dd).toString();
+
+    const shipDate = new Date(today);
+    shipDate.setDate(shipDate.getDate() + ship);
+    var dd1 = String(shipDate.getDate()).padStart(2, "0");
+    var mm1 = String(shipDate.getMonth() + 1).padStart(2, "0");
+    var yyyy1 = shipDate.getFullYear();
+    const deliveryDate = (yyyy1 + "-" + mm1 + "-" + dd1).toString();
+
     const checkFund = { totalCost, userID };
+
     await axios
       .post("http://localhost:8080/payment/checkFund", checkFund)
       .then((response) => {
@@ -27,19 +49,26 @@ const Payment = ({ userID }) => {
             .get("http://localhost:8080/payment/checkStock/" + userID)
             .then((response) => {
               if (response.data.result == true) {
-                const finalisePay = { userID, deliveryDate, orderDate };
-                axios
-                  .put("http://localhost:8080/payment/finalise", finalisePay)
-                  .then((response) => {
-                    console.log(response);
-                    if (response.data.result == true) {
-                      window.alert(response.data.message);
-                      history.push("/Basket/Payment/Confirmation");
-                    } else {
-                      window.alert(response.data.message);
-                      history.push("/Basket");
-                    }
-                  });
+                if (addr1 || addr2 || city || postcode) {
+                  const delivAddress =
+                    addr1 + " " + addr2 + " " + city + " " + postcode;
+                  const finalisePay = {
+                    userID,
+                    deliveryDate,
+                    orderDate,
+                    delivAddress,
+                  };
+                  finalisePayAct(finalisePay);
+                } else {
+                  const delivAddress = deliv;
+                  const finalisePay = {
+                    userID,
+                    deliveryDate,
+                    orderDate,
+                    delivAddress,
+                  };
+                  finalisePayAct(finalisePay);
+                }
               } else {
                 window.alert("Some of the items are out of stock..");
                 //redirect the page now
@@ -52,55 +81,63 @@ const Payment = ({ userID }) => {
         }
       });
   };
+
+  const finalisePayAct = (finalisePay) => {
+    axios
+      .put("http://localhost:8080/payment/finalise", finalisePay)
+      .then((response) => {
+        console.log(response);
+        if (response.data.result == true) {
+          window.alert(response.data.message);
+          history.push("/Basket/Payment/Confirmation");
+        } else {
+          window.alert(response.data.message);
+          history.push("/Basket");
+        }
+      });
+  };
+
   useEffect(() => {
     axios
       .get("http://localhost:8080/payment/getCostAndBaskID/" + userID)
       .then((response) => {
         setTotalCost(response.data.totalCost);
       });
+    axios
+      .get("http://localhost:8080/account/personalDetails/" + userID)
+      .then((response) => {
+        setUserDetail(response.data.result);
+        setDeliv(response.data.result.userAddress);
+      });
+    axios
+      .get("http://localhost:8080/account/paymentDetails/" + userID)
+      .then((response) => {
+        setPaymentDet(response.data.result);
+      });
   }, [isLoading]);
 
   return (
-    <div>
-      {userID} {totalCost}
-      <Form.Group as={Form.Row}>
-        <Form.Label column sm={1}>
-          Order Date
-        </Form.Label>
-        <Col sm={10}>
-          <Form.Control
-            style={{ height: "40px", width: "200px" }}
-            type="date"
-            name="orderDate"
-            id="orderDate"
-            value={orderDate}
-            onChange={(e) => setOrderDate(e.target.value)}
-          />
-        </Col>
-      </Form.Group>
-      <Form.Group as={Form.Row}>
-        <Form.Label column sm={1}>
-          Delivery Date
-        </Form.Label>
-        <Col sm={10}>
-          <Form.Control
-            style={{ height: "40px", width: "200px" }}
-            type="date"
-            name="deliveryDate"
-            id="deliveryDate"
-            value={deliveryDate}
-            onChange={(e) => setDeliveryDate(e.target.value)}
-          />
-        </Col>
-      </Form.Group>
-      <Button
-        onClick={() => {
-          handleCheckout();
-        }}
-      >
-        Check Out
-      </Button>
-    </div>
+    <PaymentDet
+      paymentDet={paymentDet}
+      userDetail={userDetail}
+      deliv={deliv}
+      showEdit={showEdit}
+      addr1={addr1}
+      setAddr1={setAddr1}
+      addr2={addr2}
+      setAddr2={setAddr2}
+      city={city}
+      setCity={setCity}
+      postcode={postcode}
+      setPostcode={setPostcode}
+      setShowEdit={setShowEdit}
+      checkRe={checkRe}
+      setCheckRe={setCheckRe}
+      setCheckEx={setCheckEx}
+      setShip={setShip}
+      checkEx={checkEx}
+      handleCheckout={handleCheckout}
+    />
   );
 };
 export default Payment;

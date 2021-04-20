@@ -24,6 +24,7 @@ app.post("/signUp/", (req, res) => {
   const lastName = req.body.lastName;
   const userAddress = req.body.userAddress;
   const userPass = req.body.userPass;
+
   console.log(userPass);
 
   bcrypt.hash(userPass, saltRounds, (err, hash) => {
@@ -46,6 +47,7 @@ app.post("/signUp/", (req, res) => {
         res.json({ error: err.message });
         return;
       }
+
       res.json({ message: "New user has been added" });
     });
   });
@@ -61,7 +63,10 @@ app.post("/signUp/admin", adminJWT, (req, res) => {
   const lastName = req.body.lastName;
   const userAddress = req.body.lastName;
   const userPass = req.body.userPass;
-  console.log(userPass);
+  const payMetID = req.body.payMetID;
+  const cardNumber = req.body.cardNumber;
+  const expire_Date = req.body.expire_Date;
+  const ccv = req.body.ccv;
 
   bcrypt.hash(userPass, saltRounds, (err, hash) => {
     if (err) {
@@ -83,9 +88,45 @@ app.post("/signUp/admin", adminJWT, (req, res) => {
         res.json({ error: err.message });
         return;
       }
-      res.json({ message: "New user has been added" });
+      const params1 = [payMetID, cardNumber, userID, expire_Date, ccv, 10000];
+      db.run(
+        "INSERT INTO paymentDetail (payMetID, cardNumber, userID, expire_Date, ccv, funds) VALUES (?,?,?,?,?,?)",
+        params1,
+        (err) => {
+          if (err) {
+            res.json({ error: err.message });
+            return;
+          }
+          res.json({ message: "New user has been added" });
+        }
+      );
     });
   });
+});
+
+app.get("/payMet/", (req, res) => {
+  db.all("SELECT * from paymentMethod", (err, result) => {
+    if (err) {
+      res.json({ error: err.message });
+      return;
+    }
+    res.json({ result });
+  });
+});
+
+app.get("/checkPayDet/:cardNumber", (req, res) => {
+  const cardNumber = req.params.cardNumber;
+  db.get(
+    "SELECT * from paymentDetail WHERE cardNumber = ?",
+    cardNumber,
+    (err, result) => {
+      if (err) {
+        res.json({ error: err.message });
+        return;
+      }
+      res.json({ result });
+    }
+  );
 });
 
 module.exports = app;
