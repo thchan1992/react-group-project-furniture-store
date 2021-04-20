@@ -50,3 +50,6 @@ export const updateStockAPI = host + "/suppliers/updateStock";
 
 //Show Sales Report
 export const showSalesAPI = host + "/sales/report";
+
+//Show Sales Summary Report
+export const showSalesSummaryAPI = host + "/sales/reportSummary";

@@ -48,6 +48,9 @@ const Header = ({ userType, caterList }) => {
           <NavDropdown.Item as={Link} to="/Sales">
             Sales Report
           </NavDropdown.Item>
+          <NavDropdown.Item as={Link} to="/SalesSummary">
+            Sales Summary Report
+          </NavDropdown.Item>
           <NavDropdown.Item as={Link} to="/EmailJS">
             Email
           </NavDropdown.Item>
