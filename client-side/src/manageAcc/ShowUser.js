@@ -1,12 +1,14 @@
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { host } from "../Constants";
 import EditUserForm from "./component/EditUserForm";
-
+import {
+  updateUserDetAPI_Func,
+  modifyCardAPI_Func,
+  fetchUserDetAPI_Func,
+  fetchUserPayDet_Func,
+  fetchPayMetAPI_Func,
+} from "../Utility/API";
 import EditCard from "./component/EditCard";
+import Message from "../Utility/Message";
 
 const ShowUser = ({ userID }) => {
   const [userEmail, setUserEmail] = useState("");
@@ -26,61 +28,66 @@ const ShowUser = ({ userID }) => {
   const [expire_Date, setExpire_Date] = useState("");
   const [ccv, setCcv] = useState("");
   const [payMetList, setPayMetList] = useState([]);
+  const [showMessage, setShowMessage] = useState(false);
+  const [messageCont, setMessageCont] = useState({
+    text: "",
+    theme: "",
+  });
+
+  const messageSetter = (text, theme) => {
+    setMessageCont({
+      text: text,
+      theme: theme,
+    });
+    setShowMessage(true);
+  };
 
   const updateUser = () => {
     if (column && change) {
       if (verPass != userPass) {
-        window.alert("password verification failed");
+        messageSetter("password verification failed", "danger");
         return;
       }
       const userID = user.userID;
       const newData = { userID, change, column };
-      console.log(newData);
-      axios
-        .put(host + "/account/personalDetails/edit", newData)
-        .then((response) => {
-          window.alert(response.data.message);
-          setIsLoading(true);
-          setUserEmail("");
-          setFirstName("");
-          setLastName("");
-          setUserAddress("");
-          setUserPass("");
-          setVerPass("");
-          setCol("");
-          setChange("");
-        });
+      updateUserDetAPI_Func(newData).then((response) => {
+        console.log(response);
+        messageSetter(response.data.message, "success");
+        setIsLoading(true);
+        setUserEmail("");
+        setFirstName("");
+        setLastName("");
+        setUserAddress("");
+        setUserPass("");
+        setVerPass("");
+        setCol("");
+        setChange("");
+      });
     } else {
-      window.alert("not enough data is inserted");
+      messageSetter("not enough data is inserted", "danger");
     }
   };
   const updateCard = () => {
     if (cardNumber && payMetID && expire_Date && ccv) {
       const newCard = { payMetID, cardNumber, userID, expire_Date, ccv };
-      axios
-        .put("http://localhost:8080/account/paymentEdit", newCard)
-        .then((response) => {
-          setIsLoading(true);
-          console.log(response);
-          window.alert(response.data.message);
-        });
+      modifyCardAPI_Func(newCard).then((response) => {
+        setIsLoading(true);
+        messageSetter(response.data.message, "success");
+      });
     } else {
-      window.alert("not enough card detail");
+      messageSetter("not enough card detail", "danger");
     }
   };
 
   useEffect(() => {
-    //remove it later
-    axios.get(host + "/account/personalDetails/" + userID).then((response) => {
+    fetchUserDetAPI_Func(userID).then((response) => {
       setUser(response.data.result);
-      axios
-        .get("http://localhost:8080/account/paymentDetails/" + userID)
-        .then((response) => {
-          setShowCard(response.data.result.cardNumber);
-          setIsLoading(false);
-        });
+      fetchUserPayDet_Func(userID).then((response) => {
+        setShowCard(response.data.result.cardNumber);
+        setIsLoading(false);
+      });
     });
-    axios.get("http://localhost:8080/payMet/").then((response) => {
+    fetchPayMetAPI_Func().then((response) => {
       setPayMetList(response.data.result);
     });
   }, [isLoading]);
@@ -88,6 +95,11 @@ const ShowUser = ({ userID }) => {
   return (
     <div>
       {" "}
+      <Message
+        messageCont={messageCont}
+        showMessage={showMessage}
+        setShowMessage={setShowMessage}
+      />
       <EditCard
         updateCard={updateCard}
         showEd={showEd}

@@ -17,6 +17,30 @@ const regularJWT = (req, res, next) => {
   }
 };
 
+const checkUserID = (req, res, userID, func) => {
+  const token = req.headers["x-access-token"];
+  jwt.verify(token, "Group47", (err, decoded) => {
+    console.log("2 ", decoded.userID);
+    if (err) {
+      res.json({
+        auth: false,
+        message:
+          "you failed to authenticate, please do not pretend someone you are not.(err)",
+      });
+    } else {
+      if (userID == decoded.userID) {
+        func();
+      } else {
+        res.json({
+          auth: false,
+          message:
+            "you failed to authenticate, please do not pretend someone you are not.",
+        });
+      }
+    }
+  });
+};
+
 //This JWT is speically for admin so the admin can modify on the products
 const adminJWT = (req, res, next) => {
   const token = req.headers["x-access-token"];
@@ -44,4 +68,4 @@ const adminJWT = (req, res, next) => {
   }
 };
 
-module.exports = { regularJWT, adminJWT };
+module.exports = { regularJWT, adminJWT, checkUserID };

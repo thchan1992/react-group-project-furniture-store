@@ -1,10 +1,8 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import Table from "react-bootstrap/Table";
+import React, { useState } from "react";
 import "./ShowBaskItem.css";
+import { modifyBasketAPI_Func } from "../../Utility/API";
 
 const ShowBaskItem = ({ data, userID, setIsLoading }) => {
   const [itemBasketQty, setItemBasketQty] = useState(
@@ -18,20 +16,15 @@ const ShowBaskItem = ({ data, userID, setIsLoading }) => {
       editBasket(newData);
     } else {
       const itemDetID = data.itemDetID;
-
       const newData = { itemBasketQty, userID, itemDetID };
       editBasket(newData);
     }
   };
 
   const editBasket = (newData) => {
-    console.log(newData);
-    axios
-      .put("http://localhost:8080/basket/editBasket", newData)
-      .then((response) => {
-        window.alert(response.data.message);
-        setIsLoading(true);
-      });
+    modifyBasketAPI_Func(newData).then((response) => {
+      setIsLoading(true);
+    });
   };
 
   return (

@@ -13,8 +13,6 @@ const SupOrdForm = ({
   setSuppOrdQty,
   orderDate,
   setOrderDate,
-  ordReceiveDate,
-  setOrdReceiveDate,
 }) => {
   return (
     <div>
@@ -60,13 +58,6 @@ const SupOrdForm = ({
         attribute={orderDate}
         inputType={"date"}
         setter={setOrderDate}
-      />
-      <Textbox
-        name={"Order Receive Date"}
-        attriName={"ordReceiveDate"}
-        attribute={ordReceiveDate}
-        inputType={"date"}
-        setter={setOrdReceiveDate}
       />
     </div>
   );

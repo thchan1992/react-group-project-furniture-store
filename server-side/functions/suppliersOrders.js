@@ -10,7 +10,7 @@ app.use(cors());
 app.use(require("../configuration/corsConf"));
 const { regularJWT, adminJWT } = require("../configuration/jwtConf");
 
-app.post("/suppliers/newOrder", (req, res) => {
+app.post("/suppliers/newOrder", adminJWT, (req, res) => {
   const suppOrdID = req.body.suppOrdID;
   const suppID = req.body.suppID;
   const itemDetID = req.body.itemDetID;
@@ -44,7 +44,7 @@ app.post("/suppliers/newOrder", (req, res) => {
 });
 
 // Fetch a list of all the orders made to the suppliers (orders history)
-app.post("/suppliers/orderHistory", (req, res) => {
+app.post("/suppliers/orderHistory", adminJWT, (req, res) => {
   db.all("SELECT * FROM suppOrder", (err, result) => {
     if (err) {
       res.json({ error: err.message });

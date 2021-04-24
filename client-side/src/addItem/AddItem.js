@@ -1,18 +1,18 @@
 import Button from "react-bootstrap/Button";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import {
-  showSuppAPI,
-  addSuppOrderAPI,
-  showCaterAPI,
-  uploadImageAPI,
-  host,
-  addItemAPI,
-} from "../Constants";
+import { host } from "../Constants";
 import { pk } from "../setPrimary";
 import PickItemCat from "./container/PickItemCat";
 import ItemDetForm from "./container/ItemDetForm";
 import SupOrdForm from "./container/SupOrdForm";
+import {
+  addItemAPIFunc,
+  addSuppOrderAPIFunc,
+  uploadImageAPIFunc,
+  showCaterAPI_Func,
+  showSuppAPI_Func,
+} from "../Utility/API";
+import Message from "../Utility/Message";
 
 const AddItem = ({ userType }) => {
   const [itemPrice, setItemPrice] = useState(0);
@@ -26,15 +26,27 @@ const AddItem = ({ userType }) => {
   const [suppID, setSuppID] = useState("");
   const [suppOrdQty, setSuppOrdQty] = useState("");
   const [orderDate, setOrderDate] = useState("");
-  const [ordReceiveDate, setOrdReceiveDate] = useState("");
   const [suppList, setSuppList] = useState([]);
+  const [showMessage, setShowMessage] = useState(false);
+  const [messageCont, setMessageCont] = useState({
+    text: "",
+    theme: "",
+  });
+
+  const messageSetter = (text, theme) => {
+    setMessageCont({
+      text: text,
+      theme: theme,
+    });
+    setShowMessage(true);
+  };
 
   //use Effect to fetch item list.
   useEffect(() => {
-    axios.get(showCaterAPI).then((response) => {
+    showCaterAPI_Func().then((response) => {
       setItemCatList(response.data.result);
     });
-    axios.get(showSuppAPI).then((response) => {
+    showSuppAPI_Func().then((response) => {
       setSuppList(response.data.result);
     });
   }, []);
@@ -44,37 +56,25 @@ const AddItem = ({ userType }) => {
     const fd = new FormData();
     fd.append("image", image);
     //API that uploads the image to the database
-    await axios
-      .post(uploadImageAPI, fd, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          "x-access-token": localStorage.getItem("token"),
-        },
-      })
-      .then((response) => {
-        const itemUrl = host + "/" + response.data.fileName;
-        const itemDetID = pk;
-        const newItem = {
-          itemThreshold,
-          itemQty,
-          itemCatID,
-          itemName,
-          itemDesp,
-          itemUrl,
-          itemDetID,
-          itemPrice,
-        };
-        //API that adds the item details to the database
-        axios
-          .post(addItemAPI, newItem, {
-            headers: {
-              "x-access-token": localStorage.getItem("token"),
-            },
-          })
-          .then((response) => {
-            window.alert(response.data.message);
-          });
+    await uploadImageAPIFunc(fd).then((response) => {
+      const itemUrl = host + "/" + response.data.fileName;
+      const itemDetID = pk;
+      const newItem = {
+        itemThreshold,
+        itemQty,
+        itemCatID,
+        itemName,
+        itemDesp,
+        itemUrl,
+        itemDetID,
+        itemPrice,
+        suppID,
+      };
+
+      addItemAPIFunc(newItem).then((response) => {
+        window.alert(response.data.message);
         const suppOrdID = pk;
+        const ordReceiveDate = orderDate;
         const newOrder = {
           suppOrdID,
           suppID,
@@ -85,14 +85,20 @@ const AddItem = ({ userType }) => {
           ordReceiveDate,
         };
         //API that adds the order details to the database
-        axios.post(addSuppOrderAPI, newOrder).then((response) => {
-          window.alert(response.data.message);
+        addSuppOrderAPIFunc(newOrder).then((response) => {
+          messageSetter(response.data.message, "success");
         });
       });
+    });
   };
 
   return (
     <div>
+      <Message
+        messageCont={messageCont}
+        showMessage={showMessage}
+        setShowMessage={setShowMessage}
+      />
       <h1>Add New Item</h1>{" "}
       {userType === "A" && (
         <div>
@@ -125,8 +131,6 @@ const AddItem = ({ userType }) => {
             setSuppOrdQty={setSuppOrdQty}
             orderDate={orderDate}
             setOrderDate={setOrderDate}
-            ordReceiveDate={ordReceiveDate}
-            setOrdReceiveDate={setOrdReceiveDate}
           />
           {/*onClick button to submit the item detail and supplier order */}
           <Button onClick={handleSubmit}>upload</Button>

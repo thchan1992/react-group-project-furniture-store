@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import EdUserTextbox from "./EdUserTextbox";
 
 const EditUserForm = ({
