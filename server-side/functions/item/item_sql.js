@@ -8,7 +8,7 @@ const updateItemDet_sql = (column) => {
 };
 
 const checkThreshold_sql =
-  "select basket.itemDetID FROM basket INNER JOIN itemDetails ON basket.itemDetID = itemDetails.itemDetID WHERE userID = ? AND itemQty - itemBasketQty <= itemThreshold";
+  "select basket.itemDetID, basket.itemCatID FROM basket INNER JOIN itemDetails ON basket.itemDetID = itemDetails.itemDetID WHERE userID = ? AND itemQty - itemBasketQty <= itemThreshold";
 
 const updateItemCat_sql = (column) => {
   return `UPDATE itemCategory SET ${column} = ? WHERE itemCatID = ?`;
