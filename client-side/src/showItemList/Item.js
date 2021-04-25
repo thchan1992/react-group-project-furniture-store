@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { showItemsAPI, showSearchAPI, showSuppAPI } from "../Constants";
-import axios from "axios";
-import Sort from "./component/Sort";
+import SortItem from "./component/SortItem";
 import ProductList from "./component/ProductList";
+import { showItemsAPI_Func, showSearchAPI_Func } from "../Utility/API";
 
 const Item = ({ itemCatName, userID, userType, keyword }) => {
   const [sorting, setSorting] = useState("ASC");
@@ -13,19 +12,15 @@ const Item = ({ itemCatName, userID, userType, keyword }) => {
   //Function to fetch the sorted items
   const fetchItem = () => {
     if (!keyword) {
-      axios
-        .get(showItemsAPI + sorting + "/" + column + "/" + itemCatName)
-        .then((response) => {
-          setItemList(response.data.result);
-          console.log("h", response.data.result);
-        });
+      showItemsAPI_Func(sorting, column, itemCatName).then((response) => {
+        setItemList(response.data.result);
+        console.log("h", response.data.result);
+      });
     } else {
       console.log(sorting, column, keyword);
-      axios
-        .get(showSearchAPI + sorting + "/" + column + "/" + keyword)
-        .then((response) => {
-          setItemList(response.data.result);
-        });
+      showSearchAPI_Func(sorting, column, keyword).then((response) => {
+        setItemList(response.data.result);
+      });
       setIsLoading(false);
     }
   };
@@ -41,7 +36,7 @@ const Item = ({ itemCatName, userID, userType, keyword }) => {
   return (
     <div>
       {/*Sorting button*/}
-      <Sort
+      <SortItem
         setColumn={setColumn}
         setSorting={setSorting}
         setIsLoading={setIsLoading}

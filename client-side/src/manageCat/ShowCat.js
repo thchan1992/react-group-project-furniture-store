@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { host, showCaterAPI } from "../Constants";
-
+import { showCaterAPI_Func } from "../Utility/API";
 import CatList from "./component/CatList";
 const ShowCat = () => {
   const [catList, setCatList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    axios.get(showCaterAPI).then((response) => {
+    showCaterAPI_Func().then((response) => {
       setCatList(response.data.result);
       setIsLoading(false);
     });

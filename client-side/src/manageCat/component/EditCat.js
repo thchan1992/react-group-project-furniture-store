@@ -1,31 +1,49 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import React, { useState } from "react";
-import axios from "axios";
-import { host } from "../../Constants";
+import { modifyCatAPI_Func } from "../../Utility/API";
+import Message from "../../Utility/Message";
 
 const EditCat = ({ data, setIsLoading }) => {
   const [itemCatName, setItemCatName] = useState("");
   const [column, setCol] = useState("");
   const [change, setChange] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
+  const [messageCont, setMessageCont] = useState({
+    text: "",
+    theme: "",
+  });
+
+  const messageSetter = (text, theme) => {
+    setMessageCont({
+      text: text,
+      theme: theme,
+    });
+    setShowMessage(true);
+  };
 
   const handleSubmit = (itemCatID) => {
     if (column && change) {
       const newData = { column, change, itemCatID };
-      axios.put(host + "/item/editCater/", newData).then((response) => {
-        window.alert(response.data.message);
+      modifyCatAPI_Func(newData).then((response) => {
+        messageSetter(response.data.message, "success");
         setItemCatName("");
         setCol("");
         setChange("");
         setIsLoading(true);
       });
     } else {
-      window.alert("No data was inserted");
+      messageSetter("No data was inserted", "danger");
     }
   };
 
   return (
     <div key={data.itemCatID}>
+      <Message
+        messageCont={messageCont}
+        showMessage={showMessage}
+        setShowMessage={setShowMessage}
+      />
       <ul>{data.itemCatName}</ul>
       <Form.Control
         style={{ height: "40px", width: "200px" }}

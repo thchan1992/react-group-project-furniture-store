@@ -11,6 +11,7 @@ import axios from "axios";
 import Search from "./Utility/Search.js";
 import Component from "./Utility/Component";
 import Header from "./Utility/Header";
+import { showCaterAPI_Func } from "./Utility/API";
 
 const App = () => {
   const [userID, setUserID] = useState("");
@@ -21,7 +22,7 @@ const App = () => {
   // API call to render the list of catergory from the database
   // This will be shown on the nav bar
   useEffect(() => {
-    axios.get(showCaterAPI).then((response) => {
+    showCaterAPI_Func().then((response) => {
       setCaterList(response.data.result);
     });
   }, []);

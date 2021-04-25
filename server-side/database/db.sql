@@ -257,9 +257,27 @@ select * from userDetail;
 -- select basket.itemDetID, CASE WHEN itemQty - itemBasketQty <= itemThreshold THEN 'restock' ELSE 'good' END status FROM basket INNER JOIN itemDetails ON basket.itemDetID = itemDetails.itemDetID WHERE userID = 6;
 
 select * from sales;
+select * from paymentDetail;
 
-
+select * from userDetail;
  SELECT userID, basketItemID, SUM(sales.itemPrice*itemBasketQty) AS totalCost, deliveryDate, orderDate from sales INNER JOIN itemDetails ON itemDetails.itemDetID = sales.itemDetID group by basketItemID having userID=1617571576478;
 
 select * from sales;
 -- select basket.itemDetID FROM basket INNER JOIN itemDetails ON basket.itemDetID = itemDetails.itemDetID WHERE userID = 6 AND itemQty - itemBasketQty <= itemThreshold;
+
+select * from itemDetails;
+
+select itemUrl, itemDetID, itemDetails.itemCatID, itemPrice, itemThreshold, itemQty, itemName, itemDesp, suppliers.suppID, suppName, itemCatName from itemDetails inner join itemCategory on itemCategory.itemCatID = itemDetails.itemCatID inner join suppliers on suppliers.suppID = itemDetails.suppID where itemDetID =1619178534354;
+
+select * from itemDetails;
+
+select * from itemDetails wh;
+
+delete from itemDetails where suppID IS NULL;
+
+select * from paymentDetail;
+
+update paymentDetail set funds = 10000 where cardNumber = 1999;
+
+
+UPDATE paymentDetail SET payMetID = 2, cardNumber = 123, userID = 1, expire_Date = 2, ccv = 222, funds =2000 Where userID = 1;

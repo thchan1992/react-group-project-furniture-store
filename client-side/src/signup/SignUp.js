@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
-import axios from "axios";
-import { signUpAPI, signUpAdminAPI } from "../Constants";
 import { pk } from "../setPrimary";
 import SignUpForm from "./container/SignUpForm";
 import CredForm from "./container/CredForm";
+import { signUpAPIFunc } from "../Utility/API";
+import {
+  checkExistPayDetAPI_Func,
+  fetchPayMetAPI_Func,
+  signUpAdminAPI_Func,
+} from "../Utility/API";
+import Message from "../Utility/Message";
 
 const SignUp = ({ userType }) => {
   const [userEmail, setUserEmail] = useState("");
@@ -22,6 +27,11 @@ const SignUp = ({ userType }) => {
   const [cardNumber, setCardNumber] = useState("");
   const [expire_Date, setExpire_Date] = useState("");
   const [ccv, setCcv] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
+  const [messageCont, setMessageCont] = useState({
+    text: "",
+    theme: "",
+  });
 
   const handleSubmit = () => {
     if (
@@ -36,17 +46,15 @@ const SignUp = ({ userType }) => {
       verPass &&
       userType != "A"
     ) {
-      axios
-        .get("http://localhost:8080/checkPayDet/" + cardNumber)
-        .then((response) => {
-          console.log("re", response);
-          if (response.data.result) {
-            window.alert("Credit card already exists");
-            return;
-          } else {
-            handleCreateAcc();
-          }
-        });
+      checkExistPayDetAPI_Func(cardNumber).then((response) => {
+        console.log("re", response);
+        if (response.data.result) {
+          messageSetter("Credit card already exists", "danger");
+          return;
+        } else {
+          handleCreateAcc();
+        }
+      });
     } else if (
       userEmail &&
       firstName &&
@@ -57,7 +65,7 @@ const SignUp = ({ userType }) => {
     ) {
       handleCreateAdmin();
     } else {
-      window.alert("Make sure all field to be filled");
+      messageSetter("Make sure all field to be filled", "danger");
     }
   };
 
@@ -80,16 +88,18 @@ const SignUp = ({ userType }) => {
         expire_Date,
         ccv,
       };
-      axios.post(signUpAPI, newUser).then((response) => {
+
+      // axios.post(signUpAPI, newUser);
+      signUpAPIFunc(newUser).then((response) => {
         if (!response.data.error) {
+          messageSetter(response.data.message, "success");
           setIsFin(true);
-          window.alert(response.data.message);
         } else {
-          window.alert(response.data.error);
+          messageSetter(response.data.error, "danger");
         }
       });
     } else {
-      window.alert("Password verification failed");
+      messageSetter("Password verification failed", "danger");
     }
   };
 
@@ -108,32 +118,40 @@ const SignUp = ({ userType }) => {
         userType,
         userPass,
       };
-      axios
-        .post(signUpAdminAPI, newUser, {
-          //with the JWT - ignore
-          headers: { "x-access-token": localStorage.getItem("token") },
-        })
-        .then((response) => {
-          if (!response.data.error) {
-            setIsFin(true);
-            window.alert(response.data.message);
-          } else {
-            window.alert(response.data.error);
-          }
-        });
+      signUpAdminAPI_Func(newUser).then((response) => {
+        if (!response.data.error) {
+          setIsFin(true);
+          messageSetter(response.data.message, "success");
+        } else {
+          messageSetter(response.data.error, "danger");
+        }
+      });
     } else {
       window.alert("Password verification failed");
     }
   };
 
+  const messageSetter = (text, theme) => {
+    setMessageCont({
+      text: text,
+      theme: theme,
+    });
+    setShowMessage(true);
+  };
+
   useEffect(() => {
-    axios.get("http://localhost:8080/payMet/").then((response) => {
+    fetchPayMetAPI_Func().then((response) => {
       setPayMetList(response.data.result);
     });
   }, []);
 
   return (
     <div>
+      <Message
+        messageCont={messageCont}
+        showMessage={showMessage}
+        setShowMessage={setShowMessage}
+      />
       {isFin == true && <h1>Registration Finished, please log in</h1>}
       {isFin == false && (
         <div>
@@ -158,17 +176,20 @@ const SignUp = ({ userType }) => {
             verPass={verPass}
             setVerPass={setVerPass}
           />
-          <CredForm
-            payMetID={payMetID}
-            setPayMetID={setPayMetID}
-            cardNumber={cardNumber}
-            setCardNumber={setCardNumber}
-            expire_Date={expire_Date}
-            setExpire_Date={setExpire_Date}
-            ccv={ccv}
-            setCcv={setCcv}
-            payMetList={payMetList}
-          />
+          {userType != "A" && (
+            <CredForm
+              payMetID={payMetID}
+              setPayMetID={setPayMetID}
+              cardNumber={cardNumber}
+              setCardNumber={setCardNumber}
+              expire_Date={expire_Date}
+              setExpire_Date={setExpire_Date}
+              ccv={ccv}
+              setCcv={setCcv}
+              payMetList={payMetList}
+            />
+          )}
+
           <Button onClick={handleSubmit}>Sign Up</Button>
         </div>
       )}

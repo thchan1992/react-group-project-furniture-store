@@ -1,9 +1,9 @@
 import Item from "../showItemList/Item";
 import SignUp from "../signup/SignUp";
 import AddItem from "../addItem/AddItem";
-import SuppOrderList from "../Item/SuppOrderList";
-import Sales from "../Item/Sales";
-import SalesSummary from "../Item/SalesSummary";
+import SuppOrderList from "../showSupOrd/SuppOrderList";
+import Sales from "../showSales/SalesReport";
+import SalesSummary from "../showSales/SalesSummary";
 import { Route, Switch } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import EmailJS from "../Item/EmailJS";
@@ -14,6 +14,7 @@ import Basket from "../basket/Basket";
 import Payment from "../paymentSys/Payment";
 import Confirmation from "../paymentSys/Confirmation";
 import ViewOrder from "../viewOrder/ViewOrder";
+import ShowItem from "../showItem/ShowItem";
 
 const Component = ({ userType, userID, keyword, caterList }) => {
   const itemData = { itemName: "React", itemDetIDs: 1234, itemQty: 5 };
@@ -95,6 +96,9 @@ const Component = ({ userType, userID, keyword, caterList }) => {
       </Route>
       <Route exact path="/User/Order">
         <ViewOrder userID={userID} />
+      </Route>
+      <Route exact path="/Item_detail/:itemDetID">
+        <ShowItem userID={userID} userType={userType} />
       </Route>
       <Route
         render={function () {

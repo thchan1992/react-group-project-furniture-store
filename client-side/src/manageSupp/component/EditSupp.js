@@ -3,19 +3,33 @@ import Form from "react-bootstrap/Form";
 
 import React, { useState } from "react";
 import axios from "axios";
-import { host } from "../../Constants";
+import { modifySuppAPI_Func } from "../../Utility/API";
+import Message from "../../Utility/Message";
 
 const EditSupp = ({ data, setIsLoading }) => {
   const [suppName, setSuppName] = useState("");
   const [suppEmail, setSuppEmail] = useState("");
   const [column, setCol] = useState("");
   const [change, setChange] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
+  const [messageCont, setMessageCont] = useState({
+    text: "",
+    theme: "",
+  });
+
+  const messageSetter = (text, theme) => {
+    setMessageCont({
+      text: text,
+      theme: theme,
+    });
+    setShowMessage(true);
+  };
 
   const handleSubmit = (suppID) => {
     if (column && change) {
       const newData = { column, change, suppID };
-      axios.put(host + "/suppliers/edit/", newData).then((response) => {
-        window.alert(response.data.message);
+      modifySuppAPI_Func(newData).then((response) => {
+        messageSetter(response.data.message, "success");
         setSuppName("");
         setSuppEmail("");
         setCol("");
@@ -23,12 +37,17 @@ const EditSupp = ({ data, setIsLoading }) => {
         setIsLoading(true);
       });
     } else {
-      window.alert("No data was inserted");
+      messageSetter("No data was inserted", "danger");
     }
   };
 
   return (
     <div key={data.suppID}>
+      <Message
+        messageCont={messageCont}
+        showMessage={showMessage}
+        setShowMessage={setShowMessage}
+      />
       <ul>{data.suppName}</ul>
       <Form.Control
         style={{ height: "40px", width: "200px" }}
@@ -42,7 +61,6 @@ const EditSupp = ({ data, setIsLoading }) => {
           setChange(e.target.value);
         }}
       />
-
       <Button
         onClick={() => {
           handleSubmit(data.suppID);

@@ -1,23 +1,41 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
-import { loginAPI, logoutAPI } from "../Constants";
 import LoginForm from "./container/LoginForm";
+import {
+  loginAPI_Func,
+  checkSessionAPI_Func,
+  logoutAPI_Func,
+} from "../Utility/API";
+import Message from "../Utility/Message";
 
 const Login = ({ setUserID, setUserType }) => {
   const [userEmail, setEmail] = useState("");
   const [userPass, setUserPass] = useState("");
   const [isLogin, setIsLogin] = useState(false);
   axios.defaults.withCredentials = true;
+  const [showMessage, setShowMessage] = useState(false);
+  const [messageCont, setMessageCont] = useState({
+    text: "",
+    theme: "",
+  });
+
+  const messageSetter = (text, theme) => {
+    setMessageCont({
+      text: text,
+      theme: theme,
+    });
+    setShowMessage(true);
+  };
+
   //Log in API function
   const handleLogin = () => {
     if (userEmail && userPass) {
       const user = { userEmail, userPass };
-      console.log(user);
-      axios.post(loginAPI, user).then((response) => {
+      loginAPI_Func(user).then((response) => {
         if (!response.data.auth) {
           setIsLogin(false);
-          window.alert(response.data.message);
+          messageSetter(response.data.message, "danger");
         } else {
           setUserID(response.data.result[0].userID);
           localStorage.setItem("token", response.data.token);
@@ -30,33 +48,30 @@ const Login = ({ setUserID, setUserType }) => {
 
   //API log out function
   const handleLogOut = async () => {
-    await axios
-      .get(logoutAPI, {
-        headers: { "x-access-token": localStorage.getItem("token") },
-      })
-      .then((response) => {});
+    await logoutAPI_Func().then((response) => {});
     window.localStorage.removeItem("token");
     window.location.reload(false);
     setIsLogin(false);
   };
   //API call to see if the session is still vaild
   useEffect(() => {
-    axios
-      .get(loginAPI, {
-        headers: { "x-access-token": localStorage.getItem("token") },
-      })
-      .then((response) => {
-        console.log(response);
-        if (response.data.loggedIn == true) {
-          setUserID(response.data.user[0].userID);
-          setUserType(response.data.user[0].userType);
-          setIsLogin(true);
-        }
-      });
+    checkSessionAPI_Func().then((response) => {
+      console.log(response);
+      if (response.data.loggedIn == true) {
+        setUserID(response.data.user[0].userID);
+        setUserType(response.data.user[0].userType);
+        setIsLogin(true);
+      }
+    });
   }, []);
 
   return (
     <div>
+      <Message
+        messageCont={messageCont}
+        showMessage={showMessage}
+        setShowMessage={setShowMessage}
+      />
       {isLogin == false && (
         <div className="flex-container">
           <LoginForm

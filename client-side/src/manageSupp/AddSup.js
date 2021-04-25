@@ -1,32 +1,56 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { host } from "../Constants";
+import React, { useState } from "react";
+import { addSupp_Func } from "../Utility/API";
 import { pk } from "../setPrimary";
 import AddSupForm from "./component/AddSupForm";
+import Message from "../Utility/Message";
 
 const AddSup = () => {
   const [suppName, setSuppName] = useState("");
   const [suppEmail, setSuppEmail] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
+  const [messageCont, setMessageCont] = useState({
+    text: "",
+    theme: "",
+  });
+
+  const messageSetter = (text, theme) => {
+    setMessageCont({
+      text: text,
+      theme: theme,
+    });
+    setShowMessage(true);
+  };
+
   const handleSubmit = () => {
     if (!suppName && !suppEmail) {
-      window.alert("not enough data is inserted");
+      messageSetter("not enough data is inserted", "danger");
     } else {
       const suppID = pk;
       const newSup = { suppEmail, suppName, suppID };
-      axios.post(host + "/suppliers/addSupplier", newSup).then((response) => {
-        window.alert(response.data.message);
+      addSupp_Func(newSup).then((response) => {
+        messageSetter(response.data.message, "success");
       });
+      setSuppName("");
+      setSuppEmail("");
     }
   };
 
   return (
-    <AddSupForm
-      suppName={suppName}
-      setSuppName={setSuppName}
-      suppEmail={suppEmail}
-      setSuppEmail={setSuppEmail}
-      handleSubmit={handleSubmit}
-    />
+    <div>
+      {" "}
+      <Message
+        messageCont={messageCont}
+        showMessage={showMessage}
+        setShowMessage={setShowMessage}
+      />{" "}
+      <AddSupForm
+        suppName={suppName}
+        setSuppName={setSuppName}
+        suppEmail={suppEmail}
+        setSuppEmail={setSuppEmail}
+        handleSubmit={handleSubmit}
+      />
+    </div>
   );
 };
 

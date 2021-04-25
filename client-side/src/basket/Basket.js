@@ -1,7 +1,7 @@
 import { useHistory, Route } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import BasketList from "./component/BasketList";
+import { fetchBasketAPI_Func, totalCostAPI_Func } from "../Utility/API";
 
 const Basket = ({ userID }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -12,7 +12,8 @@ const Basket = ({ userID }) => {
 
   //load the basket
   useEffect(() => {
-    axios.get("http://localhost:8080/basket/" + userID).then((response) => {
+    fetchBasketAPI_Func(userID).then((response) => {
+      console.log(response.data);
       setBasketList(response.data.result);
       var isReady = true;
       for (var i = 0; i < basketList.length; i++) {
@@ -22,17 +23,15 @@ const Basket = ({ userID }) => {
         }
       }
       setIsReadyPay(isReady);
-      axios
-        .get("http://localhost:8080/basket/totalCost/" + userID)
-        .then((response) => {
-          if (!response.data.result) {
-            setTotalCost(0);
-          } else {
-            setTotalCost(response.data.result.totalCost);
-          }
+      totalCostAPI_Func(userID).then((response) => {
+        if (!response.data.result) {
+          setTotalCost(0);
+        } else {
+          setTotalCost(response.data.result.totalCost);
+        }
 
-          setIsLoading(false);
-        });
+        setIsLoading(false);
+      });
     });
   }, [isLoading]);
 

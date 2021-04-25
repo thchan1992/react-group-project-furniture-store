@@ -20,7 +20,7 @@ export const signUpAdminAPI = signUpAPI + "admin";
 export const uploadImageAPI = host + "/item/uploadImage/";
 
 //Delete a picture of image in the backend
-export const delImageAPI = host + "/deletePic/";
+export const delImageAPI = host + "/item/deletePic/";
 
 //Add a new product API
 export const addItemAPI = host + "/item/addItem/";
@@ -53,3 +53,48 @@ export const showSalesAPI = host + "/sales/report";
 
 //Show Sales Summary Report
 export const showSalesSummaryAPI = host + "/sales/reportSummary";
+
+export const fetchSalesAPI = host + "/sales/";
+
+export const fetchSalesCostAPI = host + "/sales/totalCost/";
+
+export const fetchBasketAPI = host + "/basket/";
+
+export const totalCostAPI = host + "/basket/totalCost/";
+
+//show user detail
+export const updateUserDetAPI = host + "/account/personalDetails/edit";
+
+export const modifyCardAPI = host + "/account/paymentEdit";
+
+export const fetchUserDetAPI = host + "/account/personalDetails/";
+
+export const fetchUserPayDetAPI = host + "/account/paymentDetails/";
+//show payment met list
+export const fetchPayMetAPI = host + "/payMet/";
+
+export const addCatAPI = host + "/item/addCater";
+
+export const modifyCatAPI = host + "/item/editCater/";
+
+export const addSuppAPI = host + "/suppliers/addSupplier";
+
+export const modifySuppAPI = host + "/suppliers/edit/";
+
+export const checkFundAPI = host + "/payment/checkFund";
+
+export const checkStockAPI = host + "/payment/checkStock/";
+
+export const finalisePayAPI = host + "/payment/finalise";
+
+export const getCostBaskAPI = host + "/payment/getCostAndBaskID/";
+
+export const checkThresholdAPI = host + "/item/checkThreshold/";
+
+export const deleteBaskAPI = host + "/basket/delete/";
+
+export const checkExistPayDetAPI = host + "/checkPayDet/";
+
+export const modifyBasketAPI = host + "/basket/editBasket";
+
+export const addBaskItemAPI = host + "/basket/addBasketItem";
