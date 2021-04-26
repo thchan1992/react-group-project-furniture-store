@@ -10,7 +10,7 @@ app.use(cors());
 app.use(require("../configuration/corsConf"));
 const { regularJWT, adminJWT } = require("../configuration/jwtConf");
 
-app.post("/suppliers/newOrder", adminJWT, (req, res) => {
+app.post("/suppliers/newOrder", regularJWT, (req, res) => {
   const suppOrdID = req.body.suppOrdID;
   const suppID = req.body.suppID;
   const itemDetID = req.body.itemDetID;
