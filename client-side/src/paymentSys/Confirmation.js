@@ -49,7 +49,10 @@ const Confirmation = ({ userID }) => {
              var orderDate = today.getFullYear()+'-'+today.getMonth()+'-'+today.getDate();
 
 //use if condition to choose suppID =2
-            if ((itemDetID ===2 && itemCatID ===1)|| (itemDetID ===4 && itemCatID ===2)|| (itemDetID ===6 && itemCatID ===3)|| (itemDetID === 8 && itemCatID ===4)){
+            if ((itemDetID ===2 && itemCatID ===1)|| 
+            (itemDetID ===4 && itemCatID ===2)|| 
+            (itemDetID ===6 && itemCatID ===3)|| 
+            (itemDetID === 8 && itemCatID ===4)){
               const newOrder = {
                 suppOrdID,
                 suppID :2,
@@ -74,7 +77,10 @@ const Confirmation = ({ userID }) => {
                 window.alert(response.data.message);
               });}
 //use if condition to choose suppID =1
-            if ((itemDetID ===1 && itemCatID ===1)|| (itemDetID ===3 && itemCatID ===2)|| (itemDetID ===5 && itemCatID ===3)|| (itemDetID === 7 && itemCatID ===4)){
+            if ((itemDetID ===1 && itemCatID ===1)||
+             (itemDetID ===3 && itemCatID ===2)|| 
+             (itemDetID ===5 && itemCatID ===3)||
+              (itemDetID === 7 && itemCatID ===4)){
               const newOrder = {
                 suppOrdID,
                 suppID :1,
@@ -110,14 +116,20 @@ const Confirmation = ({ userID }) => {
                     var templateParams = {itemDetID: itemDetID,};
 
 //this will send email to JK.
-                    if (itemDetID ===1 || itemDetID ===3 || itemDetID ===5 || itemDetID === 7 ){emailjs.send("service_0xa7sfc", "template_37cez8j",templateParams).then(function (response) {
+                    if (itemDetID ===1 || 
+                      itemDetID ===3 ||
+                       itemDetID ===5 || 
+                       itemDetID === 7 ){emailjs.send("service_0xa7sfc", "template_37cez8j",templateParams).then(function (response) {
                       console.log("SUCCESS!", response.status, response.text);
                     },
                     function (error) {
                       console.log("FAILED...", error);}); }
 
 //this will send an email to IK
-                    if (itemDetID ===2 || itemDetID ===4 || itemDetID ===6 || itemDetID === 8 ){emailjs.send("service_0xa7sfc", "template_7wve856",templateParams).then(function (response) {
+                    if (itemDetID ===2 || 
+                      itemDetID ===4 || 
+                      itemDetID ===6 ||
+                       itemDetID === 8 ){emailjs.send("service_0xa7sfc", "template_7wve856",templateParams).then(function (response) {
                       console.log("SUCCESS!", response.status, response.text);
                     },
                     function (error) {
