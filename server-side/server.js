@@ -10,7 +10,7 @@ app.listen(HTTP_PORT, () => {
 });
 // indicate the service is working.
 app.get("/", (req, res, next) => {
-  res.json({ message: "Server running" });
+  res.json({ message: "Server is running" });
 });
 
 app.use(require("./functions/login/login"));
@@ -18,7 +18,7 @@ app.use(require("./functions/item/item"));
 app.use(require("./functions/signUp/signUp"));
 app.use(require("./functions/supplier/supplier"));
 app.use(require("./functions/user/user"));
-app.use(require("./functions/suppliersOrders"));
+// app.use(require("./functions/suppliersOrders"));
 app.use(require("./functions/basket/basket"));
 app.use(require("./functions/payment/payment"));
 app.use(require("./functions/sales/sales"));

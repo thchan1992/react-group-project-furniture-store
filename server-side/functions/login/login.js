@@ -26,7 +26,7 @@ app.use(
     secret: "group47",
     resave: false,
     saveUninitialized: false,
-    cookie: { expires: 60 * 60 * 24 },
+    cookie: { expires: 1000 * 36000 },
   })
 );
 

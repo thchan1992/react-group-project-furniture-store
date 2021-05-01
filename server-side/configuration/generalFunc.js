@@ -1,19 +1,19 @@
 var db = require("../database/database.js");
 
 const getAll = (sql, param, res) => {
-  console.log(sql);
-  console.log(param);
   if (param == null) {
     db.all(sql, (err, result) => {
       if (err) {
         res.json({ error: err.message });
         return;
       }
+      console.log(result);
       res.json({ result });
     });
   } else {
     db.all(sql, param, (err, result) => {
       if (err) {
+        console.log(err);
         res.json({ error: err.message });
         return;
       }

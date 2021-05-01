@@ -1,0 +1,35 @@
+.payment-attribute-detail-text-style {
+  color: rgb(0, 0, 0);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 20px;
+}
+
+.payment-attribute-text-style {
+  color: rgb(97, 125, 85);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+}
+
+.payment-title-text-style {
+  color: rgb(97, 125, 85);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+}
+
+.checkout-basket-text-style {
+  color: rgb(249, 249, 249);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+}
+
+.change-shipping-text-style {
+  color: rgb(20, 20, 20);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+}
+
+/* .order-column-text-style {
+  color: rgb(255, 255, 255);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 20px;
+} */

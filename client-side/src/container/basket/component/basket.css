@@ -1,0 +1,35 @@
+.photo {
+  height: 100px;
+  width: 100px;
+}
+
+.basket-detail-text-style {
+  color: rgb(0, 0, 0);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 20px;
+}
+
+.basket-item-name-detail-text-style {
+  color: rgb(0, 0, 0);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.basket-column-text-style {
+  color: rgb(97, 125, 85);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 20px;
+}
+
+.edit-basket-button-style {
+  color: rgb(249, 249, 249);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+}
+
+.remove-basket-item-button-style {
+  color: rgb(0, 0, 0);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+}

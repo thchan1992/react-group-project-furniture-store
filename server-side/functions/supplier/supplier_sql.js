@@ -9,9 +9,12 @@ const fetchSuppDet_sql = "SELECT * FROM suppliers WHERE suppID = ?";
 const addSupplier_sql =
   "INSERT INTO suppliers (suppID, suppName, suppEmail) VALUES (?, ?, ?)";
 
+const getOrdHistory_sql =
+  "SELECT * FROM suppOrder WHERE orderDate BETWEEN ? AND ?";
 module.exports = {
   fetchSuppList_sql,
   editSupplier_sql,
   fetchSuppDet_sql,
   addSupplier_sql,
+  getOrdHistory_sql,
 };

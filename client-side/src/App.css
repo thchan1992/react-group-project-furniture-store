@@ -2,3 +2,26 @@
   /* This makes all the component staying on the same line */
   display: flex;
 }
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.back-ground-colour {
+  height: 210px;
+  background-color: rgb(119, 189, 89);
+}
+
+.container {
+  justify-content: "flex-end";
+}
+
+.right {
+  float: right;
+}
+
+.titleText {
+  color: rgb(73, 74, 72);
+  font-family: "Titillium Web", sans-serif;
+}

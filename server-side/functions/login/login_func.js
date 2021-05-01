@@ -17,7 +17,8 @@ const login = (sql, userEmail, userPass, req, res) => {
           const userType = result[0].userType;
           //create the token by using the userID, userEmail and userType
           const token = jwt.sign({ userID, userEmail, userType }, "Group47", {
-            expiresIn: 300,
+            // expiresIn: 10,
+            expiresIn: 60 * 60 * 24,
           });
           //create a session
           req.session.user = result;
