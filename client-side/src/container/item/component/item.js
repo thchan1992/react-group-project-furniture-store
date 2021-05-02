@@ -16,8 +16,6 @@ const ShowItemComp = ({
   setEdColumn,
   setChange,
   updateItem,
-  edColumn,
-  change,
   itemDesp,
   setItemDesp,
   itemQty,
@@ -73,13 +71,6 @@ const ShowItemComp = ({
                     </div>
                   )}
                 </ListGroup.Item>
-
-                <ListGroup.Item className="product-detail-text-style">
-                  <h1 className="product-attribute-text-style">
-                    Product Name:
-                  </h1>{" "}
-                  {data.itemName}
-                </ListGroup.Item>
                 <ListGroupItem
                   userType={userType}
                   inputType={"text"}
@@ -91,14 +82,10 @@ const ShowItemComp = ({
                   itemDetID={data.itemDetID}
                   setEdColumn={setEdColumn}
                   setChange={setChange}
-                  edColumn={edColumn}
-                  change={change}
+                  propName={"Product Name: "}
+                  property={data.itemName}
                 />
 
-                <ListGroup.Item className="product-detail-text-style">
-                  <h1 className="product-attribute-text-style">Price:</h1>£
-                  {data.itemPrice}
-                </ListGroup.Item>
                 <ListGroupItem
                   userType={userType}
                   inputType={"number"}
@@ -110,8 +97,8 @@ const ShowItemComp = ({
                   itemDetID={data.itemDetID}
                   setEdColumn={setEdColumn}
                   setChange={setChange}
-                  edColumn={edColumn}
-                  change={change}
+                  propName={"Price: "}
+                  property={data.itemPrice}
                 />
                 <ListGroup.Item className="product-detail-text-style">
                   <h1 className="product-attribute-text-style">Category:</h1>{" "}
@@ -121,10 +108,7 @@ const ShowItemComp = ({
                   <h1 className="product-attribute-text-style">Brand:</h1>
                   {data.suppName}
                 </ListGroup.Item>
-                <ListGroup.Item className="product-detail-text-style">
-                  <h1 className="product-attribute-text-style">About:</h1>
-                  {data.itemDesp}
-                </ListGroup.Item>
+
                 <ListGroupItem
                   userType={userType}
                   inputType={"text"}
@@ -136,20 +120,14 @@ const ShowItemComp = ({
                   itemDetID={data.itemDetID}
                   setEdColumn={setEdColumn}
                   setChange={setChange}
-                  edColumn={edColumn}
-                  change={change}
+                  propName={"About: "}
+                  property={data.itemDesp}
                 />
               </ListGroup>
               {userType == "A" && (
                 <ListGroup>
                   {" "}
                   {/* Admin  */}
-                  <ListGroup.Item className="product-detail-text-style">
-                    <h1 className="product-attribute-text-style">
-                      Stock Level:
-                    </h1>
-                    {data.itemQty}
-                  </ListGroup.Item>
                   <ListGroupItem
                     userType={userType}
                     inputType={"number"}
@@ -161,15 +139,9 @@ const ShowItemComp = ({
                     itemDetID={data.itemDetID}
                     setEdColumn={setEdColumn}
                     setChange={setChange}
-                    edColumn={edColumn}
-                    change={change}
+                    propName={"Stock Level: "}
+                    property={data.itemQty}
                   />
-                  <ListGroup.Item className="product-detail-text-style">
-                    <h1 className="product-attribute-text-style">
-                      Auto Order Threshold:
-                    </h1>
-                    {data.itemThreshold}
-                  </ListGroup.Item>
                   {userType == "A" && (
                     <>
                       <ListGroupItem
@@ -183,10 +155,9 @@ const ShowItemComp = ({
                         itemDetID={data.itemDetID}
                         setEdColumn={setEdColumn}
                         setChange={setChange}
-                        edColumn={edColumn}
-                        change={change}
+                        propName={"Auto Order Threshold: "}
+                        property={data.itemThreshold}
                       />
-
                       <ListGroup.Item>
                         {" "}
                         <Button
@@ -207,6 +178,7 @@ const ShowItemComp = ({
               )}
             </Card.Text>
           </Card.Body>
+
           <Card.Footer>
             {" "}
             {userType != "A" && (

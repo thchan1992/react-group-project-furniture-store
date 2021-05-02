@@ -14,11 +14,17 @@ const ListGroupItem = ({
   itemDetID,
   setEdColumn,
   setChange,
-  edColumn,
-  change,
+  propName,
+  property,
 }) => {
   return (
     <div>
+      {property != null && (
+        <ListGroup.Item className="product-detail-text-style">
+          <h1 className="product-attribute-text-style">{propName}</h1>{" "}
+          {property}
+        </ListGroup.Item>
+      )}
       {userType == "A" && (
         <ListGroup.Item>
           {" "}
@@ -41,7 +47,7 @@ const ListGroupItem = ({
               size="sm"
               variant="info"
               onClick={() => {
-                updateItem(itemDetID, edColumn, change);
+                updateItem(itemDetID, attributeName, attribute);
               }}
             >
               <span className="edit-product-detail-button-style">Update</span>

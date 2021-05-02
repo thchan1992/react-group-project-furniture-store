@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import { pk } from "../../setPrimary";
-import SignUpForm from "./component/signUpForm";
-import CredForm from "./component/credForm";
+import Component from "./component/signup";
 import { useHistory } from "react-router-dom";
 import {
   checkExistPayDetAPI_Func,
@@ -12,38 +11,44 @@ import {
 } from "../../frame/API";
 
 const SignUp = ({ userType, messageSetter }) => {
-  const [userEmail, setUserEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [user, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    userEmail: "",
+    payMetID: "",
+    cardNumber: "",
+    expire_Date: "",
+    ccv: "",
+  });
+
   const [addr1, setAddr1] = useState("");
   const [addr2, setAddr2] = useState("");
   const [city, setCity] = useState("");
   const [postcode, setPostcode] = useState("");
   const [userPass, setUserPass] = useState("");
   const [verPass, setVerPass] = useState("");
-  const [isFin, setIsFin] = useState(false);
-  const [payMetID, setPayMetID] = useState("");
   const [payMetList, setPayMetList] = useState([]);
-  const [cardNumber, setCardNumber] = useState("");
-  const [expire_Date, setExpire_Date] = useState("");
-  const [ccv, setCcv] = useState("");
   const history = useHistory();
 
   const handleSubmit = () => {
+    console.log(user);
     if (
-      userEmail &&
-      firstName &&
-      lastName &&
+      user.userEmail &&
+      user.firstName &&
+      user.lastName &&
       addr1 &&
       addr2 &&
       city &&
       postcode &&
       userPass &&
       verPass &&
+      user.payMetID &&
+      user.cardNumber &&
+      user.expire_Date &&
+      user.ccv &&
       userType != "A"
     ) {
-      checkExistPayDetAPI_Func(cardNumber).then((response) => {
-        console.log("re", response);
+      checkExistPayDetAPI_Func(user.cardNumber).then((response) => {
         if (response.data.result) {
           messageSetter("Credit card already exists", "danger", true);
           return;
@@ -52,9 +57,9 @@ const SignUp = ({ userType, messageSetter }) => {
         }
       });
     } else if (
-      userEmail &&
-      firstName &&
-      lastName &&
+      user.userEmail &&
+      user.firstName &&
+      user.lastName &&
       userPass &&
       verPass &&
       userType == "A"
@@ -67,29 +72,15 @@ const SignUp = ({ userType, messageSetter }) => {
 
   const handleCreateAcc = () => {
     if (userPass == verPass) {
-      const userAddress = addr1 + " " + addr2 + " " + city + " " + postcode;
-      const userID = pk;
-      const userType = "C";
-      const newUser = {
-        userID,
-        userType,
-        firstName,
-        lastName,
-        userEmail,
-        userAddress,
-        userType,
-        userPass,
-        payMetID,
-        cardNumber,
-        expire_Date,
-        ccv,
-      };
-
-      // axios.post(signUpAPI, newUser);
-      signUpAPIFunc(newUser).then((response) => {
+      user.userAddress = addr1 + " " + addr2 + " " + city + " " + postcode;
+      user.userID = pk;
+      user.userType = "C";
+      user.userPass = userPass;
+      console.log(user);
+      signUpAPIFunc(user).then((response) => {
         if (!response.data.error) {
-          messageSetter(response.data.message, "success", true);
-          setIsFin(true);
+          history.push("/Home");
+          messageSetter("Please Sign in to shop", "success", true);
         } else {
           messageSetter(response.data.error, "danger", true);
         }
@@ -101,30 +92,26 @@ const SignUp = ({ userType, messageSetter }) => {
 
   const handleCreateAdmin = () => {
     if (userPass == verPass) {
-      const userID = pk;
-      const userType = "A";
-      const userAddress = "N/A";
-      const newUser = {
-        userID,
-        userType,
-        firstName,
-        lastName,
-        userEmail,
-        userAddress,
-        userType,
-        userPass,
-      };
-      signUpAdminAPI_Func(newUser).then((response) => {
+      user.userID = pk;
+      user.userType = "A";
+      user.userAddress = "N/A";
+      user.userPass = userPass;
+      signUpAdminAPI_Func(user).then((response) => {
         if (response.data.auth == false) {
           history.push("/error");
           window.location.reload(false);
         }
-
-        if (!response.data.error) {
-          setIsFin(true);
-          messageSetter(response.data.message, "success", true);
-        } else {
+        if (response.data.error) {
+          console.log(response);
           messageSetter(response.data.error, "danger", true);
+        }
+        if (!response.data.error) {
+          history.push("/Home");
+          messageSetter(
+            "Please sign out and log in the new admin account",
+            "success",
+            true
+          );
         }
       });
     } else {
@@ -139,49 +126,25 @@ const SignUp = ({ userType, messageSetter }) => {
   }, []);
 
   return (
-    <div>
-      {isFin == true && <h1>Registration Finished, please log in</h1>}
-      {isFin == false && (
-        <div>
-          <SignUpForm
-            userType={userType}
-            firstName={firstName}
-            setFirstName={setFirstName}
-            lastName={lastName}
-            setLastName={setLastName}
-            userEmail={userEmail}
-            setUserEmail={setUserEmail}
-            addr1={addr1}
-            setAddr1={setAddr1}
-            addr2={addr2}
-            setAddr2={setAddr2}
-            city={city}
-            setCity={setCity}
-            postcode={postcode}
-            setPostcode={setPostcode}
-            userPass={userPass}
-            setUserPass={setUserPass}
-            verPass={verPass}
-            setVerPass={setVerPass}
-          />
-          {userType != "A" && (
-            <CredForm
-              payMetID={payMetID}
-              setPayMetID={setPayMetID}
-              cardNumber={cardNumber}
-              setCardNumber={setCardNumber}
-              expire_Date={expire_Date}
-              setExpire_Date={setExpire_Date}
-              ccv={ccv}
-              setCcv={setCcv}
-              payMetList={payMetList}
-            />
-          )}
-
-          <Button onClick={handleSubmit}>Sign Up</Button>
-        </div>
-      )}
-    </div>
+    <Component
+      user={user}
+      setUser={setUser}
+      userType={userType}
+      addr1={addr1}
+      setAddr1={setAddr1}
+      addr2={addr2}
+      setAddr2={setAddr2}
+      city={city}
+      setCity={setCity}
+      postcode={postcode}
+      setPostcode={setPostcode}
+      userPass={userPass}
+      setUserPass={setUserPass}
+      verPass={verPass}
+      setVerPass={setVerPass}
+      payMetList={payMetList}
+      handleSubmit={handleSubmit}
+    />
   );
 };
 

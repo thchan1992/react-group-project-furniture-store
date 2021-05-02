@@ -10,7 +10,6 @@ const addNewSuppOrd = (req, res) => {
   const orderDate = req.body.orderDate;
   const ordReceiveDate = req.body.ordReceiveDate;
   const itemName = req.body.itemName;
-
   //send email
   getSuppDet(suppID, (supplier) => {
     sendAutoOrder(supplier.suppEmail, supplier.suppName, itemName, suppOrdQty);
@@ -26,12 +25,12 @@ const addNewSuppOrd = (req, res) => {
     ordReceiveDate,
   ];
 
-  db.all(
+  db.run(
     "INSERT INTO suppOrder (suppOrdID, suppID, itemDetID, itemCatID, suppOrdQty, orderDate, ordReceiveDate) VALUES (?, ?, ?, ?, ?, ?, ?)",
     params,
     (err) => {
       if (err) {
-        res.json({ error: err.message });
+        console.log(err);
         return;
       }
     }
@@ -40,11 +39,14 @@ const addNewSuppOrd = (req, res) => {
 
 //get supplier detail
 const getSuppDet = (suppID, callback) => {
+  console.log("getSuppDet");
+  console.log(suppID);
   db.get("select * from suppliers where suppID = ?", suppID, (err, result) => {
     if (err) {
       console.log(err);
       return;
     }
+    console.log(result);
     callback(result);
   });
 };

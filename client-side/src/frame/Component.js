@@ -73,7 +73,7 @@ const Component = ({
       </Route>
       {userType == "A" && (
         <Route exact path="/AdminSignUp">
-          <SignUp userType={userType} />
+          <SignUp userType={userType} messageSetter={messageSetter} />
         </Route>
       )}
       {userType == "A" && (

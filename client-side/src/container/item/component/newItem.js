@@ -7,28 +7,12 @@ import SupOrdForm from "./supOrdForm";
 
 const NewItem = ({
   userType,
-  itemCatID,
-  setItemCatID,
   itemCatList,
-  itemName,
-  setItemName,
-  itemPrice,
-  setItemPrice,
-  itemThreshold,
-  setItemThreshold,
-  itemQty,
-  setItemQty,
-  itemDesp,
-  setItemDesp,
   setImage,
-  suppID,
-  setSuppID,
   suppList,
-  suppOrdQty,
-  setSuppOrdQty,
-  orderDate,
-  setOrderDate,
   handleSubmit,
+  item,
+  setItem,
 }) => {
   return (
     <div>
@@ -42,34 +26,14 @@ const NewItem = ({
             <div>
               {/*Drop down button to select item category */}
               <PickItemCat
-                itemCatID={itemCatID}
-                setItemCatID={setItemCatID}
+                setItem={setItem}
+                item={item}
                 itemCatList={itemCatList}
-              />
-              {/* product detail form */}
-              <ItemDetForm
-                itemName={itemName}
-                setItemName={setItemName}
-                itemPrice={itemPrice}
-                setItemPrice={setItemPrice}
-                itemThreshold={itemThreshold}
-                setItemThreshold={setItemThreshold}
-                itemQty={itemQty}
-                setItemQty={setItemQty}
-                itemDesp={itemDesp}
-                setItemDesp={setItemDesp}
-                setImage={setImage}
-              />
+              />{" "}
               {/*Supplier order form */}
-              <SupOrdForm
-                suppID={suppID}
-                setSuppID={setSuppID}
-                suppList={suppList}
-                suppOrdQty={suppOrdQty}
-                setSuppOrdQty={setSuppOrdQty}
-                orderDate={orderDate}
-                setOrderDate={setOrderDate}
-              />
+              <SupOrdForm item={item} setItem={setItem} suppList={suppList} />
+              {/* product detail form */}
+              <ItemDetForm item={item} setItem={setItem} setImage={setImage} />
               {/*onClick button to submit the item detail and supplier order */}
               <Card.Footer>
                 {" "}

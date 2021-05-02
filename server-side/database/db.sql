@@ -255,3 +255,9 @@ select * from suppOrder;
 SELECT * FROM suppOrder;
 
 update itemDetails set itemQty = 0 where itemDetID = 2;
+
+select * from suppOrder where suppOrdID = 1619911948078;
+
+select * from itemDetails where itemDetID =1619911948077;
+
+INSERT INTO suppOrder (suppOrdID, suppID, itemDetID, itemCatID, suppOrdQty, orderDate, ordReceiveDate) VALUES (1619911675698, '1', 1619911675698, '1', '1', '2021-4-2', '2021-4-2');

@@ -5,15 +5,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import React, { useEffect, useState } from "react";
 import Textbox from "../../../frame/Textbox";
 
-const SupOrdForm = ({
-  suppID,
-  setSuppID,
-  suppList,
-  suppOrdQty,
-  setSuppOrdQty,
-  orderDate,
-  setOrderDate,
-}) => {
+const SupOrdForm = ({ suppList, item, setItem }) => {
   return (
     <div>
       {" "}
@@ -23,13 +15,13 @@ const SupOrdForm = ({
           <Form.Control
             style={{ height: "40px", width: "170px" }}
             readOnly
-            value={suppID}
+            value={item.suppID}
             placeholder="Select the Supplier ID"
           />
           <DropdownButton
             variant="dark"
             title=""
-            onSelect={(e) => setSuppID(e)}
+            onSelect={(e) => setItem({ ...item, suppID: e })}
           >
             {suppList.map((data) => (
               <Dropdown.Item
@@ -43,20 +35,6 @@ const SupOrdForm = ({
           </DropdownButton>
         </div>
       </Form.Group>
-      <Textbox
-        name={"Supplier Order Quantity"}
-        attriName={"suppOrdQty"}
-        attribute={suppOrdQty}
-        inputType={"number"}
-        setter={setSuppOrdQty}
-      />
-      <Textbox
-        name={"Order Date"}
-        attriName={"orderDate"}
-        attribute={orderDate}
-        inputType={"date"}
-        setter={setOrderDate}
-      />
     </div>
   );
 };

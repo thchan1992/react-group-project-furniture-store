@@ -3,48 +3,44 @@ import Col from "react-bootstrap/Col";
 import React, { useEffect, useState } from "react";
 import Textbox from "../../../frame/Textbox";
 
-const ItemDetForm = ({
-  itemName,
-  setItemName,
-  itemPrice,
-  setItemPrice,
-  itemThreshold,
-  setItemThreshold,
-  itemQty,
-  setItemQty,
-  itemDesp,
-  setItemDesp,
-  setImage,
-}) => {
+const ItemDetForm = ({ setImage, item, setItem }) => {
   return (
     <div>
       <Textbox
         name={"Item Name"}
         attriName={"itemName"}
-        attribute={itemName}
+        attribute={item.itemName}
         inputType={"text"}
-        setter={setItemName}
+        setter={(e) => {
+          setItem({ ...item, itemName: e });
+        }}
       />
       <Textbox
         name={"Item Price"}
         attriName={"itemPrice"}
-        attribute={itemPrice}
+        attribute={item.itemPrice}
         inputType={"number"}
-        setter={setItemPrice}
+        setter={(e) => {
+          setItem({ ...item, itemPrice: e });
+        }}
       />
       <Textbox
         name={"Order Threshold"}
         attriName={"itemThreshold"}
-        attribute={itemThreshold}
+        attribute={item.itemThreshold}
         inputType={"number"}
-        setter={setItemThreshold}
+        setter={(e) => {
+          setItem({ ...item, itemThreshold: e });
+        }}
       />
       <Textbox
         name={"Stock Level"}
         attriName={"itemQty"}
-        attribute={itemQty}
+        attribute={item.itemQty}
         inputType={"number"}
-        setter={setItemQty}
+        setter={(e) => {
+          setItem({ ...item, itemQty: e });
+        }}
       />
       <Form.Group>
         <span className="user-attribute-text-style">Item Description</span>
@@ -56,8 +52,10 @@ const ItemDetForm = ({
           type="text"
           name="itemDesp"
           id="itemDesp"
-          value={itemDesp}
-          onChange={(e) => setItemDesp(e.target.value)}
+          value={item.itemDesp}
+          onChange={(e) => {
+            setItem({ ...item, itemDesp: e.target.value });
+          }}
         />
       </Form.Group>
       <Form.Group>

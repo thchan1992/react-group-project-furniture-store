@@ -4,7 +4,7 @@ import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 
-const PickItemCat = ({ itemCatID, setItemCatID, itemCatList }) => {
+const PickItemCat = ({ itemCatList, item, setItem }) => {
   return (
     <Form.Group>
       <span className="user-attribute-text-style">Item Category ID</span>
@@ -13,13 +13,13 @@ const PickItemCat = ({ itemCatID, setItemCatID, itemCatList }) => {
         <Form.Control
           style={{ height: "40px", width: "170px" }}
           readOnly
-          value={itemCatID}
+          value={item.itemCatID}
           placeholder="Select the Category"
         />
         <DropdownButton
           variant="dark"
           title=""
-          onSelect={(e) => setItemCatID(e)}
+          onSelect={(e) => setItem({ ...item, itemCatID: e })}
         >
           {itemCatList.map((data) => (
             <Dropdown.Item

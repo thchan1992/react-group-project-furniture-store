@@ -102,3 +102,5 @@ export const addBaskItemAPI = host + "/basket/addBasketItem";
 export const getItemDetAPI = host + "/itemDetail/";
 
 export const getUserOrdAPI = host + "/account/userOrder/";
+
+export const setItemImageAPI = host + "/item/setImageUrl/";

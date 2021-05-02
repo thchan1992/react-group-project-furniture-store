@@ -5,13 +5,9 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 
 const SignUpForm = ({
+  user,
+  setUser,
   userType,
-  firstName,
-  setFirstName,
-  lastName,
-  setLastName,
-  userEmail,
-  setUserEmail,
   addr1,
   setAddr1,
   addr2,
@@ -35,23 +31,29 @@ const SignUpForm = ({
           <Textbox
             name={"First Name"}
             attriName={"firstName"}
-            attribute={firstName}
+            attribute={user.firstName}
             inputType={"text"}
-            setter={setFirstName}
+            setter={(e) => {
+              setUser({ ...user, firstName: e });
+            }}
           />
           <Textbox
             name={"Last Name"}
             attriName={"lastName"}
-            attribute={lastName}
+            attribute={user.lastName}
             inputType={"text"}
-            setter={setLastName}
+            setter={(e) => {
+              setUser({ ...user, lastName: e });
+            }}
           />
           <Textbox
             name={"Email"}
             attriName={"userEmail"}
-            attribute={userEmail}
+            attribute={user.userEmail}
             inputType={"email"}
-            setter={setUserEmail}
+            setter={(e) => {
+              setUser({ ...user, userEmail: e });
+            }}
           />
           {userType == "" && (
             <div>

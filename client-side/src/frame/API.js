@@ -41,6 +41,7 @@ import {
   delImageAPI,
   getItemDetAPI,
   getUserOrdAPI,
+  setItemImageAPI,
 } from "./Constants";
 
 const jwt = () => {
@@ -248,4 +249,8 @@ export const getItemDetAPI_Func = (itemDetID) => {
 //vieworder.js
 export const getUserOrdAPI_Func = (userID) => {
   return axios.get(getUserOrdAPI + userID, jwt());
+};
+
+export const setItemImageAPI_Func = (newData) => {
+  return axios.post(setItemImageAPI, newData, jwt());
 };

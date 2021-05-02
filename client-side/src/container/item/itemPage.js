@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect, useState, useRef } from "react";
 import { showItemsAPI_Func, showSearchAPI_Func } from "../../frame/API";
 import Component from "./component/itemPage";
+import { showItemsAPI } from "../../frame/Constants";
 
 const Item = ({ itemCatName, userID, userType, keyword, messageSetter }) => {
   const [sorting, setSorting] = useState("ASC");
@@ -9,24 +9,35 @@ const Item = ({ itemCatName, userID, userType, keyword, messageSetter }) => {
   const [itemList, setItemList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showSort, setShowSort] = useState("Item Name (A to Z)");
+  const cache = useRef({});
 
   //Function to fetch the sorted items
   const fetchItem = () => {
     if (!keyword) {
-      showItemsAPI_Func(sorting, column, itemCatName).then((response) => {
-        setItemList(response.data.result);
-      });
+      if (cache.current[showSort]) {
+        const data = cache.current[showSort];
+        setItemList(data);
+        console.log("Use Cache");
+      } else {
+        showItemsAPI_Func(sorting, column, itemCatName).then((response) => {
+          const data = response.data.result;
+          cache.current[showSort] = data;
+          setItemList(response.data.result);
+          console.log("Didnt use cache");
+        });
+      }
     } else {
       showSearchAPI_Func(sorting, column, keyword).then((response) => {
         setItemList(response.data.result);
       });
-      setIsLoading(false);
     }
+    setIsLoading(false);
   };
 
   //use Effect to fetch item list.
   useEffect(() => {
     fetchItem();
+    console.log("useEffect", cache);
     setIsLoading(false);
   }, [isLoading]);
 

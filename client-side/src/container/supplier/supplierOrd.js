@@ -15,6 +15,7 @@ const SuppOrderList = ({ userType }) => {
         history.push("/error");
         window.location.reload(false);
       }
+      console.log();
       setOrderList(response.data.result);
     });
   };

@@ -8,18 +8,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 
-const CredForm = ({
-  payMetID,
-  setPayMetID,
-  cardNumber,
-  setCardNumber,
-  expire_Date,
-  setExpire_Date,
-  ccv,
-  setCcv,
-  payMetList,
-  updateCard,
-}) => {
+const CredForm = ({ user, setUser, payMetList, updateCard }) => {
   return (
     <Col>
       <Card>
@@ -36,14 +25,14 @@ const CredForm = ({
               <Form.Control
                 style={{ height: "40px", width: "170px" }}
                 readOnly
-                value={payMetID}
+                value={user.payMetID}
                 placeholder="Select the Payment Method"
               />
               <DropdownButton
                 alignRight
                 variant="dark"
                 title=""
-                onSelect={(e) => setPayMetID(e)}
+                onSelect={(e) => setUser({ ...user, payMetID: e })}
               >
                 {payMetList.map((data) => (
                   <Dropdown.Item eventKey={data.payMetID} key={data.payMetID}>
@@ -58,29 +47,37 @@ const CredForm = ({
           <Textbox
             name={"card number"}
             attriName={"cardNumber"}
-            attribute={cardNumber}
+            attribute={user.cardNumber}
             inputType={"number"}
-            setter={setCardNumber}
+            setter={(e) => {
+              setUser({ ...user, cardNumber: e });
+            }}
           />
           <Textbox
             name={"expire Date"}
             attriName={"expire_Date"}
-            attribute={expire_Date}
+            attribute={user.expire_Date}
             inputType={"date"}
-            setter={setExpire_Date}
+            setter={(e) => {
+              setUser({ ...user, expire_Date: e });
+            }}
           />{" "}
           <Textbox
             name={"ccv"}
             attriName={"ccv"}
-            attribute={ccv}
+            attribute={user.ccv}
             inputType={"number"}
-            setter={setCcv}
+            setter={(e) => {
+              setUser({ ...user, ccv: e });
+            }}
           />
-          <Button onClick={updateCard} variant="info">
-            <span className="user-detail-update-button-style">
-              Add the card
-            </span>
-          </Button>
+          {updateCard != null && (
+            <Button onClick={updateCard} variant="info">
+              <span className="user-detail-update-button-style">
+                Add the card
+              </span>
+            </Button>
+          )}
         </Card.Body>
       </Card>
     </Col>

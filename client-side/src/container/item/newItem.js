@@ -1,4 +1,3 @@
-import Button from "react-bootstrap/Button";
 import React, { useEffect, useState } from "react";
 import { host } from "../../frame/Constants";
 import { pk } from "../../setPrimary";
@@ -10,20 +9,23 @@ import {
   uploadImageAPIFunc,
   showCaterAPI_Func,
   showSuppAPI_Func,
+  setItemImageAPI_Func,
 } from "../../frame/API";
 
 const AddItem = ({ userType, messageSetter }) => {
-  const [itemPrice, setItemPrice] = useState(0);
-  const [itemQty, setItemQty] = useState(0);
-  const [itemCatID, setItemCatID] = useState(0);
+  const [item, setItem] = useState({
+    itemThreshold: 0,
+    itemQty: 0,
+    itemCatID: "",
+    itemName: "",
+    itemDesp: "",
+    itemUrl: "",
+    itemDetID: "",
+    itemPrice: 0,
+    suppID: "",
+  });
   const [image, setImage] = useState(null);
-  const [itemName, setItemName] = useState("");
-  const [itemDesp, setItemDesp] = useState("");
-  const [itemThreshold, setItemThreshold] = useState(0);
   const [itemCatList, setItemCatList] = useState([]);
-  const [suppID, setSuppID] = useState("");
-  const [suppOrdQty, setSuppOrdQty] = useState("");
-  const [orderDate, setOrderDate] = useState("");
   const [suppList, setSuppList] = useState([]);
   const history = useHistory();
 
@@ -41,48 +43,82 @@ const AddItem = ({ userType, messageSetter }) => {
     });
   }, []);
 
-  //handle the submission
   const handleSubmit = async () => {
+    if (
+      !item.itemThreshold ||
+      !item.itemQty ||
+      !item.itemCatID ||
+      !item.itemName ||
+      !item.itemDesp ||
+      !item.itemPrice ||
+      !item.suppID
+    ) {
+      messageSetter("Make sure filling up all the fields", "warning", true);
+      return;
+    }
+    item.itemDetID = pk;
+    const today = new Date();
+    item.orderDate =
+      today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
+    item.ordReceiveDate =
+      today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
+    item.suppOrdID = pk + 1;
+    item.suppOrdQty = item.itemQty;
+
+    addItemAPIFunc(item).then((response) => {
+      if (response.data.auth == false) {
+        history.push("/error");
+        window.location.reload(false);
+      } else if (response.data.error) {
+        messageSetter(response.data.error, "warning", true);
+      } else {
+        uploadImage();
+      }
+    });
+  };
+
+  const uploadImage = () => {
     const fd = new FormData();
     fd.append("image", image);
-    //API that uploads the image to the database
-    await uploadImageAPIFunc(fd).then((response) => {
-      const itemUrl = host + "/" + response.data.fileName;
-      const itemDetID = pk;
-      const newItem = {
-        itemThreshold,
-        itemQty,
-        itemCatID,
-        itemName,
-        itemDesp,
-        itemUrl,
-        itemDetID,
-        itemPrice,
-        suppID,
-      };
+    uploadImageAPIFunc(fd).then((response) => {
+      if (response.data.fileName) {
+        const itemUrl = host + "/" + response.data.fileName;
+        const itemDetID = item.itemDetID;
+        const newData = { itemUrl, itemDetID };
+        updateImageUrl(newData);
+      } else {
+        messageSetter(
+          "Image upload has been interrupted, please try it again later",
+          "warning",
+          true
+        );
+        return;
+      }
+    });
+  };
 
-      addItemAPIFunc(newItem).then((response) => {
-        const suppOrdID = pk;
-        const ordReceiveDate = orderDate;
-        const newOrder = {
-          suppOrdID,
-          suppID,
-          itemDetID,
-          itemCatID,
-          suppOrdQty,
-          orderDate,
-          ordReceiveDate,
-          itemName,
-        };
-        //API that adds the order details to the database
-        addSuppOrderAPIFunc(newOrder).then((response) => {
-          if (response.data.auth == false) {
-            history.push("/error");
-            window.location.reload(false);
-          }
-          messageSetter(response.data.message, "success", true);
-        });
+  const updateImageUrl = (newData) => {
+    setItemImageAPI_Func(newData).then((response) => {
+      if (response.data.error) {
+        messageSetter(
+          "Image upload has been interrupted, please try it again later",
+          "warning",
+          true
+        );
+      }
+      setItem({
+        itemThreshold: 0,
+        itemQty: 0,
+        itemCatID: "",
+        itemName: "",
+        itemDesp: "",
+        itemUrl: "",
+        itemDetID: "",
+        itemPrice: 0,
+        suppID: "",
       });
+      setImage(null);
+      messageSetter("new item has been added", "success", true);
     });
   };
 
@@ -90,28 +126,12 @@ const AddItem = ({ userType, messageSetter }) => {
     <div>
       <Component
         userType={userType}
-        itemCatID={itemCatID}
-        setItemCatID={setItemCatID}
         itemCatList={itemCatList}
-        itemName={itemName}
-        setItemName={setItemName}
-        itemPrice={itemPrice}
-        setItemPrice={setItemPrice}
-        itemThreshold={itemThreshold}
-        setItemThreshold={setItemThreshold}
-        itemQty={itemQty}
-        setItemQty={setItemQty}
-        itemDesp={itemDesp}
-        setItemDesp={setItemDesp}
         setImage={setImage}
-        suppID={suppID}
-        setSuppID={setSuppID}
         suppList={suppList}
-        suppOrdQty={suppOrdQty}
-        setSuppOrdQty={setSuppOrdQty}
-        orderDate={orderDate}
-        setOrderDate={setOrderDate}
         handleSubmit={handleSubmit}
+        item={item}
+        setItem={setItem}
       />
     </div>
   );

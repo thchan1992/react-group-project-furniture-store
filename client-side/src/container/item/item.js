@@ -26,6 +26,7 @@ const ShowItem = ({ userID, userType, messageSetter }) => {
   const [change, setChange] = useState("");
   const { itemDetID } = useParams();
 
+  //
   const deactItem = (itemDetID) => {
     const column = "itemThreshold";
     const change = 0;
@@ -39,6 +40,7 @@ const ShowItem = ({ userID, userType, messageSetter }) => {
     });
   };
 
+  //
   const updateItem = (itemDetID, edColumn, change) => {
     if (change != "") {
       const column = edColumn;
@@ -90,6 +92,7 @@ const ShowItem = ({ userID, userType, messageSetter }) => {
       messageSetter(response.data.message, "success", true);
     });
   };
+
   useEffect(() => {
     getItemDetAPI_Func(itemDetID).then((response) => {
       setItem(response.data.result);
@@ -111,8 +114,6 @@ const ShowItem = ({ userID, userType, messageSetter }) => {
         setEdColumn={setEdColumn}
         setChange={setChange}
         updateItem={updateItem}
-        edColumn={edColumn}
-        change={change}
         itemDesp={itemDesp}
         setItemDesp={setItemDesp}
         itemQty={itemQty}
