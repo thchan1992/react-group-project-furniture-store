@@ -1,6 +1,6 @@
 import { useHistory } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import PaymentDet from "./component/payment";
+import Component from "./payment_component/payment";
 import {
   checkFundAPI_Func,
   checkStockAPI_Func,
@@ -8,7 +8,9 @@ import {
   fetchUserPayDet_Func,
   fetchUserDetAPI_Func,
   getCostBaskAPI_Func,
-} from "../../frame/API";
+} from "../../api/api";
+
+import { authChecker } from "../../utility/authChecker";
 
 const Payment = ({ userID, messageSetter }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,12 +41,14 @@ const Payment = ({ userID, messageSetter }) => {
     var mm1 = String(shipDate.getMonth() + 1).padStart(2, "0");
     var yyyy1 = shipDate.getFullYear();
     const deliveryDate = (yyyy1 + "-" + mm1 + "-" + dd1).toString();
-
     const checkFund = { totalCost, userID };
 
-    await checkFundAPI_Func(checkFund).then((response) => {
+    checkFundAPI_Func(checkFund).then((response) => {
+      authChecker(history, response, false);
       if (response.data.result == true) {
         checkStockAPI_Func(userID).then((response) => {
+          authChecker(history, response, false);
+          // redirect(response);
           if (response.data.result == true) {
             if (addr1 || addr2 || city || postcode) {
               const delivAddress =
@@ -88,6 +92,8 @@ const Payment = ({ userID, messageSetter }) => {
 
   const finalisePayAct = (finalisePay) => {
     finalisePayAPI_Func(finalisePay).then((response) => {
+      authChecker(history, response, false);
+      // redirect(response);
       if (response.data.result == true) {
         history.push("/Basket/Payment/Confirmation");
         messageSetter(response.data.message, "success", true);
@@ -100,21 +106,24 @@ const Payment = ({ userID, messageSetter }) => {
 
   useEffect(() => {
     getCostBaskAPI_Func(userID).then((response) => {
+      authChecker(history, response, false);
       setTotalCost(response.data.totalCost);
-    });
-    fetchUserDetAPI_Func(userID).then((response) => {
-      setUserDetail(response.data.result);
-      setDeliv(response.data.result.userAddress);
-    });
-    fetchUserPayDet_Func(userID).then((response) => {
-      setPaymentDet(response.data.result);
+      fetchUserDetAPI_Func(userID).then((response) => {
+        authChecker(history, response, false);
+        setUserDetail(response.data.result);
+        setDeliv(response.data.result.userAddress);
+        fetchUserPayDet_Func(userID).then((response) => {
+          authChecker(history, response, false);
+          setPaymentDet(response.data.result);
+        });
+      });
     });
   }, [isLoading]);
 
   return (
     <div>
       {" "}
-      <PaymentDet
+      <Component
         paymentDet={paymentDet}
         userDetail={userDetail}
         deliv={deliv}

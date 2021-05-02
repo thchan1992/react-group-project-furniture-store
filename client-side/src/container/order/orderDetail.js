@@ -5,10 +5,11 @@ import {
   fetchSalesAPI_Func,
   fetchSalesCostAPI_Func,
   deleteBaskAPI_Func,
-} from "../../frame/API";
+} from "../../api/api";
 import Button from "react-bootstrap/esm/Button";
-import OrderDet from "../payment/component/confirmation";
+import Confirmation from "../payment/confirmation_component/confirmation";
 import { useHistory } from "react-router-dom";
+import { authChecker } from "../../utility/authChecker";
 
 const ViewOrderDetail = ({ userID }) => {
   const [orderList, setOrderList] = useState([]);
@@ -22,15 +23,13 @@ const ViewOrderDetail = ({ userID }) => {
 
   useEffect(() => {
     fetchSalesAPI_Func(basketItemID, userID).then((response1) => {
-      if (!response1.data.result || response1.data.auth == false) {
-        history.push("/error");
-        window.location.reload(false);
-      }
+      authChecker(history, response1, true);
       setOrderList(response1.data.result);
       setDeliveryDate(response1.data.result[0].deliveryDate);
       setOrderDate(response1.data.result[0].orderDate);
       setOrderRef(response1.data.result[0].basketItemID);
       fetchSalesCostAPI_Func(basketItemID, userID).then((response2) => {
+        authChecker(history, response2, true);
         setTotalCost(response2.data.result.totalCost);
         setOrderDet({
           totalCost: response2.data.result.totalCost,
@@ -44,7 +43,7 @@ const ViewOrderDetail = ({ userID }) => {
   }, []);
 
   return (
-    <OrderDet
+    <Confirmation
       totalCost={totalCost}
       deliveryDate={deliveryDate}
       orderDate={orderDate}

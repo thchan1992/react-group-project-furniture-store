@@ -19,8 +19,8 @@ const regularJWT = (req, res, next) => {
 
 const checkUserID = (req, res, userID, func) => {
   const token = req.headers["x-access-token"];
+  console.log("token", req.headers["x-access-token"]);
   jwt.verify(token, "Group47", (err, decoded) => {
-    console.log("2 ", decoded.userID);
     if (err) {
       res.json({
         auth: false,
@@ -29,8 +29,11 @@ const checkUserID = (req, res, userID, func) => {
       });
     } else {
       if (userID == decoded.userID) {
+        console.log("pass");
         func();
       } else {
+        console.log("userID::", userID);
+        console.log("decode::", decoded.userID);
         res.json({
           auth: false,
           message:

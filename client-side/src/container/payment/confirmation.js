@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import OrderDet from "./component/confirmation";
+import Component from "./confirmation_component/confirmation";
 import {
   fetchBasketAPI_Func,
   fetchSalesAPI_Func,
   fetchSalesCostAPI_Func,
   deleteBaskAPI_Func,
-} from "../../frame/API";
+} from "../../api/api";
 import { useHistory } from "react-router-dom";
 
 const Confirmation = ({ userID }) => {
@@ -17,6 +17,10 @@ const Confirmation = ({ userID }) => {
   const history = useHistory();
   useEffect(async () => {
     await fetchBasketAPI_Func(userID).then((response) => {
+      if (response.data.auth == false) {
+        history.push("/error");
+        window.location.reload(false);
+      }
       const basketItemID = response.data.result[0].basketItemID;
       fetchSalesAPI_Func(basketItemID, userID).then((response) => {
         setOrderList(response.data.result);
@@ -34,7 +38,7 @@ const Confirmation = ({ userID }) => {
   }, []);
 
   return (
-    <OrderDet
+    <Component
       totalCost={totalCost}
       deliveryDate={deliveryDate}
       orderDate={orderDate}

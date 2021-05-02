@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
-import { getUserOrdAPI_Func } from "../../frame/API";
-import Component from "./component/order";
+import { getUserOrdAPI_Func } from "../../api/api";
+import Component from "./order_component/order";
 import { useHistory, useParams } from "react-router-dom";
-
+import { authChecker } from "../../utility/authChecker";
 const ViewOrder = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [orderList, setOrderList] = useState([]);
@@ -12,10 +12,7 @@ const ViewOrder = () => {
 
   useEffect(() => {
     getUserOrdAPI_Func(userID).then((response) => {
-      if (!response.data.result || response.data.auth == false) {
-        history.push("/error");
-        window.location.reload(false);
-      }
+      authChecker(history, response, true);
       setOrderList(response.data.result);
     });
   }, [isLoading]);

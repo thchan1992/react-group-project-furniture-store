@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { showCaterAPI_Func } from "../../frame/API";
-import CatList from "./component/categoryList";
+import { showCaterAPI_Func } from "../../api/api";
+import Component from "./categoryList_component/categoryList";
 import { useHistory } from "react-router-dom";
 const ShowCat = ({ messageSetter }) => {
   const [catList, setCatList] = useState([]);
@@ -15,7 +15,7 @@ const ShowCat = ({ messageSetter }) => {
   }, [isLoading]);
 
   return (
-    <CatList
+    <Component
       catList={catList}
       setIsLoading={setIsLoading}
       messageSetter={messageSetter}

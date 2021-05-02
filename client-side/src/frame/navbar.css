@@ -1,0 +1,15 @@
+.linkText {
+  color: rgb(119, 189, 89);
+  font-family: "Titillium Web", sans-serif;
+  text-transform: uppercase;
+}
+
+.text-myaccount {
+  color: rgb(255, 255, 255);
+  font-family: "Titillium Web", sans-serif;
+}
+
+.placeholder-style-search {
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+}

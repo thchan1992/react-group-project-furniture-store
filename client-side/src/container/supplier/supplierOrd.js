@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import SuppOrder from "./component/supplierOrd";
-import { showOrdHistoryAPI_Func, updateStockAPI_Func } from "../../frame/API";
+import Component from "./supplierOrd_component/supplierOrd";
+import { showOrdHistoryAPI_Func, updateStockAPI_Func } from "../../api/api";
 import { useHistory } from "react-router-dom";
+import { authChecker } from "../../utility/authChecker";
 
-const SuppOrderList = ({ userType }) => {
+const SuppOrderList = () => {
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [dateTo, setDateTo] = useState("-");
@@ -11,11 +12,8 @@ const SuppOrderList = ({ userType }) => {
   const history = useHistory();
   const fetchOrder = () => {
     showOrdHistoryAPI_Func(dateTo, dateFrom).then((response) => {
-      if (!response.data.result || response.data.auth == false) {
-        history.push("/error");
-        window.location.reload(false);
-      }
-      console.log();
+      authChecker(history, response, true);
+      console.log(response);
       setOrderList(response.data.result);
     });
   };
@@ -26,8 +24,7 @@ const SuppOrderList = ({ userType }) => {
   }, [isLoading]);
 
   return (
-    <SuppOrder
-      userType={userType}
+    <Component
       orderList={orderList}
       dateTo={dateTo}
       setDateTo={setDateTo}

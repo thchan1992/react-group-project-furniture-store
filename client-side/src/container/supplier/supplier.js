@@ -1,8 +1,8 @@
 import React from "react";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
-import AddSup from "./newSupplier";
-import ShowSup from "./supplierList";
+import NewSupplier from "./newSupplier";
+import SupplierList from "./supplierList";
 
 const Supplier = ({ messageSetter }) => {
   return (
@@ -13,7 +13,7 @@ const Supplier = ({ messageSetter }) => {
           <span className="category-tab-button-style"> Modify Supplier</span>
         }
       >
-        <ShowSup messageSetter={messageSetter} />
+        <SupplierList messageSetter={messageSetter} />
       </Tab>
       <Tab
         eventKey="Supplier"
@@ -21,7 +21,7 @@ const Supplier = ({ messageSetter }) => {
           <span className="category-tab-button-style"> Add a Supplier</span>
         }
       >
-        <AddSup messageSetter={messageSetter} />
+        <NewSupplier messageSetter={messageSetter} />
       </Tab>
     </Tabs>
   );

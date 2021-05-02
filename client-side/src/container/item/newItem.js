@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { host } from "../../frame/Constants";
-import { pk } from "../../setPrimary";
+import { host } from "../../api/url";
+import { pk } from "../../utility/setPrimary";
 import { useHistory } from "react-router-dom";
-import Component from "./component/newItem";
+import Component from "./component_newItem/newItem";
 import {
   addItemAPIFunc,
   addSuppOrderAPIFunc,
@@ -10,9 +10,10 @@ import {
   showCaterAPI_Func,
   showSuppAPI_Func,
   setItemImageAPI_Func,
-} from "../../frame/API";
+} from "../../api/api";
+import { authChecker } from "../../utility/authChecker";
 
-const AddItem = ({ userType, messageSetter }) => {
+const AddItem = ({ messageSetter }) => {
   const [item, setItem] = useState({
     itemThreshold: 0,
     itemQty: 0,
@@ -34,10 +35,7 @@ const AddItem = ({ userType, messageSetter }) => {
     showCaterAPI_Func().then((response) => {
       setItemCatList(response.data.result);
       showSuppAPI_Func().then((response) => {
-        if (!response.data.result || response.data.auth == false) {
-          history.push("/error");
-          window.location.reload(false);
-        }
+        authChecker(history, response, true);
         setSuppList(response.data.result);
       });
     });
@@ -51,7 +49,8 @@ const AddItem = ({ userType, messageSetter }) => {
       !item.itemName ||
       !item.itemDesp ||
       !item.itemPrice ||
-      !item.suppID
+      !item.suppID ||
+      !image
     ) {
       messageSetter("Make sure filling up all the fields", "warning", true);
       return;
@@ -125,7 +124,6 @@ const AddItem = ({ userType, messageSetter }) => {
   return (
     <div>
       <Component
-        userType={userType}
         itemCatList={itemCatList}
         setImage={setImage}
         suppList={suppList}

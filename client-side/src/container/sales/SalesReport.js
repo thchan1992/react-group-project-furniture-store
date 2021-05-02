@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import SalesReComp from "./component/SalesReport";
-import { showSalesAPI_Func } from "../../frame/API";
+import Component from "./salesReport_component/SalesReport";
+import { showSalesAPI_Func } from "../../api/api";
 import { useHistory } from "react-router-dom";
-
-const Sales = ({ userType }) => {
+import { authChecker } from "../../utility/authChecker";
+const Sales = () => {
   const [sorting, setSorting] = useState("ASC");
   const [column, setColumn] = useState("orderDate");
   const [salesList, setSalesList] = useState([]);
@@ -15,10 +15,7 @@ const Sales = ({ userType }) => {
   //Function to fetch the sorted items
   const fetchSales = () => {
     showSalesAPI_Func(sorting, column, dateFrom, dateTo).then((response) => {
-      if (!response.data.result || response.data.auth == false) {
-        history.push("/error");
-        window.location.reload(false);
-      }
+      authChecker(history, response, true);
       setSalesList(response.data.result);
     });
   };
@@ -32,7 +29,7 @@ const Sales = ({ userType }) => {
   //Sorting Item by Name (A to Z), Name(Z to A), Price(low to high), Price(high to low).
   //Admin can update any Item's Name, Price, Description, Quantity, Threshold and Image.
   return (
-    <SalesReComp
+    <Component
       dateFrom={dateFrom}
       setDateFrom={setDateFrom}
       dateTo={dateTo}
@@ -41,7 +38,6 @@ const Sales = ({ userType }) => {
       setColumn={setColumn}
       setSorting={setSorting}
       setIsLoading={setIsLoading}
-      userType={userType}
       salesList={salesList}
       showSort={showSort}
       setShowSort={setShowSort}

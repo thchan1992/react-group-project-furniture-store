@@ -1,7 +1,7 @@
 import { useHistory, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import BasketList from "./component/basket";
-import { fetchBasketAPI_Func, totalCostAPI_Func } from "../../frame/API";
+import Component from "./basket_component/basket";
+import { fetchBasketAPI_Func, totalCostAPI_Func } from "../../api/api";
 
 const Basket = ({ messageSetter }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,7 +39,7 @@ const Basket = ({ messageSetter }) => {
   }, [isLoading]);
 
   return (
-    <BasketList
+    <Component
       messageSetter={messageSetter}
       basketList={basketList}
       userID={userID}

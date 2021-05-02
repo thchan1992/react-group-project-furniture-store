@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
-import { pk } from "../../setPrimary";
-import Component from "./component/signup";
+import { pk } from "../../utility/setPrimary";
+import Component from "./signup_component/signup";
 import { useHistory } from "react-router-dom";
 import {
   checkExistPayDetAPI_Func,
   fetchPayMetAPI_Func,
   signUpAdminAPI_Func,
   signUpAPIFunc,
-} from "../../frame/API";
+} from "../../api/api";
+
+import { authChecker } from "../../utility/authChecker";
 
 const SignUp = ({ userType, messageSetter }) => {
   const [user, setUser] = useState({
@@ -97,12 +99,8 @@ const SignUp = ({ userType, messageSetter }) => {
       user.userAddress = "N/A";
       user.userPass = userPass;
       signUpAdminAPI_Func(user).then((response) => {
-        if (response.data.auth == false) {
-          history.push("/error");
-          window.location.reload(false);
-        }
+        authChecker(history, response, false);
         if (response.data.error) {
-          console.log(response);
           messageSetter(response.data.error, "danger", true);
         }
         if (!response.data.error) {

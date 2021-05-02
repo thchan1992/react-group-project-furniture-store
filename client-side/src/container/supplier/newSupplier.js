@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { addSupp_Func } from "../../frame/API";
-import { pk } from "../../setPrimary";
-import AddSupForm from "./component/newSupplier";
+import { addSupp_Func } from "../../api/api";
+import { pk } from "../../utility/setPrimary";
+import Component from "./newSupplier_component/newSupplier";
 import { useHistory } from "react-router-dom";
+import { authChecker } from "../../utility/authChecker";
 
 const AddSup = ({ messageSetter }) => {
   const [suppName, setSuppName] = useState("");
@@ -16,10 +17,7 @@ const AddSup = ({ messageSetter }) => {
       const suppID = pk;
       const newSup = { suppEmail, suppName, suppID };
       addSupp_Func(newSup).then((response) => {
-        if (response.data.auth == false) {
-          history.push("/error");
-          window.location.reload(false);
-        }
+        authChecker(history, response, false);
         messageSetter(response.data.message, "success", true);
       });
       setSuppName("");
@@ -29,7 +27,7 @@ const AddSup = ({ messageSetter }) => {
 
   return (
     <div>
-      <AddSupForm
+      <Component
         suppName={suppName}
         setSuppName={setSuppName}
         suppEmail={suppEmail}

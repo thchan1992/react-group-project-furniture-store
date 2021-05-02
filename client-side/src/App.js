@@ -1,13 +1,14 @@
 import "./App.css";
-import Login from "./container/login/login";
+
 import { BrowserRouter, Link } from "react-router-dom";
-import Navbar from "react-bootstrap/Navbar";
+
 import React, { useEffect, useState } from "react";
-import Component from "./frame/Component";
-import Header from "./frame/Header";
-import { showCaterAPI_Func } from "./frame/API";
-import Inline from "./frame/Inline";
-import Message from "./frame/Message";
+import Containers from "./frame/containers";
+import NavBar from "./frame/navbar";
+import { showCaterAPI_Func } from "./api/api";
+import Header from "./frame/header";
+
+import Message from "./utility/message";
 
 const App = () => {
   const [userID, setUserID] = useState("");
@@ -40,57 +41,37 @@ const App = () => {
     <div className="back-ground-colour">
       <BrowserRouter>
         <br />
-        {/* The website banner */}
-        <div className="footer">
-          <h1 className="titleText">CHKMV Furniture</h1>
-          <div className={"right"}>
-            {userType == "A" && (
-              <h4 className="titleText">Admin Mode | User ID: {userID}</h4>
-            )}
-            {userType == "C" && (
-              <h4 className="titleText">Welcome back, {user.firstName}!</h4>
-            )}
-            {/* The website log in component */}
-            <Login
-              isLogin={isLogin}
-              setIsLogin={setIsLogin}
-              userID={userID}
-              setUserID={(userID) => setUserID(userID)}
-              setUserType={(userType) => setUserType(userType)}
-              userType={userType}
-              setUser={setUser}
-              messageSetter={messageSetter}
-            />
-          </div>
-        </div>
+        {/* Header */}
+        <Header
+          userType={user.userType}
+          userID={user.userID}
+          user={user}
+          isLogin={isLogin}
+          setIsLogin={setIsLogin}
+          setUserID={setUserID}
+          setUserType={setUserType}
+          setUser={setUser}
+          messageSetter={messageSetter}
+        />
+        {/*Nav bar*/}
+        <NavBar
+          caterList={caterList}
+          userType={user.userType}
+          keyword={keyword}
+          setKeyword={setKeyword}
+          userID={user.userID}
+        />
         {/* Message */}
         <Message
           messageCont={messageCont}
           showMessage={showMessage}
           setShowMessage={setShowMessage}
         />
-        {/* Header */}
-        <Navbar bg="dark" variant="dark">
-          <Navbar.Brand>
-            <Link to="/home">🪧</Link>
-          </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            {/*Header*/}
-            <Header caterList={caterList} userType={userType} />
-            <Inline
-              setKeyword={setKeyword}
-              userType={userType}
-              keyword={keyword}
-              userID={userID}
-            />
-          </Navbar.Collapse>
-        </Navbar>
-
         {/*Router Linking different component and container */}
-        <Component
+        <Containers
+          user={user}
           isLogin={isLogin}
-          userType={userType}
+          userType={user.userType}
           userID={userID}
           keyword={keyword}
           caterList={caterList}

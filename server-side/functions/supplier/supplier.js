@@ -66,7 +66,7 @@ app.post(addNewSuppOrd_url, adminJWT, (req, res) => {
 
 // Fetch a list of all the orders made to the suppliers (orders history)
 app.post(getOrdHistory_url, adminJWT, (req, res) => {
-  const params = [req.body.dateTo, req.body.dateFrom];
+  const params = [req.body.dateFrom, req.body.dateTo];
   console.log(params);
   getAll(getOrdHistory_sql, params, res);
 });

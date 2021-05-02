@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { defaults } from "react-chartjs-2";
-import { showSalesSummaryAPI_Func } from "../../frame/API";
-import SalesSumComp from "./component/SalesSummary";
+import { showSalesSummaryAPI_Func } from "../../api/api";
+import Component from "./salesSummary_component/SalesSummary";
 import { useHistory } from "react-router-dom";
-
-const SalesSummary = ({ userType }) => {
+import { authChecker } from "../../utility/authChecker";
+const SalesSummary = () => {
   const [salesList, setSalesList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [dateTo, setDateTo] = useState("-");
@@ -39,10 +39,7 @@ const SalesSummary = ({ userType }) => {
   //Function to fetch the daily revenue within the specified customer order dates
   const fetchSales = () => {
     showSalesSummaryAPI_Func(dateFrom, dateTo).then((response) => {
-      if (!response.data.result || response.data.auth == false) {
-        history.push("/error");
-        window.location.reload(false);
-      }
+      authChecker(history, response, true);
       setSalesList(response.data.result);
     });
   };
@@ -55,13 +52,12 @@ const SalesSummary = ({ userType }) => {
   }, [isLoading]);
 
   return (
-    <SalesSumComp
+    <Component
       dateFrom={dateFrom}
       setDateFrom={setDateFrom}
       dateTo={dateTo}
       setDateTo={setDateTo}
       fetchSales={fetchSales}
-      userType={userType}
       salesList={salesList}
       barData={barData}
     />

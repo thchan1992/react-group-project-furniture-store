@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import SuppList from "./component/supplierList";
-import { showSuppAPI_Func } from "../../frame/API";
+import Component from "./supplierList_component/supplierList";
+import { showSuppAPI_Func } from "../../api/api";
 import { useHistory } from "react-router-dom";
+import { authChecker } from "../../utility/authChecker";
 
 const ShowSup = ({ messageSetter }) => {
   const [suppList, setSuppList] = useState([]);
@@ -9,17 +10,14 @@ const ShowSup = ({ messageSetter }) => {
   const history = useHistory();
   useEffect(() => {
     showSuppAPI_Func().then((response) => {
-      if (!response.data.result || response.data.auth == false) {
-        history.push("/error");
-        window.location.reload(false);
-      }
+      authChecker(history, response, true);
       setSuppList(response.data.result);
       setIsLoading(false);
     });
   }, [isLoading]);
 
   return (
-    <SuppList
+    <Component
       suppList={suppList}
       setIsLoading={setIsLoading}
       messageSetter={messageSetter}
