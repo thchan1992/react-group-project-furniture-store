@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import { authChecker } from "../../../utility/authChecker";
 
-const EditCat = ({ data, setIsLoading, messageSetter }) => {
+const EditCategory = ({ data, setIsLoading, messageSetter }) => {
   const [itemCatName, setItemCatName] = useState(null);
 
   const history = useHistory();
@@ -68,4 +68,4 @@ const EditCat = ({ data, setIsLoading, messageSetter }) => {
   );
 };
 
-export default EditCat;
+export default EditCategory;

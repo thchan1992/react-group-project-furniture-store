@@ -5,7 +5,7 @@ import BaskItem from "./baskItem";
 import "./basket.css";
 import Card from "react-bootstrap/Card";
 
-const BasketList = ({
+const Basket = ({
   basketList,
   userID,
   setIsLoading,
@@ -59,4 +59,4 @@ const BasketList = ({
     </Card>
   );
 };
-export default BasketList;
+export default Basket;

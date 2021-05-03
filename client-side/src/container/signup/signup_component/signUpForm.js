@@ -55,7 +55,7 @@ const SignUpForm = ({
               attriName={"userEmail"}
               attribute={user.userEmail}
               inputType={"email"}
-              placeholder={"Email"}
+              placeholder={"Email Must contain @"}
               setter={(e) => {
                 setUser({ ...user, userEmail: e });
               }}
@@ -106,7 +106,7 @@ const SignUpForm = ({
               attriName={"userPass"}
               attribute={userPass}
               inputType={"password"}
-              placeholder={"Password"}
+              placeholder={"At least 6 digit"}
               setter={setUserPass}
             />
             <Textbox

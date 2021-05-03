@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col";
 import React, { useEffect, useState } from "react";
 import Textbox from "../../../utility/Textbox";
 
-const ItemDetForm = ({ setImage, item, setItem }) => {
+const NewItemForm = ({ setImage, item, setItem }) => {
   return (
     <div>
       <Textbox
@@ -72,4 +72,4 @@ const ItemDetForm = ({ setImage, item, setItem }) => {
   );
 };
 
-export default ItemDetForm;
+export default NewItemForm;

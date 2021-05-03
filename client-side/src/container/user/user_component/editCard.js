@@ -1,4 +1,4 @@
-import CredForm from "../../signup/signup_component/credForm";
+import CardForm from "../../signup/signup_component/cardForm";
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Card from "react-bootstrap/Card";
@@ -21,7 +21,7 @@ const EditCard = ({
         </Card.Header>
         {showEd == true && (
           <>
-            <CredForm
+            <CardForm
               user={user}
               setUser={setUser}
               payMetList={payMetList}

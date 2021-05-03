@@ -33,6 +33,11 @@ const User = ({ messageSetter }) => {
   const history = useHistory();
 
   const updateUser = (column, change) => {
+    if (column == "userEmail" && !change.includes("@")) {
+      messageSetter("Wrong Email Format: It must contain @", "danger", true);
+      return;
+    }
+
     if (column && change) {
       if (verPass != user.userPass) {
         messageSetter("password verification failed", "danger", true);

@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import "./supplierOrd.css";
 
-const SuppOrder = ({
+const SupplierOrd = ({
   orderList,
   dateTo,
   dateFrom,
@@ -104,4 +104,4 @@ const SuppOrder = ({
     </div>
   );
 };
-export default SuppOrder;
+export default SupplierOrd;

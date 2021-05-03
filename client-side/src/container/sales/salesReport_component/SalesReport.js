@@ -6,9 +6,9 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import ListGroup from "react-bootstrap/ListGroup";
 import Card from "react-bootstrap/Card";
-import "./SalesReport.css";
+import "./salesReport.css";
 
-const SalesReComp = ({
+const SalesReport = ({
   dateFrom,
   setDateFrom,
   dateTo,
@@ -193,4 +193,4 @@ const SalesReComp = ({
   );
 };
 
-export default SalesReComp;
+export default SalesReport;

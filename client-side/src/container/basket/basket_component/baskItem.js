@@ -4,7 +4,7 @@ import React, { useState } from "react";
 
 import { modifyBasketAPI_Func } from "../../../api/api";
 
-const ShowBaskItem = ({ data, userID, setIsLoading, messageSetter }) => {
+const BaskItem = ({ data, userID, setIsLoading, messageSetter }) => {
   const [itemBasketQty, setItemBasketQty] = useState(
     Number(data.itemBasketQty)
   );
@@ -84,4 +84,4 @@ const ShowBaskItem = ({ data, userID, setIsLoading, messageSetter }) => {
   );
 };
 
-export default ShowBaskItem;
+export default BaskItem;

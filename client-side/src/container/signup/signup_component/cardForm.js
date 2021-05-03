@@ -8,7 +8,7 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Card from "react-bootstrap/Card";
 import Row from "react-bootstrap/Row";
 
-const CredForm = ({ user, setUser, payMetList, updateCard }) => {
+const CardForm = ({ user, setUser, payMetList, updateCard }) => {
   return (
     <Card>
       <Card.Header>
@@ -94,4 +94,4 @@ const CredForm = ({ user, setUser, payMetList, updateCard }) => {
   );
 };
 
-export default CredForm;
+export default CardForm;

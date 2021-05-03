@@ -4,7 +4,7 @@ import React from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import DropdownButton from "react-bootstrap/DropdownButton";
 
-const PickItemCat = ({ itemCatList, item, setItem }) => {
+const ItemCatList = ({ itemCatList, item, setItem }) => {
   return (
     <Form.Group>
       <span className="user-attribute-text-style">Item Category ID</span>
@@ -36,4 +36,4 @@ const PickItemCat = ({ itemCatList, item, setItem }) => {
   );
 };
 
-export default PickItemCat;
+export default ItemCatList;

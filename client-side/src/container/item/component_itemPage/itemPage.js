@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import SortItem from "./sortItem";
 import ProductList from "./productList";
 import "./itemPage.css";
-const ItemList = ({
+const ItemPage = ({
   setColumn,
   setSorting,
   setIsLoading,
@@ -34,4 +34,4 @@ const ItemList = ({
     </div>
   );
 };
-export default ItemList;
+export default ItemPage;

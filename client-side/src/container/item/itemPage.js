@@ -3,7 +3,13 @@ import { showItemsAPI_Func, showSearchAPI_Func } from "../../api/api";
 import Component from "./component_itemPage/itemPage";
 import { showItemsAPI } from "../../api/api";
 
-const Item = ({ itemCatName, userID, userType, keyword, messageSetter }) => {
+const ItemPage = ({
+  itemCatName,
+  userID,
+  userType,
+  keyword,
+  messageSetter,
+}) => {
   const [sorting, setSorting] = useState("ASC");
   const [column, setColumn] = useState("itemName");
   const [itemList, setItemList] = useState([]);
@@ -60,4 +66,4 @@ const Item = ({ itemCatName, userID, userType, keyword, messageSetter }) => {
   );
 };
 
-export default Item;
+export default ItemPage;

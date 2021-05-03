@@ -5,7 +5,7 @@ import Component from "./newSupplier_component/newSupplier";
 import { useHistory } from "react-router-dom";
 import { authChecker } from "../../utility/authChecker";
 
-const AddSup = ({ messageSetter }) => {
+const NewSupplier = ({ messageSetter }) => {
   const [suppName, setSuppName] = useState("");
   const [suppEmail, setSuppEmail] = useState("");
   const history = useHistory();
@@ -38,4 +38,4 @@ const AddSup = ({ messageSetter }) => {
   );
 };
 
-export default AddSup;
+export default NewSupplier;

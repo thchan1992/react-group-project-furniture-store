@@ -4,7 +4,7 @@ import { getUserOrdAPI_Func } from "../../api/api";
 import Component from "./order_component/order";
 import { useHistory, useParams } from "react-router-dom";
 import { authChecker } from "../../utility/authChecker";
-const ViewOrder = () => {
+const Order = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [orderList, setOrderList] = useState([]);
   const history = useHistory();
@@ -19,4 +19,4 @@ const ViewOrder = () => {
   return <Component orderList={orderList} history={history} />;
 };
 
-export default ViewOrder;
+export default Order;

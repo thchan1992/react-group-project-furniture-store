@@ -32,7 +32,6 @@ app.use(
 
 //Login API request
 app.post(login_url, (req, res) => {
-  const sql = "SELECT * FROM userDetail WHERE userEmail =?";
   const userEmail = req.body.userEmail;
   const userPass = req.body.userPass;
   login(login_sql, userEmail, userPass, req, res);

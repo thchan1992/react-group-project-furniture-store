@@ -1,6 +1,6 @@
 import React from "react";
 import EditUserForm from "./editUserForm";
-import EditCredCard from "./editCredCard";
+import EditCredCard from "./editCard";
 import "./user.css";
 const User = ({
   user,

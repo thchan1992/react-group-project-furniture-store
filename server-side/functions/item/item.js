@@ -15,6 +15,7 @@ const {
   updateItemCat_url,
   showCater_url,
   showItemDet_url,
+  setImageUrl_url,
 } = require("./item_url");
 
 const {
@@ -28,6 +29,7 @@ const {
   fetchSearchItemList_sql,
   addNewItem_sql,
   fetchItemDetUrl_sql,
+  setImageUrl_sql,
 } = require("./item_sql");
 
 const { getAll, getOne, runCom, uploadImg, deleteImg } = require("./item_func");
@@ -139,9 +141,9 @@ app.delete(fetchItemDetUrl_url, adminJWT, (req, res) => {
   deleteImg(fetchItemDetUrl_sql, params, res);
 });
 
-app.post("/item/setImageUrl/", adminJWT, (req, res) => {
+app.post(setImageUrl_url, adminJWT, (req, res) => {
   runCom(
-    "UPDATE itemDetails SET itemUrl = ? WHERE itemDetID = ?",
+    setImageUrl_sql,
     [req.body.itemUrl, req.body.itemDetID],
     res,
     "Item Picture updated"

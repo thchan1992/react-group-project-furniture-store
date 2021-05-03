@@ -1,6 +1,6 @@
 import React from "react";
 import SignUpForm from "./signUpForm";
-import CredForm from "./credForm";
+import CardForm from "./cardForm";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import "./signup.css";
@@ -55,7 +55,7 @@ const Signup = ({
             backgroundColor: "white",
           }}
         >
-          <CredForm user={user} setUser={setUser} payMetList={payMetList} />
+          <CardForm user={user} setUser={setUser} payMetList={payMetList} />
         </Col>
       )}
     </Row>

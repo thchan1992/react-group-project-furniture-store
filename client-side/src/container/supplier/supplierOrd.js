@@ -4,7 +4,7 @@ import { showOrdHistoryAPI_Func, updateStockAPI_Func } from "../../api/api";
 import { useHistory } from "react-router-dom";
 import { authChecker } from "../../utility/authChecker";
 
-const SuppOrderList = () => {
+const SupplierOrd = () => {
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [dateTo, setDateTo] = useState("-");
@@ -35,4 +35,4 @@ const SuppOrderList = () => {
   );
 };
 
-export default SuppOrderList;
+export default SupplierOrd;

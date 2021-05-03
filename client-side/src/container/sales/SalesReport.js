@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import Component from "./salesReport_component/SalesReport";
+import Component from "./salesReport_component/salesReport";
 import { showSalesAPI_Func } from "../../api/api";
 import { useHistory } from "react-router-dom";
 import { authChecker } from "../../utility/authChecker";
-const Sales = () => {
+const SalesReport = () => {
   const [sorting, setSorting] = useState("ASC");
   const [column, setColumn] = useState("orderDate");
   const [salesList, setSalesList] = useState([]);
@@ -45,4 +45,4 @@ const Sales = () => {
   );
 };
 
-export default Sales;
+export default SalesReport;

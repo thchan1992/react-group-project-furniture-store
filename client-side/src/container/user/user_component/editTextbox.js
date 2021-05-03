@@ -4,7 +4,7 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import ListGroup from "react-bootstrap/ListGroup";
 
-const EdUserTextbox = ({
+const EditTextBox = ({
   name,
   attriName,
   attribute,
@@ -51,4 +51,4 @@ const EdUserTextbox = ({
   );
 };
 
-export default EdUserTextbox;
+export default EditTextBox;

@@ -7,7 +7,7 @@ import {
   deleteBaskAPI_Func,
 } from "../../api/api";
 import Button from "react-bootstrap/esm/Button";
-import Confirmation from "../payment/confirmation_component/confirmation";
+import Component from "../payment/confirmation_component/confirmation";
 import { useHistory } from "react-router-dom";
 import { authChecker } from "../../utility/authChecker";
 
@@ -43,7 +43,7 @@ const ViewOrderDetail = ({ userID }) => {
   }, []);
 
   return (
-    <Confirmation
+    <Component
       totalCost={totalCost}
       deliveryDate={deliveryDate}
       orderDate={orderDate}

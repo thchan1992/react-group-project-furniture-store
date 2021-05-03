@@ -1,6 +1,8 @@
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 
+const jwtSecretKey = process.env.ACCESS_TOKEN_SECRET;
+
 const jwtMaker = (userPass, req, res, result) => {
   //bcrypt decode the userPass and check whether it matches the password from the front end.
   bcrypt.compare(userPass, result[0].userPass, (error, response) => {
@@ -9,7 +11,10 @@ const jwtMaker = (userPass, req, res, result) => {
       const userEmail = result[0].userEmail;
       const userType = result[0].userType;
       //create the token by using the userID, userEmail and userType
-      const token = jwt.sign({ userID, userEmail, userType }, "Group47", {
+
+      // var jwtSecret = process.env.ACCESS_TOKEN_SECRET;
+
+      const token = jwt.sign({ userID, userEmail, userType }, jwtSecretKey, {
         // expiresIn: 15,
         expiresIn: 60 * 60 * 24,
       });
@@ -29,7 +34,7 @@ const regularJWT = (req, res, next) => {
   if (!token) {
     res.send("Token not found");
   } else {
-    jwt.verify(token, "Group47", (err, decoded) => {
+    jwt.verify(token, jwtSecretKey, (err, decoded) => {
       if (err) {
         res.json({ auth: false, message: "you failed to authenticate" });
       } else {
@@ -43,7 +48,7 @@ const regularJWT = (req, res, next) => {
 const checkUserID = (req, res, userID, func) => {
   const token = req.headers["x-access-token"];
   console.log("token", req.headers["x-access-token"]);
-  jwt.verify(token, "Group47", (err, decoded) => {
+  jwt.verify(token, jwtSecretKey, (err, decoded) => {
     if (err) {
       res.json({
         auth: false,
@@ -73,7 +78,7 @@ const adminJWT = (req, res, next) => {
   if (!token) {
     res.send("Token not found");
   } else {
-    jwt.verify(token, "Group47", (err, decoded) => {
+    jwt.verify(token, jwtSecretKey, (err, decoded) => {
       if (err) {
         res.json({
           auth: false,

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import "./newSupplier.css";
-const AddSupForm = ({
+const NewSupplier = ({
   suppName,
   setSuppName,
   suppEmail,
@@ -48,4 +48,4 @@ const AddSupForm = ({
     </Card>
   );
 };
-export default AddSupForm;
+export default NewSupplier;

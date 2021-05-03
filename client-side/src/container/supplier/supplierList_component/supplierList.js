@@ -5,7 +5,7 @@ import EditSupplier from "./editSupplier";
 import Card from "react-bootstrap/Card";
 import "./supplierList.css";
 
-const SuppList = ({ suppList, setIsLoading, messageSetter }) => {
+const SupplierList = ({ suppList, setIsLoading, messageSetter }) => {
   return (
     <Card>
       <Card.Header>
@@ -42,4 +42,4 @@ const SuppList = ({ suppList, setIsLoading, messageSetter }) => {
     </Card>
   );
 };
-export default SuppList;
+export default SupplierList;

@@ -5,8 +5,8 @@ import Form from "react-bootstrap/Form";
 import { Bar } from "react-chartjs-2";
 import ListGroup from "react-bootstrap/ListGroup";
 import Card from "react-bootstrap/Card";
-import "./SalesSummary.css";
-const SalesSumComp = ({
+import "./salesSummary.css";
+const SalesSummary = ({
   dateFrom,
   setDateFrom,
   dateTo,
@@ -121,4 +121,4 @@ const SalesSumComp = ({
     </div>
   );
 };
-export default SalesSumComp;
+export default SalesSummary;

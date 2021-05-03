@@ -9,7 +9,7 @@ import React from "react";
 import Textbox from "../../../utility/Textbox";
 import "./payment.css";
 
-const PaymentDet = ({
+const Payment = ({
   paymentDet,
   userDetail,
   deliv,
@@ -186,4 +186,4 @@ const PaymentDet = ({
   );
 };
 
-export default PaymentDet;
+export default Payment;

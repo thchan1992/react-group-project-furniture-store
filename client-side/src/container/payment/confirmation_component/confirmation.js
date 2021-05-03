@@ -3,7 +3,7 @@ import Table from "react-bootstrap/Table";
 import ListGroup from "react-bootstrap/ListGroup";
 import "./confirmation.css";
 import Card from "react-bootstrap/Card";
-const OrderDet = ({
+const Confirmation = ({
   totalCost,
   deliveryDate,
   orderDate,
@@ -83,4 +83,4 @@ const OrderDet = ({
   );
 };
 
-export default OrderDet;
+export default Confirmation;

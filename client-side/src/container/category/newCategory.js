@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 import Component from "./newCategory_component/newCategory";
 import { authChecker } from "../../utility/authChecker";
 
-const AddCat = ({ messageSetter }) => {
+const NewCategory = ({ messageSetter }) => {
   const [itemCatName, setItemCatName] = useState("");
   const history = useHistory();
   const handleSubmit = () => {
@@ -30,4 +30,4 @@ const AddCat = ({ messageSetter }) => {
   );
 };
 
-export default AddCat;
+export default NewCategory;

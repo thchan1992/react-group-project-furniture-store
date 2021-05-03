@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import Component from "./component_item/item";
+import Component from "./component_items/items";
 import { host } from "../../api/url";
 import { addBaskItemAPI_Func } from "../../api/api";
 import { authChecker } from "../../utility/authChecker";
@@ -13,7 +13,7 @@ import {
   getItemDetAPI_Func,
 } from "../../api/api";
 
-const ShowItem = ({ userID, userType, messageSetter }) => {
+const Items = ({ userID, userType, messageSetter }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [item, setItem] = useState({});
   const [newVal, setNewVal] = useState({
@@ -127,4 +127,4 @@ const ShowItem = ({ userID, userType, messageSetter }) => {
     </div>
   );
 };
-export default ShowItem;
+export default Items;

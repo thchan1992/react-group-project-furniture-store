@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import { useHistory } from "react-router-dom";
 import "./item.css";
 import ListGroupItem from "./listGroupItem";
-const ShowItemComp = ({
+const Items = ({
   newVal,
   setNewVal,
   item,
@@ -215,4 +215,4 @@ const ShowItemComp = ({
   );
 };
 
-export default ShowItemComp;
+export default Items;

@@ -5,7 +5,7 @@ import EditCategory from "./editCategory";
 import Card from "react-bootstrap/Card";
 import "./categoryList.css";
 
-const CatList = ({ catList, setIsLoading, messageSetter }) => {
+const CategoryList = ({ catList, setIsLoading, messageSetter }) => {
   return (
     <Card>
       <Card.Header>
@@ -42,4 +42,4 @@ const CatList = ({ catList, setIsLoading, messageSetter }) => {
   );
 };
 
-export default CatList;
+export default CategoryList;

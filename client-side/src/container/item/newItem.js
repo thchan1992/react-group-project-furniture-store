@@ -13,7 +13,7 @@ import {
 } from "../../api/api";
 import { authChecker } from "../../utility/authChecker";
 
-const AddItem = ({ messageSetter }) => {
+const NewItem = ({ messageSetter }) => {
   const [item, setItem] = useState({
     itemThreshold: 0,
     itemQty: 0,
@@ -134,4 +134,4 @@ const AddItem = ({ messageSetter }) => {
     </div>
   );
 };
-export default AddItem;
+export default NewItem;

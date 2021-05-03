@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import "./order.css";
 import Card from "react-bootstrap/Card";
 
-const ViewOrder = ({ orderList, history }) => {
+const Order = ({ orderList, history }) => {
   return (
     <Card bg="secondary">
       <Card.Header>
@@ -47,4 +47,4 @@ const ViewOrder = ({ orderList, history }) => {
   );
 };
 
-export default ViewOrder;
+export default Order;

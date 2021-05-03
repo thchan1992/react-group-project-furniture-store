@@ -7,7 +7,7 @@ import { modifySuppAPI_Func } from "../../../api/api";
 
 import Card from "react-bootstrap/Card";
 
-const EditSupp = ({ data, setIsLoading, messageSetter }) => {
+const EditSupplier = ({ data, setIsLoading, messageSetter }) => {
   const [suppName, setSuppName] = useState("");
   const [suppEmail, setSuppEmail] = useState("");
   const [column, setCol] = useState("");
@@ -101,4 +101,4 @@ const EditSupp = ({ data, setIsLoading, messageSetter }) => {
   );
 };
 
-export default EditSupp;
+export default EditSupplier;

@@ -4,7 +4,7 @@ import { showSuppAPI_Func } from "../../api/api";
 import { useHistory } from "react-router-dom";
 import { authChecker } from "../../utility/authChecker";
 
-const ShowSup = ({ messageSetter }) => {
+const SupplierList = ({ messageSetter }) => {
   const [suppList, setSuppList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
@@ -26,4 +26,4 @@ const ShowSup = ({ messageSetter }) => {
   );
 };
 
-export default ShowSup;
+export default SupplierList;

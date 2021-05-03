@@ -12,7 +12,7 @@ import {
 
 import { authChecker } from "../../utility/authChecker";
 
-const SignUp = ({ userType, messageSetter }) => {
+const Signup = ({ userType, messageSetter }) => {
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
@@ -48,7 +48,9 @@ const SignUp = ({ userType, messageSetter }) => {
       user.cardNumber &&
       user.expire_Date &&
       user.ccv &&
-      userType != "A"
+      userType != "A" &&
+      user.userEmail.includes("@") &&
+      userPass.length >= 6
     ) {
       checkExistPayDetAPI_Func(user.cardNumber).then((response) => {
         if (response.data.result) {
@@ -146,4 +148,4 @@ const SignUp = ({ userType, messageSetter }) => {
   );
 };
 
-export default SignUp;
+export default Signup;

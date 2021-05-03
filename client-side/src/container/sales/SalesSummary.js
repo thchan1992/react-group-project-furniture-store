@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { defaults } from "react-chartjs-2";
 import { showSalesSummaryAPI_Func } from "../../api/api";
-import Component from "./salesSummary_component/SalesSummary";
+import Component from "./salesSummary_component/salesSummary";
 import { useHistory } from "react-router-dom";
 import { authChecker } from "../../utility/authChecker";
 const SalesSummary = () => {
