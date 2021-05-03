@@ -5,7 +5,7 @@ import SuppOrderList from "../container/supplier/supplierOrd";
 import Sales from "../container/sales/SalesReport";
 import SalesSummary from "../container/sales/SalesSummary";
 import { Route, Switch } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import Supplier from "../container/supplier/supplier";
 import Category from "../container/category/category";

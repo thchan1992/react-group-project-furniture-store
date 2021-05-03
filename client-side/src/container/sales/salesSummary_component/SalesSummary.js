@@ -5,66 +5,74 @@ import Form from "react-bootstrap/Form";
 import { Bar } from "react-chartjs-2";
 import ListGroup from "react-bootstrap/ListGroup";
 import Card from "react-bootstrap/Card";
+import "./SalesSummary.css";
 const SalesSumComp = ({
   dateFrom,
   setDateFrom,
   dateTo,
   setDateTo,
   fetchSales,
-
   salesList,
   barData,
 }) => {
   return (
     <div>
-      <ListGroup>
-        <ListGroup.Item>
-          {" "}
-          <span className="sales-report-title"> Sales Summary Report</span>
-        </ListGroup.Item>
-
-        <ListGroup.Item>
-          <span className="sales-report-date-range-style">Date From:</span>
-          <Form.Control
-            style={{ height: "30px", width: "150px" }}
-            type="date"
-            placeholder="From:"
-            name="dateFrom"
-            id="dateFrom"
-            value={dateFrom}
-            onChange={(e) => {
-              setDateFrom(e.target.value);
-            }}
-          />
-        </ListGroup.Item>
-        <ListGroup.Item>
-          <span className="sales-report-date-range-style">Date To:</span>
-          <Form.Control
-            style={{ height: "30px", width: "150px" }}
-            type="date"
-            placeholder="To:"
-            name="dateTo"
-            id="dateTo"
-            value={dateTo}
-            onChange={(e) => {
-              setDateTo(e.target.value);
-            }}
-          />
-        </ListGroup.Item>
-        <ListGroup.Item>
-          {" "}
-          <Button
-            className="sales-report-search-button-style"
-            size="sm"
-            variant="info"
-            onClick={() => {
-              fetchSales();
-            }}
-          >
-            Search
-          </Button>
-        </ListGroup.Item>
-      </ListGroup>
+      <Card>
+        <ListGroup>
+          <Card.Header>
+            <ListGroup.Item>
+              {" "}
+              <div className="sales-summary-title-style">
+                {" "}
+                Sales Summary Report
+              </div>
+            </ListGroup.Item>
+          </Card.Header>
+          <Card.Body>
+            <ListGroup.Item>
+              <span className="sales-report-date-range-style">Date From:</span>
+              <Form.Control
+                style={{ width: "200px" }}
+                type="date"
+                placeholder="From:"
+                name="dateFrom"
+                id="dateFrom"
+                value={dateFrom}
+                onChange={(e) => {
+                  setDateFrom(e.target.value);
+                }}
+              />
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <span className="sales-report-date-range-style">Date To:</span>
+              <Form.Control
+                style={{ width: "200px" }}
+                type="date"
+                placeholder="To:"
+                name="dateTo"
+                id="dateTo"
+                value={dateTo}
+                onChange={(e) => {
+                  setDateTo(e.target.value);
+                }}
+              />
+            </ListGroup.Item>
+            <ListGroup.Item>
+              {" "}
+              <Button
+                className="sales-report-search-button-style"
+                size="sm"
+                variant="info"
+                onClick={() => {
+                  fetchSales();
+                }}
+              >
+                Search
+              </Button>
+            </ListGroup.Item>
+          </Card.Body>
+        </ListGroup>
+      </Card>
       <Card bg="info">
         <Card.Body>
           <Table striped bordered hover variant="dark">
@@ -88,22 +96,26 @@ const SalesSumComp = ({
       </Card>
       <div>
         {" "}
-        <Bar
-          data={barData}
-          height={300}
-          options={{
-            maintainAspectRatio: false,
-            scales: {
-              yAxes: [
-                {
-                  ticks: {
-                    beginAtZero: true,
-                  },
+        <Card bg="dark">
+          <Card.Body>
+            <Bar
+              data={barData}
+              height={300}
+              options={{
+                maintainAspectRatio: false,
+                scales: {
+                  yAxes: [
+                    {
+                      ticks: {
+                        beginAtZero: true,
+                      },
+                    },
+                  ],
                 },
-              ],
-            },
-          }}
-        />
+              }}
+            />
+          </Card.Body>
+        </Card>
       </div>
       ;
     </div>

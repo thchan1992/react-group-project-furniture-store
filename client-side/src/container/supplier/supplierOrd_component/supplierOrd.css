@@ -22,3 +22,12 @@
   color: rgb(255, 255, 255);
   font-family: "Titillium Web", sans-serif;
 }
+
+.supplier-order-title-style {
+  color: rgb(5, 12, 2);
+  text-align: center;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 30px;
+  text-transform: uppercase;
+  text-align: center;
+}

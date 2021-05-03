@@ -8,6 +8,7 @@ const ShowSup = ({ messageSetter }) => {
   const [suppList, setSuppList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
+
   useEffect(() => {
     showSuppAPI_Func().then((response) => {
       authChecker(history, response, true);

@@ -27,3 +27,11 @@
   font-family: "Titillium Web", sans-serif;
   font-size: 20px;
 }
+
+.order-detail-title-style {
+  color: rgb(0, 0, 0);
+  text-align: center;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 30px;
+  text-transform: uppercase;
+}

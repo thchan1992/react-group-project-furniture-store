@@ -35,7 +35,7 @@ const PaymentDet = ({
       <Card bg="light">
         <Card.Header>
           {" "}
-          <h1>Payment & Delivery Detail</h1>
+          <div className="payment-title-style">Payment & Delivery Detail</div>
         </Card.Header>
         <Card.Body>
           <ListGroup>

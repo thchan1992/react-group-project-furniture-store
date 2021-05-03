@@ -1,6 +1,6 @@
-.new-category-title-style {
-  color: rgb(34, 90, 63);
-  text-align: center;
+.new-item-title-style {
+  color: rgb(0, 0, 0);
+  text-align: left;
   font-family: "Titillium Web", sans-serif;
   font-size: 30px;
   text-transform: uppercase;

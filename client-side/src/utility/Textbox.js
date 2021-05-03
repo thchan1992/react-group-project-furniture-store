@@ -13,11 +13,11 @@ const Textbox = ({
   return (
     <Form.Group>
       <Form.Label>
-        <span className="user-attribute-text-style">{name}</span>
+        <span className="text-box-property-style">{name}</span>
       </Form.Label>
       <br />
       <Form.Control
-        className="user-detail-update-text-style"
+        className="text-box-property-style"
         style={{ height: "35px", width: "200px" }}
         type={inputType}
         name={attriName}

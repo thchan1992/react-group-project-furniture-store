@@ -7,20 +7,19 @@ import Card from "react-bootstrap/Card";
 import { authChecker } from "../../../utility/authChecker";
 
 const EditCat = ({ data, setIsLoading, messageSetter }) => {
-  const [itemCatName, setItemCatName] = useState("");
-  const [column, setCol] = useState("");
-  const [change, setChange] = useState("");
+  const [itemCatName, setItemCatName] = useState(null);
+
   const history = useHistory();
 
   const handleSubmit = (itemCatID) => {
-    if (column && change) {
+    if (itemCatName) {
+      const column = "itemCatName";
+      const change = itemCatName;
       const newData = { column, change, itemCatID };
       modifyCatAPI_Func(newData).then((response) => {
         authChecker(history, response, true);
         messageSetter(response.data.message, "success", true);
-        setItemCatName("");
-        setCol("");
-        setChange("");
+        setItemCatName(null);
         setIsLoading(true);
       });
     } else {
@@ -29,26 +28,27 @@ const EditCat = ({ data, setIsLoading, messageSetter }) => {
   };
 
   return (
-    <Card.Body>
-      <div key={data.itemCatID}>
+    <div key={data.itemCatID}>
+      {" "}
+      <Card bg="secondary">
         <Card.Header>
-          <span className="category-text-style">
+          <div className="category-text-style">
             {" "}
-            {data.itemCatName} - {data.itemCatID}
-          </span>
+            {data.itemCatName} <br />
+            <div className="category-pk-style"> {data.itemCatID}</div>
+          </div>
         </Card.Header>
         <Card.Body>
           {" "}
           <Form.Control
-            style={{ height: "40px", width: "200px" }}
             type="text"
             name="itemCatName"
             id="itemCatName"
+            className="text-box-property-style"
             value={itemCatName}
+            placeholder="New Name"
             onChange={(e) => {
               setItemCatName(e.target.value);
-              setCol(e.target.name);
-              setChange(e.target.value);
             }}
           />
         </Card.Body>
@@ -62,9 +62,9 @@ const EditCat = ({ data, setIsLoading, messageSetter }) => {
           >
             Edit Name
           </Button>
-        </Card.Footer>
-      </div>
-    </Card.Body>
+        </Card.Footer>{" "}
+      </Card>
+    </div>
   );
 };
 

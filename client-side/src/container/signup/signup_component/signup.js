@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import SignUpForm from "./signUpForm";
 import CredForm from "./credForm";
-import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import "./signup.css";
 const Signup = ({
   user,
   setUser,
@@ -22,29 +24,41 @@ const Signup = ({
   handleSubmit,
 }) => {
   return (
-    <div>
-      <SignUpForm
-        user={user}
-        setUser={setUser}
-        userType={userType}
-        addr1={addr1}
-        setAddr1={setAddr1}
-        addr2={addr2}
-        setAddr2={setAddr2}
-        city={city}
-        setCity={setCity}
-        postcode={postcode}
-        setPostcode={setPostcode}
-        userPass={userPass}
-        setUserPass={setUserPass}
-        verPass={verPass}
-        setVerPass={setVerPass}
-      />
+    <Row>
+      <Col
+        style={{
+          backgroundColor: "white",
+        }}
+      >
+        <SignUpForm
+          user={user}
+          setUser={setUser}
+          userType={userType}
+          addr1={addr1}
+          setAddr1={setAddr1}
+          addr2={addr2}
+          setAddr2={setAddr2}
+          city={city}
+          setCity={setCity}
+          postcode={postcode}
+          setPostcode={setPostcode}
+          userPass={userPass}
+          setUserPass={setUserPass}
+          verPass={verPass}
+          setVerPass={setVerPass}
+          handleSubmit={handleSubmit}
+        />
+      </Col>{" "}
       {userType != "A" && (
-        <CredForm user={user} setUser={setUser} payMetList={payMetList} />
+        <Col
+          style={{
+            backgroundColor: "white",
+          }}
+        >
+          <CredForm user={user} setUser={setUser} payMetList={payMetList} />
+        </Col>
       )}
-      <Button onClick={handleSubmit}>Sign Up</Button>
-    </div>
+    </Row>
   );
 };
 export default Signup;

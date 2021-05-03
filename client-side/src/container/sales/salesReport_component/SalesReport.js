@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import ListGroup from "react-bootstrap/ListGroup";
 import Card from "react-bootstrap/Card";
-import "./SalesReComp.css";
+import "./SalesReport.css";
 
 const SalesReComp = ({
   dateFrom,
@@ -23,162 +23,171 @@ const SalesReComp = ({
 }) => {
   return (
     <div>
-      <ListGroup>
-        {" "}
-        <ListGroup.Item>
-          <span className="sales-report-title">Product Sales Report</span>
-        </ListGroup.Item>
-        <ListGroup.Item>
-          <span className="sales-report-date-range-style">Date From:</span>
-          <Form.Control
-            style={{ height: "30px", width: "200px" }}
-            type="date"
-            placeholder="From:"
-            name="dateFrom"
-            id="dateFrom"
-            value={dateFrom}
-            onChange={(e) => {
-              setDateFrom(e.target.value);
-            }}
-          />
-        </ListGroup.Item>
-        <ListGroup.Item>
-          <span className="sales-report-date-range-style">Date To:</span>
-          <Form.Control
-            style={{ height: "30px", width: "200px" }}
-            type="date"
-            placeholder="To:"
-            name="dateTo"
-            id="dateTo"
-            value={dateTo}
-            onChange={(e) => {
-              setDateTo(e.target.value);
-            }}
-          />
-        </ListGroup.Item>
-        <ListGroup.Item>
-          {" "}
-          <Button
-            size="sm"
-            variant="info"
-            className="sales-report-search-button-style"
-            onClick={() => {
-              fetchSales();
-            }}
-          >
-            Search
-          </Button>
-          <DropdownButton
-            variant="warning"
-            title={
-              <span className="sales-report-search-button-style">
-                {showSort}
-              </span>
-            }
-          >
-            <Dropdown.Item
-              eventKey="Date"
-              onClick={() => {
-                setColumn("orderDate");
-                setSorting("ASC");
-                setIsLoading(true);
-                setShowSort("orderDate(A to Z)");
-              }}
-            >
-              orderDate(A to Z)
-            </Dropdown.Item>
-            <Dropdown.Item
-              eventKey="Date"
-              onClick={() => {
-                setColumn("orderDate");
-                setSorting("DESC");
-                setIsLoading(true);
-                setShowSort("orderDate (Z to A)");
-              }}
-            >
-              orderDate (Z to A)
-            </Dropdown.Item>
-            <Dropdown.Item
-              eventKey="Price"
-              onClick={() => {
-                setColumn("itemPrice");
-                setSorting("ASC");
-                setIsLoading(true);
-                setShowSort("Price (Low to High)");
-              }}
-            >
-              Price (Low to High)
-            </Dropdown.Item>
-            <Dropdown.Item
-              eventKey="Price"
-              onClick={() => {
-                setColumn("itemPrice");
-                setSorting("DESC");
-                setIsLoading(true);
-                setShowSort("Price (High to Low)");
-              }}
-            >
-              Price (High to Low)
-            </Dropdown.Item>
-            <Dropdown.Item
-              eventKey="Date"
-              onClick={() => {
-                setColumn("deliveryDate");
-                setSorting("ASC");
-                setIsLoading(true);
-                setShowSort("Delivery Date(early to late)");
-              }}
-            >
-              Delivery Date(early to late)
-            </Dropdown.Item>
-            <Dropdown.Item
-              eventKey="Date"
-              onClick={() => {
-                setColumn("deliveryDate");
-                setSorting("DESC");
-                setIsLoading(true);
-                setShowSort("Delivery Date(late to early)");
-              }}
-            >
-              Delivery Date(late to early)
-            </Dropdown.Item>
-          </DropdownButton>
-        </ListGroup.Item>
-      </ListGroup>
-      <Card bg="info">
-        <Card.Body>
-          <Table variant="dark" striped bordered hover>
-            <thead>
-              <tr className="sales-report-column-style">
-                <th>User ID</th>
-                <th>Basket Item ID</th>
-                <th>Item Detail ID</th>
-                <th>Item Category ID</th>
-                <th>Item Price</th>
-                <th>Item Basket Quantity</th>
-                <th>Order Date</th>
-                <th>Delivery Date</th>
-                <th>Delivery Address</th>
-              </tr>
-            </thead>
+      <Card>
+        <ListGroup>
+          <Card.Header>
+            <ListGroup.Item>
+              <div className="sales-reports-title-style">
+                Product Sales Report
+              </div>
+            </ListGroup.Item>
+          </Card.Header>{" "}
+          <Card.Body>
+            <ListGroup.Item>
+              <span className="sales-report-date-range-style">Date From:</span>
+              <Form.Control
+                style={{ height: "30px", width: "200px" }}
+                type="date"
+                placeholder="From:"
+                name="dateFrom"
+                id="dateFrom"
+                value={dateFrom}
+                onChange={(e) => {
+                  setDateFrom(e.target.value);
+                }}
+              />
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <span className="sales-report-date-range-style">Date To:</span>
+              <Form.Control
+                style={{ height: "30px", width: "200px" }}
+                type="date"
+                placeholder="To:"
+                name="dateTo"
+                id="dateTo"
+                value={dateTo}
+                onChange={(e) => {
+                  setDateTo(e.target.value);
+                }}
+              />
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <div className="flex-container">
+                <Button
+                  size="sm"
+                  variant="info"
+                  className="sales-report-search-button-style"
+                  onClick={() => {
+                    fetchSales();
+                  }}
+                >
+                  Search
+                </Button>
+                <DropdownButton
+                  variant="warning"
+                  title={
+                    <span className="sales-report-search-button-style">
+                      {showSort}
+                    </span>
+                  }
+                >
+                  <Dropdown.Item
+                    eventKey="Date"
+                    onClick={() => {
+                      setColumn("orderDate");
+                      setSorting("ASC");
+                      setIsLoading(true);
+                      setShowSort("orderDate(A to Z)");
+                    }}
+                  >
+                    orderDate(A to Z)
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    eventKey="Date"
+                    onClick={() => {
+                      setColumn("orderDate");
+                      setSorting("DESC");
+                      setIsLoading(true);
+                      setShowSort("orderDate (Z to A)");
+                    }}
+                  >
+                    orderDate (Z to A)
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    eventKey="Price"
+                    onClick={() => {
+                      setColumn("itemPrice");
+                      setSorting("ASC");
+                      setIsLoading(true);
+                      setShowSort("Price (Low to High)");
+                    }}
+                  >
+                    Price (Low to High)
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    eventKey="Price"
+                    onClick={() => {
+                      setColumn("itemPrice");
+                      setSorting("DESC");
+                      setIsLoading(true);
+                      setShowSort("Price (High to Low)");
+                    }}
+                  >
+                    Price (High to Low)
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    eventKey="Date"
+                    onClick={() => {
+                      setColumn("deliveryDate");
+                      setSorting("ASC");
+                      setIsLoading(true);
+                      setShowSort("Delivery Date(early to late)");
+                    }}
+                  >
+                    Delivery Date(early to late)
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    eventKey="Date"
+                    onClick={() => {
+                      setColumn("deliveryDate");
+                      setSorting("DESC");
+                      setIsLoading(true);
+                      setShowSort("Delivery Date(late to early)");
+                    }}
+                  >
+                    Delivery Date(late to early)
+                  </Dropdown.Item>
+                </DropdownButton>
+              </div>
+            </ListGroup.Item>{" "}
+          </Card.Body>
+        </ListGroup>
 
-            {salesList.map((data) => (
-              <tbody key={data.ID}>
-                <tr>
-                  <td>{data.userID}</td>
-                  <td>{data.basketItemID}</td>
-                  <td>{data.itemDetID}</td>
-                  <td>{data.itemCatID}</td>
-                  <td>{data.itemPrice}</td>
-                  <td>{data.itemBasketQty}</td>
-                  <td className="text-style-item">{data.orderDate}</td>
-                  <td className="text-style-item">{data.deliveryDate}</td>
-                  <td>{data.delivAddress}</td>
+        <Card bg="info">
+          <Card.Body>
+            <Table variant="dark" striped bordered hover>
+              <thead>
+                <tr className="sales-report-column-style">
+                  <th>User ID</th>
+                  <th>Basket Item ID</th>
+                  <th>Item Detail ID</th>
+                  <th>Item Category ID</th>
+                  <th>Item Price</th>
+                  <th>Item Basket Quantity</th>
+                  <th>Order Date</th>
+                  <th>Delivery Date</th>
+                  <th>Delivery Address</th>
                 </tr>
-              </tbody>
-            ))}
-          </Table>
-        </Card.Body>
+              </thead>
+
+              {salesList.map((data) => (
+                <tbody key={data.ID}>
+                  <tr>
+                    <td>{data.userID}</td>
+                    <td>{data.basketItemID}</td>
+                    <td>{data.itemDetID}</td>
+                    <td>{data.itemCatID}</td>
+                    <td>{data.itemPrice}</td>
+                    <td>{data.itemBasketQty}</td>
+                    <td className="text-style-item">{data.orderDate}</td>
+                    <td className="text-style-item">{data.deliveryDate}</td>
+                    <td>{data.delivAddress}</td>
+                  </tr>
+                </tbody>
+              ))}
+            </Table>
+          </Card.Body>
+        </Card>
       </Card>
     </div>
   );

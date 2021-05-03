@@ -21,3 +21,22 @@
   font-family: "Titillium Web", sans-serif;
   font-size: 15px;
 }
+
+.user-edit-switch-style {
+  color: rgb(0, 0, 0);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+}
+
+.align-edit-switch {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user-detail-title-style {
+  color: rgb(5, 12, 2);
+  text-align: center;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 30px;
+  text-transform: uppercase;
+}

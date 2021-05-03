@@ -13,6 +13,7 @@ const EdUserTextbox = ({
   data,
   showEd,
   updateUser,
+  placeholder,
 }) => {
   return (
     <div>
@@ -31,6 +32,7 @@ const EdUserTextbox = ({
               name={attriName}
               id={attriName}
               value={attribute}
+              placeholder={placeholder}
               onChange={(e) => setter(e)}
             />{" "}
             <Button

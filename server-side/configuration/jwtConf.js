@@ -1,4 +1,27 @@
 var jwt = require("jsonwebtoken");
+var bcrypt = require("bcrypt");
+
+const jwtMaker = (userPass, req, res, result) => {
+  //bcrypt decode the userPass and check whether it matches the password from the front end.
+  bcrypt.compare(userPass, result[0].userPass, (error, response) => {
+    if (response) {
+      const userID = result[0].userID;
+      const userEmail = result[0].userEmail;
+      const userType = result[0].userType;
+      //create the token by using the userID, userEmail and userType
+      const token = jwt.sign({ userID, userEmail, userType }, "Group47", {
+        // expiresIn: 15,
+        expiresIn: 60 * 60 * 24,
+      });
+      //create a session
+      req.session.user = result;
+      //return the token back to the front.
+      res.json({ auth: true, token: token, result: result });
+    } else {
+      res.send({ auth: false, message: "Wrong username or password" });
+    }
+  });
+};
 
 //set up the JWT for all users including admin, this token will be used for all purposes
 const regularJWT = (req, res, next) => {
@@ -71,4 +94,4 @@ const adminJWT = (req, res, next) => {
   }
 };
 
-module.exports = { regularJWT, adminJWT, checkUserID };
+module.exports = { regularJWT, adminJWT, checkUserID, jwtMaker };

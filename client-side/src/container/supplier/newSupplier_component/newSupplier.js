@@ -2,6 +2,7 @@ import Textbox from "../../../utility/Textbox";
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import "./newSupplier.css";
 const AddSupForm = ({
   suppName,
   setSuppName,
@@ -11,6 +12,10 @@ const AddSupForm = ({
 }) => {
   return (
     <Card>
+      {" "}
+      <Card.Header>
+        <div className="new-supplier-title-style">New Supplier</div>
+      </Card.Header>
       <Card.Body>
         {" "}
         <Textbox
@@ -19,6 +24,7 @@ const AddSupForm = ({
           attribute={suppName}
           inputType={"text"}
           setter={setSuppName}
+          placeholder={"Supplier Name"}
         />
         <Textbox
           name={"Supplier Email"}
@@ -26,6 +32,7 @@ const AddSupForm = ({
           attribute={suppEmail}
           inputType={"email"}
           setter={setSuppEmail}
+          placeholder={"Supplier Email"}
         />
       </Card.Body>{" "}
       <Card.Footer>

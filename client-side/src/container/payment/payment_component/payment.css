@@ -28,6 +28,14 @@
   font-size: 15px;
 }
 
+.payment-title-style {
+  color: rgb(119, 189, 89);
+  text-align: center;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
 /* .order-column-text-style {
   color: rgb(255, 255, 255);
   font-family: "Titillium Web", sans-serif;

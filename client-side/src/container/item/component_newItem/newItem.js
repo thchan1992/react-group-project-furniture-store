@@ -4,6 +4,9 @@ import Card from "react-bootstrap/Card";
 import ItemCatList from "./itemCatList";
 import NewItemForm from "./newItemForm";
 import SupOrdForm from "./supOrdForm";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import "./newItem.css";
 
 const NewItem = ({
   itemCatList,
@@ -18,29 +21,35 @@ const NewItem = ({
       {" "}
       <Card bg="light">
         <Card.Header>
-          <span className="supplier-order-title">New Item Form</span>
+          <div className="new-item-title-style">New Item Form</div>
         </Card.Header>
         <Card.Body>
-          <div>
-            {/*Drop down button to select item category */}
-            <ItemCatList
-              setItem={setItem}
-              item={item}
-              itemCatList={itemCatList}
-            />{" "}
-            {/*Supplier order form */}
-            <SupOrdForm item={item} setItem={setItem} suppList={suppList} />
-            {/* product detail form */}
-            <NewItemForm item={item} setItem={setItem} setImage={setImage} />
-            {/*onClick button to submit the item detail and supplier order */}
-            <Card.Footer>
+          <Row>
+            {" "}
+            <Col>
+              {/*Drop down button to select item category */}
+              <ItemCatList
+                setItem={setItem}
+                item={item}
+                itemCatList={itemCatList}
+              />{" "}
+              {/*Supplier order form */}
+              <SupOrdForm item={item} setItem={setItem} suppList={suppList} />
+            </Col>{" "}
+            <Col>
               {" "}
-              <Button onClick={handleSubmit} variant="info">
-                upload
-              </Button>
-            </Card.Footer>
-          </div>
-        </Card.Body>
+              {/* product detail form */}
+              <NewItemForm item={item} setItem={setItem} setImage={setImage} />
+            </Col>
+          </Row>
+        </Card.Body>{" "}
+        <Card.Footer>
+          {" "}
+          {/*onClick button to submit the item detail and supplier order */}
+          <Button onClick={handleSubmit} variant="info">
+            upload
+          </Button>
+        </Card.Footer>
       </Card>
     </div>
   );

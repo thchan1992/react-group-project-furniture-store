@@ -1,7 +1,7 @@
 import React from "react";
 import EditUserForm from "./editUserForm";
 import EditCredCard from "./editCredCard";
-
+import "./user.css";
 const User = ({
   user,
   setUser,
