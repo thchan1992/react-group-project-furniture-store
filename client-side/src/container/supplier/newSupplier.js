@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { addSupp_Func } from "../../api/api";
-import { pk } from "../../utility/setPrimary";
+import { pk } from "../../Utility/setPrimary";
 import Component from "./newSupplier_component/newSupplier";
 import { useHistory } from "react-router-dom";
-import { authChecker } from "../../utility/authChecker";
+import { authChecker } from "../../Utility/authChecker";
 
 const NewSupplier = ({ messageSetter }) => {
   const [suppName, setSuppName] = useState("");

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { modifyCatAPI_Func } from "../../../api/api";
 import { useHistory } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-import { authChecker } from "../../../utility/authChecker";
+import { authChecker } from "../../../Utility/authChecker";
 
 const EditCategory = ({ data, setIsLoading, messageSetter }) => {
   const [itemCatName, setItemCatName] = useState(null);

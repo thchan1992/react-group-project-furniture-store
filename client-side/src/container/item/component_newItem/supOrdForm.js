@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
 import React, { useEffect, useState } from "react";
-import Textbox from "../../../utility/Textbox";
+import Textbox from "../../../Utility/Textbox";
 
 const SupOrdForm = ({ suppList, item, setItem }) => {
   return (

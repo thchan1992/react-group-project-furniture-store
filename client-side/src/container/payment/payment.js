@@ -10,7 +10,7 @@ import {
   getCostBaskAPI_Func,
 } from "../../api/api";
 
-import { authChecker } from "../../utility/authChecker";
+import { authChecker } from "../../Utility/authChecker";
 
 const Payment = ({ userID, messageSetter }) => {
   const [isLoading, setIsLoading] = useState(true);

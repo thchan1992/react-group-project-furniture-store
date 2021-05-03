@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Component from "./supplierOrd_component/supplierOrd";
 import { showOrdHistoryAPI_Func, updateStockAPI_Func } from "../../api/api";
 import { useHistory } from "react-router-dom";
-import { authChecker } from "../../utility/authChecker";
+import { authChecker } from "../../Utility/authChecker";
 
 const SupplierOrd = () => {
   const [orderList, setOrderList] = useState([]);

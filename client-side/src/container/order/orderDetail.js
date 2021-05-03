@@ -9,7 +9,7 @@ import {
 import Button from "react-bootstrap/esm/Button";
 import Component from "../payment/confirmation_component/confirmation";
 import { useHistory } from "react-router-dom";
-import { authChecker } from "../../utility/authChecker";
+import { authChecker } from "../../Utility/authChecker";
 
 const ViewOrderDetail = ({ userID }) => {
   const [orderList, setOrderList] = useState([]);

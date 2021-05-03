@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Component from "./supplierList_component/supplierList";
 import { showSuppAPI_Func } from "../../api/api";
 import { useHistory } from "react-router-dom";
-import { authChecker } from "../../utility/authChecker";
+import { authChecker } from "../../Utility/authChecker";
 
 const SupplierList = ({ messageSetter }) => {
   const [suppList, setSuppList] = useState([]);

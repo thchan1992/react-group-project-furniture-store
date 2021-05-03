@@ -3,7 +3,7 @@ import { defaults } from "react-chartjs-2";
 import { showSalesSummaryAPI_Func } from "../../api/api";
 import Component from "./salesSummary_component/salesSummary";
 import { useHistory } from "react-router-dom";
-import { authChecker } from "../../utility/authChecker";
+import { authChecker } from "../../Utility/authChecker";
 const SalesSummary = () => {
   const [salesList, setSalesList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
