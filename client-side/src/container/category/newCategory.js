@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { addCatAPI_Func } from "../../api/api";
-import { pk } from "../../utility/setPrimary";
+import { pk } from "../../Utility/setPrimary";
 import { useHistory } from "react-router-dom";
 import Component from "./newCategory_component/newCategory";
-import { authChecker } from "../../utility/authChecker";
+import { authChecker } from "../../Utility/authChecker";
 
 const NewCategory = ({ messageSetter }) => {
   const [itemCatName, setItemCatName] = useState("");

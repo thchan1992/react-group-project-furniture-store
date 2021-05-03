@@ -9,7 +9,7 @@ import {
 import "react-dragswitch/dist/index.css";
 import Component from "./user_component/user";
 import { useHistory, useParams } from "react-router-dom";
-import { authChecker } from "../../utility/authChecker";
+import { authChecker } from "../../Utility/authChecker";
 
 const User = ({ messageSetter }) => {
   const [user, setUser] = useState({

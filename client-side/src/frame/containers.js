@@ -15,8 +15,8 @@ import Payment from "../container/payment/payment";
 import Confirmation from "../container/payment/confirmation";
 import ViewOrder from "../container/order/order";
 import ShowItem from "../container/item/items";
-import Home from "../utility/home";
-import NotFound from "../utility/error";
+import Home from "../Utility/home";
+import NotFound from "../Utility/error";
 import ViewOrderDetail from "../container/order/orderDetail";
 
 const Component = ({ user, keyword, caterList, messageSetter }) => {

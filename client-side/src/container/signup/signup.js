@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
-import { pk } from "../../utility/setPrimary";
+import { pk } from "../../Utility/setPrimary";
 import Component from "./signup_component/signup";
 import { useHistory } from "react-router-dom";
 import {
@@ -10,7 +10,7 @@ import {
   signUpAPIFunc,
 } from "../../api/api";
 
-import { authChecker } from "../../utility/authChecker";
+import { authChecker } from "../../Utility/authChecker";
 
 const Signup = ({ userType, messageSetter }) => {
   const [user, setUser] = useState({

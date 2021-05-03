@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Component from "./component_items/items";
 import { host } from "../../api/url";
 import { addBaskItemAPI_Func } from "../../api/api";
-import { authChecker } from "../../utility/authChecker";
+import { authChecker } from "../../Utility/authChecker";
 import { useHistory } from "react-router-dom";
 
 import {

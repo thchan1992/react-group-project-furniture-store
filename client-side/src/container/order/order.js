@@ -3,7 +3,7 @@ import Table from "react-bootstrap/Table";
 import { getUserOrdAPI_Func } from "../../api/api";
 import Component from "./order_component/order";
 import { useHistory, useParams } from "react-router-dom";
-import { authChecker } from "../../utility/authChecker";
+import { authChecker } from "../../Utility/authChecker";
 const Order = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [orderList, setOrderList] = useState([]);

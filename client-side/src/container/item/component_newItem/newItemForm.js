@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import React, { useEffect, useState } from "react";
-import Textbox from "../../../utility/Textbox";
+import Textbox from "../../../Utility/Textbox";
 
 const NewItemForm = ({ setImage, item, setItem }) => {
   return (

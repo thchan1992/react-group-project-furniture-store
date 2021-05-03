@@ -6,7 +6,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 
 import React from "react";
 
-import Textbox from "../../../utility/Textbox";
+import Textbox from "../../../Utility/Textbox";
 import "./payment.css";
 
 const Payment = ({

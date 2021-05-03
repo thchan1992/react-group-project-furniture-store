@@ -1,6 +1,6 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
-import Textbox from "../../../utility/Textbox";
+import Textbox from "../../../Utility/Textbox";
 import Button from "react-bootstrap/Button";
 import "./newCategory.css";
 const NewCategory = ({ itemCatName, setItemCatName, handleSubmit }) => {

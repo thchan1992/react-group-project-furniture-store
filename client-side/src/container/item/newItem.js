@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { host } from "../../api/url";
-import { pk } from "../../utility/setPrimary";
+import { pk } from "../../Utility/setPrimary";
 import { useHistory } from "react-router-dom";
 import Component from "./component_newItem/newItem";
 import {
@@ -11,7 +11,7 @@ import {
   showSuppAPI_Func,
   setItemImageAPI_Func,
 } from "../../api/api";
-import { authChecker } from "../../utility/authChecker";
+import { authChecker } from "../../Utility/authChecker";
 
 const NewItem = ({ messageSetter }) => {
   const [item, setItem] = useState({

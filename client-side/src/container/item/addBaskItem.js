@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Component from "./component_addBaskItem/addBaskItem";
 import { addBaskItemAPI_Func } from "../../api/api";
-import { authChecker } from "../../utility/authChecker";
+import { authChecker } from "../../Utility/authChecker";
 
 const AddBaskItem = ({ userType, userID, itemDetID, messageSetter }) => {
   const history = useHistory();
