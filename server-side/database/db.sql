@@ -236,48 +236,28 @@
 -- ALTER TABLE sales_new RENAME TO sales;
 -- COMMIT;
 
+--
 
--- select * from basket where userID = 6;
+update itemDetails set itemQty = 101 where itemDetID = 1619178801447;
 
--- update itemDetails SET itemQty = 10 where itemDetID = 3;
-
--- select * from itemDetails;
--- select * from userDetail;
--- select * from basket;
--- select * from paymentDetail where userID = 1617571576478;
-
-select * from sales;
-
-delete from sales where basketItemID = 1618654248025;
-
-select sum(itemPrice * itemBasketQty), orderDate from sales group by orderDate BETWEEN '2021-04-06' AND '2021-04-09' ORDER BY orderDate;
-
-select * from userDetail;
-
--- select basket.itemDetID, CASE WHEN itemQty - itemBasketQty <= itemThreshold THEN 'restock' ELSE 'good' END status FROM basket INNER JOIN itemDetails ON basket.itemDetID = itemDetails.itemDetID WHERE userID = 6;
-
-select * from sales;
-select * from paymentDetail;
-
-select * from userDetail;
- SELECT userID, basketItemID, SUM(sales.itemPrice*itemBasketQty) AS totalCost, deliveryDate, orderDate from sales INNER JOIN itemDetails ON itemDetails.itemDetID = sales.itemDetID group by basketItemID having userID=1617571576478;
-
-select * from sales;
--- select basket.itemDetID FROM basket INNER JOIN itemDetails ON basket.itemDetID = itemDetails.itemDetID WHERE userID = 6 AND itemQty - itemBasketQty <= itemThreshold;
+update itemDetails set itemQty = 3 where itemDetID = 1619546468323;
+select * from itemDetails where itemDetID = 1619178801447; 
+select * from itemDetails where itemDetID = 1619546468323;
+select * from suppliers;
 
 select * from itemDetails;
-
-select itemUrl, itemDetID, itemDetails.itemCatID, itemPrice, itemThreshold, itemQty, itemName, itemDesp, suppliers.suppID, suppName, itemCatName from itemDetails inner join itemCategory on itemCategory.itemCatID = itemDetails.itemCatID inner join suppliers on suppliers.suppID = itemDetails.suppID where itemDetID =1619178534354;
-
-select * from itemDetails;
-
-select * from itemDetails wh;
-
-delete from itemDetails where suppID IS NULL;
-
+select * from userDetail;
 select * from paymentDetail;
+select * from suppOrder;
+-- Select itemDetails.itemDetID, itemName, suppliers.suppID, suppName, suppEmail from itemDetails INNER JOIN suppliers ON suppliers.suppID = itemDetails.suppID INNER JOIN basket ON itemDetails.itemDetID = basket.itemDetID where itemQTY <= itemThreshold AND userID = 1619001836630;
 
-update paymentDetail set funds = 10000 where cardNumber = 1999;
+-- select * from suppliers;
+SELECT * FROM suppOrder;
 
+update itemDetails set itemQty = 0 where itemDetID = 2;
 
-UPDATE paymentDetail SET payMetID = 2, cardNumber = 123, userID = 1, expire_Date = 2, ccv = 222, funds =2000 Where userID = 1;
+select * from suppOrder where suppOrdID = 1619911948078;
+
+select * from itemDetails where itemDetID =1619911948077;
+
+INSERT INTO suppOrder (suppOrdID, suppID, itemDetID, itemCatID, suppOrdQty, orderDate, ordReceiveDate) VALUES (1619911675698, '1', 1619911675698, '1', '1', '2021-4-2', '2021-4-2');

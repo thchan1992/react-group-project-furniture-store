@@ -15,6 +15,7 @@ const {
   updateItemCat_url,
   showCater_url,
   showItemDet_url,
+  setImageUrl_url,
 } = require("./item_url");
 
 const {
@@ -28,6 +29,7 @@ const {
   fetchSearchItemList_sql,
   addNewItem_sql,
   fetchItemDetUrl_sql,
+  setImageUrl_sql,
 } = require("./item_sql");
 
 const { getAll, getOne, runCom, uploadImg, deleteImg } = require("./item_func");
@@ -96,8 +98,12 @@ app.get(fetchSearchItemList_url, (req, res) => {
   getAll(fetchSearchItemList_sql(column, sorting), keyword, res);
 });
 
-//API request to add the item
+//API request to add the item *
+
+const { addNewSuppOrd } = require("../supplier/supplier_func");
+
 app.post(addNewItem_url, adminJWT, (req, res) => {
+  console.log("pass");
   const itemDetID = req.body.itemDetID;
   const itemCatID = req.body.itemCatID;
   const itemPrice = req.body.itemPrice;
@@ -107,7 +113,6 @@ app.post(addNewItem_url, adminJWT, (req, res) => {
   const itemDesp = req.body.itemDesp;
   const itemUrl = req.body.itemUrl;
   const suppID = req.body.suppID;
-
   var params = [
     itemDetID,
     itemCatID,
@@ -120,9 +125,10 @@ app.post(addNewItem_url, adminJWT, (req, res) => {
     suppID,
   ];
   runCom(addNewItem_sql, params, res, "New Item has been added");
+  addNewSuppOrd(req, res);
 });
 
-//API request to upload the Image of the product
+//API request to upload the Image of the product *merge the func below
 app.post(addItemImg_url, adminJWT, uploadImg.single("image"), (req, res) => {
   const fileName = req.file.filename;
   //send the file name to the front end
@@ -133,6 +139,15 @@ app.post(addItemImg_url, adminJWT, uploadImg.single("image"), (req, res) => {
 app.delete(fetchItemDetUrl_url, adminJWT, (req, res) => {
   const params = req.params.itemDetID;
   deleteImg(fetchItemDetUrl_sql, params, res);
+});
+
+app.post(setImageUrl_url, adminJWT, (req, res) => {
+  runCom(
+    setImageUrl_sql,
+    [req.body.itemUrl, req.body.itemDetID],
+    res,
+    "Item Picture updated"
+  );
 });
 
 module.exports = app;

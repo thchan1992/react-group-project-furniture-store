@@ -13,6 +13,8 @@ const {
   showBasket_url,
   deleteBasket_url,
   getBasketCost_url,
+  editBasket_url,
+  addBasketItem_url,
 } = require("./basket_url");
 
 const {
@@ -34,7 +36,7 @@ app.get(showBasket_url, regularJWT, (req, res) => {
 });
 
 //delete the whole basket item
-app.delete(deleteBasket_url, (req, res) => {
+app.delete(deleteBasket_url, regularJWT, (req, res) => {
   const userID = req.params.userID;
   checkUserID(req, res, userID, () => {
     runCom(deleteBasket_sql, userID, res, "Basket has been deleted");
@@ -42,7 +44,7 @@ app.delete(deleteBasket_url, (req, res) => {
 });
 
 //get total cost of the basket
-app.get("/basket/totalCost/:userID", (req, res) => {
+app.get(getBasketCost_url, regularJWT, (req, res) => {
   const userID = req.params.userID;
   checkUserID(req, res, userID, () => {
     getOne(getBasketCost_sql, userID, res);
@@ -50,7 +52,7 @@ app.get("/basket/totalCost/:userID", (req, res) => {
 });
 
 //update the basket item QTY
-app.put("/basket/editBasket", (req, res) => {
+app.put(editBasket_url, regularJWT, (req, res) => {
   const itemBasketQty = req.body.itemBasketQty;
   const itemDetID = req.body.itemDetID;
   const userID = req.body.userID;
@@ -66,7 +68,7 @@ app.put("/basket/editBasket", (req, res) => {
 //step 3: use userID to check wether there is a exisiting basket in the method
 //step 4: if user got a basket, add the item qty number to the basket
 //step 5: if user has not got a basket, create one, then add item to the basket
-app.put("/basket/addBasketItem", async (req, res) => {
+app.put(addBasketItem_url, regularJWT, (req, res) => {
   const itemDetID = req.body.itemDetID;
   const userID = req.body.userID;
   const itemBasketQty = req.body.itemBasketQty;

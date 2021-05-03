@@ -1,0 +1,36 @@
+.product-detail-text-style {
+  color: rgb(0, 0, 0);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 20px;
+}
+
+.product-attribute-text-style {
+  color: rgb(97, 125, 85);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+}
+
+.product-align-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 200px;
+  height: 200px;
+}
+
+.product-add-to-basket-text-style {
+  color: rgb(249, 249, 249);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+}
+
+.placeholder-style-item-edit-form {
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+}
+
+.edit-product-detail-button-style {
+  color: rgb(253, 253, 253);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 16px;
+}

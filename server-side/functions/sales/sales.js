@@ -2,7 +2,11 @@ var express = require("express");
 var app = express();
 app.use(require("../../configuration/corsConf"));
 const { getOne, getAll, runCom } = require("../../configuration/generalFunc");
-const { regularJWT, adminJWT } = require("../../configuration/jwtConf");
+const {
+  regularJWT,
+  adminJWT,
+  checkUserID,
+} = require("../../configuration/jwtConf");
 
 const {
   salesRecord_sql,
@@ -17,10 +21,13 @@ const {
   salesSummary_url,
 } = require("./sales_url");
 
-//get a list of sales record
-app.get(salesRecord_url, (req, res) => {
+//get a list of sales record based on user
+app.get(salesRecord_url, regularJWT, (req, res) => {
   const basketItemID = req.params.basketItemID;
-  getAll(salesRecord_sql, basketItemID, res);
+  const userID = req.params.userID;
+  checkUserID(req, res, userID, () => {
+    getAll(salesRecord_sql, basketItemID, res);
+  });
 });
 
 app.get(salesTotalCost_url, (req, res) => {
