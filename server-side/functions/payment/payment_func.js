@@ -10,6 +10,7 @@ const {
   deleteBasket_sql,
   reverFund_sql,
 } = require("./payment_sql");
+const { autoMail_func } = require("../email/email.js");
 
 const finalisePay = (userID, deliveryDate, orderDate, delivAddress, res) => {
   //get the total cost of the basket and basket ID
@@ -34,6 +35,7 @@ const finalisePay = (userID, deliveryDate, orderDate, delivAddress, res) => {
                   res,
                   (isAuthed) => {
                     if (isAuthed == true) {
+                      autoMail_func(userID);
                       res.json({
                         message: "Order has been completed",
                         result: true,

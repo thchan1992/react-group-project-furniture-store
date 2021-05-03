@@ -26,13 +26,12 @@ app.use(
     secret: "group47",
     resave: false,
     saveUninitialized: false,
-    cookie: { expires: 60 * 60 * 24 },
+    cookie: { expires: 1000 * 36000 },
   })
 );
 
 //Login API request
 app.post(login_url, (req, res) => {
-  const sql = "SELECT * FROM userDetail WHERE userEmail =?";
   const userEmail = req.body.userEmail;
   const userPass = req.body.userPass;
   login(login_sql, userEmail, userPass, req, res);

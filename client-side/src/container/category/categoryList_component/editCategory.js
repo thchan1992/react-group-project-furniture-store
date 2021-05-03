@@ -1,0 +1,71 @@
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import React, { useState } from "react";
+import { modifyCatAPI_Func } from "../../../api/api";
+import { useHistory } from "react-router-dom";
+import Card from "react-bootstrap/Card";
+import { authChecker } from "../../../utility/authChecker";
+
+const EditCategory = ({ data, setIsLoading, messageSetter }) => {
+  const [itemCatName, setItemCatName] = useState(null);
+
+  const history = useHistory();
+
+  const handleSubmit = (itemCatID) => {
+    if (itemCatName) {
+      const column = "itemCatName";
+      const change = itemCatName;
+      const newData = { column, change, itemCatID };
+      modifyCatAPI_Func(newData).then((response) => {
+        authChecker(history, response, true);
+        messageSetter(response.data.message, "success", true);
+        setItemCatName(null);
+        setIsLoading(true);
+      });
+    } else {
+      messageSetter("No data was inserted", "danger", true);
+    }
+  };
+
+  return (
+    <div key={data.itemCatID}>
+      {" "}
+      <Card bg="secondary">
+        <Card.Header>
+          <div className="category-text-style">
+            {" "}
+            {data.itemCatName} <br />
+            <div className="category-pk-style"> {data.itemCatID}</div>
+          </div>
+        </Card.Header>
+        <Card.Body>
+          {" "}
+          <Form.Control
+            type="text"
+            name="itemCatName"
+            id="itemCatName"
+            className="text-box-property-style"
+            value={itemCatName}
+            placeholder="New Name"
+            onChange={(e) => {
+              setItemCatName(e.target.value);
+            }}
+          />
+        </Card.Body>
+        <Card.Footer>
+          <Button
+            variant="info"
+            className="category-edit-button-style"
+            onClick={() => {
+              handleSubmit(data.itemCatID);
+            }}
+          >
+            Edit Name
+          </Button>
+        </Card.Footer>{" "}
+      </Card>
+    </div>
+  );
+};
+
+export default EditCategory;

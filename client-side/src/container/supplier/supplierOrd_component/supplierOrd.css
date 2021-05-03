@@ -1,0 +1,33 @@
+.supplier-order-column-style {
+  color: rgb(119, 189, 89);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+.supplier-order-title {
+  color: rgb(75, 92, 68);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 30px;
+  text-transform: uppercase;
+}
+
+.date-range-style {
+  color: rgb(0, 0, 0);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 18px;
+}
+
+.supplier-order-search-button-style {
+  color: rgb(255, 255, 255);
+  font-family: "Titillium Web", sans-serif;
+}
+
+.supplier-order-title-style {
+  color: rgb(5, 12, 2);
+  text-align: center;
+  font-family: "Titillium Web", sans-serif;
+  font-size: 30px;
+  text-transform: uppercase;
+  text-align: center;
+}

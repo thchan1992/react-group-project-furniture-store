@@ -1,0 +1,52 @@
+.add-space {
+  margin: 40px;
+}
+
+.product-text-style {
+  color: rgb(119, 189, 89);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 25px;
+}
+
+.product-detail-button-style {
+  color: rgb(119, 189, 89);
+  font-family: "Titillium Web", sans-serif;
+}
+
+.product-title-text-style {
+  color: rgb(255, 255, 255);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 12px;
+}
+
+.product-price-style {
+  color: rgb(255, 255, 255);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 20px;
+}
+
+.product-text-style-admin {
+  color: rgb(255, 255, 255);
+  font-size: 15px;
+}
+
+.product-text-brand-style {
+  color: rgb(255, 255, 255);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+}
+
+.card-footer-style {
+  height: 40px;
+}
+.sort-text-style {
+  color: rgb(0, 0, 0);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 18px;
+}
+
+.sort-button-style {
+  color: rgb(46, 46, 46);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 20px;
+}

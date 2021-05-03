@@ -76,9 +76,11 @@ app.get(orderConfirmation_url, (req, res) => {
   getAll(orderConfirmation_sql, basketItemID, res);
 });
 
-app.get(getOrdHist_url, (req, res) => {
+app.get(getOrdHist_url, regularJWT, (req, res) => {
   const userID = req.params.userID;
-  getAll(getOrdHist_sql, userID, res);
+  checkUserID(req, res, userID, () => {
+    getAll(getOrdHist_sql, userID, res);
+  });
 });
 
 module.exports = app;

@@ -1,0 +1,14 @@
+.flex-container-bask {
+  /* This makes all the component staying on the same line */
+  display: flex;
+}
+
+.formstyle {
+  width: "30px";
+  height: "30px";
+}
+
+.add-product-basket-button-style {
+  color: rgb(255, 255, 255);
+  font-family: "Titillium Web", sans-serif;
+}

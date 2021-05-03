@@ -41,6 +41,9 @@ const addNewItem_sql =
 const fetchItemDetUrl_sql =
   "SELECT itemUrl FROM itemDetails WHERE itemDetID = ?";
 
+const setImageUrl_sql =
+  "UPDATE itemDetails SET itemUrl = ? WHERE itemDetID = ?";
+
 module.exports = {
   showCater_sql,
   showItemDet_sql,
@@ -52,4 +55,5 @@ module.exports = {
   fetchSearchItemList_sql,
   addNewItem_sql,
   fetchItemDetUrl_sql,
+  setImageUrl_sql,
 };
