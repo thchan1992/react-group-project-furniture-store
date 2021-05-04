@@ -77,7 +77,6 @@ const Items = ({
                   propName={"Product Name: "}
                   property={item.itemName}
                 />
-
                 <ListGroupItem
                   userType={userType}
                   inputType={"number"}
@@ -101,7 +100,6 @@ const Items = ({
                   <h1 className="product-attribute-text-style">Brand:</h1>
                   {item.suppName}
                 </ListGroup.Item>
-
                 <ListGroupItem
                   userType={userType}
                   inputType={"text"}

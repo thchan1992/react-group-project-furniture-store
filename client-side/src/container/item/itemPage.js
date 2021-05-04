@@ -19,16 +19,18 @@ const ItemPage = ({
   //Function to fetch the sorted items
   const fetchItem = () => {
     if (!keyword) {
-      const cacheName = itemCatName + showSort;
+      const cacheName = itemCatName + ":" + showSort;
       if (getCache.get(cacheName)) {
         const data = getCache.get(cacheName);
         setItemList(data);
+
         console.log("Use Cache");
       } else {
         showItemsAPI_Func(sorting, column, itemCatName).then((response) => {
           const data = response.data.result;
-          getCache.set(cacheName, data, [200000]);
-          setItemList(response.data.result);
+          console.log("data", data);
+          getCache.set(cacheName, data, [100000]);
+          filterList(response.data.result);
           console.log("Create Cache");
         });
       }
@@ -37,8 +39,18 @@ const ItemPage = ({
         setItemList(response.data.result);
       });
     }
-
     setIsLoading(false);
+  };
+
+  const filterList = (result) => {
+    if (userType != "A") {
+      result = result.filter((data) => {
+        return data.itemThreshold > 0;
+      });
+      setItemList(result);
+    } else {
+      setItemList(result);
+    }
   };
 
   //use Effect to fetch item list.

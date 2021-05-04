@@ -48,6 +48,7 @@ const Login = ({
   const handleLogOut = async () => {
     await logoutAPI_Func().then((response) => {});
     window.localStorage.removeItem("token");
+
     window.location.reload(false);
     setIsLogin(false);
   };

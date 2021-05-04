@@ -52,6 +52,9 @@ const ProductList = ({
                   <h5 className="product-text-brand-style">
                     Brand: {data.suppName}{" "}
                   </h5>
+                  {data.itemQty < 5 && (
+                    <h5 className="product-low-stock-style">Low Stock</h5>
+                  )}
                   <div>
                     {" "}
                     {userType == "A" && (
