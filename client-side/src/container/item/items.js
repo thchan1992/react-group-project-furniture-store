@@ -28,6 +28,8 @@ const Items = ({ userID, userType, messageSetter }) => {
   const [itemBasketQty, setItemBasketQty] = useState(0);
   const { itemDetID } = useParams();
 
+  const getCache = require("localstorage-ttl");
+
   const deactItem = (itemDetID) => {
     const column = "itemThreshold";
     const change = 0;
@@ -108,6 +110,9 @@ const Items = ({ userID, userType, messageSetter }) => {
         setIsLoading(false);
         setItem(null);
       } else {
+        getCache.set("recentViewItem", response.data.result, []);
+        const data = getCache.get("recentViewItem");
+        console.log(data, "from item");
         setItem(response.data.result);
         setIsLoading(false);
       }

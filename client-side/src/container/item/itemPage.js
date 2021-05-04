@@ -20,6 +20,7 @@ const ItemPage = ({
   const fetchItem = () => {
     if (!keyword) {
       const cacheName = itemCatName + ":" + showSort;
+      console.log(cacheName);
       if (getCache.get(cacheName)) {
         const data = getCache.get(cacheName);
         setItemList(data);

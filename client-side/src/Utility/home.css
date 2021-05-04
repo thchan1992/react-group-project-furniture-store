@@ -1,6 +1,30 @@
 .centered {
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 70%;
+  left: 20%;
   transform: translate(-50%, -50%);
+  font-size: 100px;
+}
+
+.back-ground {
+  width: 100%;
+}
+
+.home-page-product-title-style {
+  color: rgb(0, 0, 0);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+}
+
+.home-page-product-detail-style {
+  color: rgb(241, 241, 241);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+}
+
+.card-text-style {
+  color: rgb(255, 255, 255);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 30px;
+  text-align: center;
 }
