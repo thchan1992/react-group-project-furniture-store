@@ -36,6 +36,12 @@
   font-size: 15px;
 }
 
+.product-low-stock-style {
+  color: rgba(214, 25, 25, 0.979);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 15px;
+}
+
 .card-footer-style {
   height: 40px;
 }

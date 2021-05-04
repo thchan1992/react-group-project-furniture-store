@@ -3,13 +3,15 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
-
+import { DragSwitch } from "react-dragswitch";
 import React from "react";
 
 import Textbox from "../../../Utility/Textbox";
 import "./payment.css";
 
 const Payment = ({
+  userID,
+  history,
   paymentDet,
   userDetail,
   deliv,
@@ -118,21 +120,62 @@ const Payment = ({
                 }}
               />
             </ListGroup.Item>
+            <ListGroup.Item>
+              <span className="payment-attribute-text-style">
+                {" "}
+                Would like to change your personal detail before check in?
+              </span>
 
+              <div className="align-edit-switch">
+                <Button
+                  variant="warning"
+                  className="checkout-basket-text-style"
+                  onClick={() => {
+                    history.push("/ShowUser/" + userID);
+                  }}
+                >
+                  Profile
+                </Button>
+              </div>
+            </ListGroup.Item>
+            <p />
+            <div className="align-edit-switch">
+              {" "}
+              <span className="user-edit-switch-style">use other address</span>
+              <DragSwitch
+                offColor="rgb(0, 0, 0)"
+                onColor="rgb(54, 199, 127)"
+                checked={showEdit}
+                onChange={() => {
+                  if (showEdit == true) {
+                    setShowEdit(false);
+                    setAddr1(null);
+                    setAddr2(null);
+                    setCity(null);
+                    setPostcode(null);
+                  } else {
+                    setShowEdit(true);
+                  }
+                }}
+              />{" "}
+            </div>
+            <p />
             {showEdit == true && (
               <ListGroup.Item>
                 <Textbox
-                  name={"Address line"}
+                  name={"Address line 1"}
                   attriName={"addr1"}
                   attribute={addr1}
                   inputType={"text"}
+                  placeholder={"address line 1"}
                   setter={setAddr1}
                 />
                 <Textbox
-                  name={"Address line"}
+                  name={"Address line 2 (Optional)"}
                   attriName={"addr2"}
                   attribute={addr2}
                   inputType={"text"}
+                  placeholder={"address line 2"}
                   setter={setAddr2}
                 />
                 <Textbox
@@ -140,6 +183,7 @@ const Payment = ({
                   attriName={"city"}
                   attribute={city}
                   inputType={"text"}
+                  placeholder={"city"}
                   setter={setCity}
                 />
                 <Textbox
@@ -147,25 +191,11 @@ const Payment = ({
                   attriName={"postcode"}
                   attribute={postcode}
                   inputType={"text"}
+                  placeholder={"postcode"}
                   setter={setPostcode}
                 />
               </ListGroup.Item>
             )}
-            <ListGroup.Item>
-              <Button
-                className="change-shipping-text-style"
-                variant="warning"
-                onClick={() => {
-                  if (showEdit == false) {
-                    setShowEdit(true);
-                  } else {
-                    setShowEdit(false);
-                  }
-                }}
-              >
-                change shipping address
-              </Button>
-            </ListGroup.Item>
           </ListGroup>
         </Card.Body>
         <Card.Footer>

@@ -14,11 +14,15 @@ const User = ({
   updateCard,
   showCard,
   payMetList,
+  userAddress,
+  setUserAddress,
 }) => {
   return (
     <div>
       {" "}
       <EditUserForm
+        userAddress={userAddress}
+        setUserAddress={setUserAddress}
         user={user}
         setUser={setUser}
         curUser={curUser}
