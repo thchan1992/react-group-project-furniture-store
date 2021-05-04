@@ -77,10 +77,10 @@ const Signup = ({ userType, messageSetter }) => {
   const handleCreateAcc = () => {
     if (userPass == verPass) {
       user.userAddress = addr1 + " " + addr2 + " " + city + " " + postcode;
-      user.userID = pk;
+      user.userID = pk();
       user.userType = "C";
       user.userPass = userPass;
-      console.log(user);
+      console.log("x", user);
       signUpAPIFunc(user).then((response) => {
         if (!response.data.error) {
           history.push("/Home");
