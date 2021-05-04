@@ -87,6 +87,7 @@ const Component = ({ user, keyword, caterList, messageSetter }) => {
           userID={user.userID}
           userType={user.userType}
           messageSetter={messageSetter}
+          key={new Date().getTime()}
         />
       </Route>{" "}
       <Route exact path="/User/Order/Detail/:basketItemID">

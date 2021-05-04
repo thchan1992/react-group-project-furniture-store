@@ -22,7 +22,7 @@ const showCater_url = item + "/showCater";
 
 const showItemDet_url = item + "Detail/:itemDetID";
 
-const setImageUrl_url = item + "setImageUrl/";
+const setImageUrl_url = item + "/setImageUrl/";
 
 module.exports = {
   fetchItemDetUrl_url,

@@ -29,6 +29,7 @@ const NewItem = ({ messageSetter }) => {
   const [itemCatList, setItemCatList] = useState([]);
   const [suppList, setSuppList] = useState([]);
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(true);
 
   //use Effect to fetch item list.
   useEffect(() => {
@@ -37,11 +38,12 @@ const NewItem = ({ messageSetter }) => {
       showSuppAPI_Func().then((response) => {
         authChecker(history, response, true);
         setSuppList(response.data.result);
+        setIsLoading(false);
       });
     });
-  }, []);
+  }, [isLoading]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
     if (
       !item.itemThreshold ||
       !item.itemQty ||
@@ -55,14 +57,14 @@ const NewItem = ({ messageSetter }) => {
       messageSetter("Make sure filling up all the fields", "warning", true);
       return;
     }
-    item.itemDetID = pk;
+    item.itemDetID = pk();
+    item.suppOrdID = pk() + 1;
+    item.suppOrdQty = item.itemQty;
     const today = new Date();
     item.orderDate =
       today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
     item.ordReceiveDate =
       today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
-    item.suppOrdID = pk + 1;
-    item.suppOrdQty = item.itemQty;
 
     addItemAPIFunc(item).then((response) => {
       if (response.data.auth == false) {
@@ -117,6 +119,7 @@ const NewItem = ({ messageSetter }) => {
         suppID: "",
       });
       setImage(null);
+      setIsLoading(true);
       messageSetter("new item has been added", "success", true);
     });
   };

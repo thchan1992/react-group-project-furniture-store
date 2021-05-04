@@ -103,8 +103,14 @@ const Items = ({ userID, userType, messageSetter }) => {
 
   useEffect(() => {
     getItemDetAPI_Func(itemDetID).then((response) => {
-      setItem(response.data.result);
-      setIsLoading(false);
+      if (response.data.result == null) {
+        messageSetter("No item found", "warning", true);
+        setIsLoading(false);
+        setItem(null);
+      } else {
+        setItem(response.data.result);
+        setIsLoading(false);
+      }
     });
   }, [isLoading]);
 

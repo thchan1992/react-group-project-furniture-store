@@ -1,2 +1,4 @@
 //export the primary key
-export const pk = new Date().getTime();
+export const pk = () => {
+  return new Date().getTime();
+};

@@ -18,15 +18,8 @@ const Basket = ({ messageSetter }) => {
         history.push("/error");
         window.location.reload(false);
       }
+      checkReadyPay(response.data.result.length);
       setBasketList(response.data.result);
-      var isReady = true;
-      for (var i = 0; i < basketList.length; i++) {
-        if (basketList[i].status != "Available") {
-          isReady = false;
-          break;
-        }
-      }
-      setIsReadyPay(isReady);
       totalCostAPI_Func(userID).then((response) => {
         if (!response.data.result) {
           setTotalCost(0);
@@ -37,6 +30,21 @@ const Basket = ({ messageSetter }) => {
       });
     });
   }, [isLoading]);
+
+  const checkReadyPay = (result) => {
+    var isReady = true;
+    if (result == 0) {
+      isReady = false;
+    } else {
+      for (var i = 0; i < basketList.length; i++) {
+        if (basketList[i].status != "Available") {
+          isReady = false;
+          break;
+        }
+      }
+    }
+    setIsReadyPay(isReady);
+  };
 
   return (
     <Component
