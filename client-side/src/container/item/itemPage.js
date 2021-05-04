@@ -37,6 +37,7 @@ const ItemPage = ({
         setItemList(response.data.result);
       });
     }
+
     setIsLoading(false);
   };
 

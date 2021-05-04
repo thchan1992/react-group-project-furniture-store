@@ -15,22 +15,27 @@ const ItemPage = ({
 }) => {
   return (
     <div>
-      {/*Sorting button*/}
-      <SortItem
-        setColumn={setColumn}
-        setSorting={setSorting}
-        setIsLoading={setIsLoading}
-        showSort={showSort}
-        setShowSort={setShowSort}
-      />
-      {/* Show product list */}
-      <ProductList
-        itemList={itemList}
-        userID={userID}
-        userType={userType}
-        setIsLoading={setIsLoading}
-        messageSetter={messageSetter}
-      />
+      {itemList != [] && (
+        <div>
+          {" "}
+          {/*Sorting button*/}
+          <SortItem
+            setColumn={setColumn}
+            setSorting={setSorting}
+            setIsLoading={setIsLoading}
+            showSort={showSort}
+            setShowSort={setShowSort}
+          />
+          {/* Show product list */}
+          <ProductList
+            itemList={itemList}
+            userID={userID}
+            userType={userType}
+            setIsLoading={setIsLoading}
+            messageSetter={messageSetter}
+          />
+        </div>
+      )}
     </div>
   );
 };

@@ -177,7 +177,11 @@ const Items = ({
             {userType != "A" && (
               <div className="flex-container">
                 <Form.Control
-                  style={{ height: "40px", width: "80px", marginLeft: "auto" }}
+                  style={{
+                    height: "40px",
+                    width: "80px",
+                    marginLeft: "auto",
+                  }}
                   type="number"
                   name="itemBasketQty"
                   placeholder="item qty"

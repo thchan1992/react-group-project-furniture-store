@@ -7,10 +7,10 @@ import Containers from "./frame/containers";
 import NavBar from "./frame/navbar";
 import { showCaterAPI_Func } from "./api/api";
 import Header from "./frame/header";
-
 import Message from "./Utility/message";
 
 const App = () => {
+  const [itemDetID, setItemDetID] = useState(null);
   const [userID, setUserID] = useState("");
   const [userType, setUserType] = useState("");
   const [caterList, setCaterList] = useState([]);
@@ -18,6 +18,7 @@ const App = () => {
   const [user, setUser] = useState({});
   const [isLogin, setIsLogin] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
+
   const [messageCont, setMessageCont] = useState({
     text: "",
     theme: "",
@@ -55,6 +56,9 @@ const App = () => {
         />
         {/*Nav bar*/}
         <NavBar
+          messageSetter={messageSetter}
+          itemDetID={itemDetID}
+          setItemDetID={setItemDetID}
           caterList={caterList}
           userType={user.userType}
           keyword={keyword}
