@@ -30,21 +30,47 @@ const User = ({ messageSetter }) => {
   const [showCard, setShowCard] = useState("");
   const [payMetList, setPayMetList] = useState([]);
   const { userID } = useParams();
+
+  const [userAddress, setUserAddress] = useState({
+    addr1: null,
+    addr2: null,
+    city: null,
+    postcode: null,
+  });
+
   const history = useHistory();
 
   const updateUser = (column, change) => {
-    if (column == "userEmail" && !change.includes("@")) {
-      messageSetter("Wrong Email Format: It must contain @", "danger", true);
-      return;
-    }
-
     if (column && change) {
-      if (verPass != user.userPass) {
-        messageSetter("password verification failed", "danger", true);
+      if (column == "userEmail" && !change.includes("@")) {
+        messageSetter("Wrong Email Format: It must contain @", "danger", true);
         return;
       }
+      if (
+        column == "userPass" &&
+        (verPass != user.userPass || user.userPass.length < 6)
+      ) {
+        messageSetter(
+          "password verification failed or password is not long enough",
+          "danger",
+          true
+        );
+        return;
+      }
+      if (column == "userAddress") {
+        change =
+          change.addr1 +
+          " " +
+          change.addr2 +
+          " " +
+          change.city +
+          " " +
+          change.postcode;
+      }
+
       const userID = curUser.userID;
       const newData = { userID, change, column };
+      console.log(newData);
       updateUserDetAPI_Func(newData).then((response) => {
         authChecker(history, response, false);
         messageSetter(response.data.message, "success", true);
@@ -60,11 +86,13 @@ const User = ({ messageSetter }) => {
           cardNumber: null,
           ccv: null,
         });
+        setIsLoading(true);
       });
     } else {
       messageSetter("not enough data is inserted", "danger", true);
     }
   };
+
   const updateCard = () => {
     if (user.cardNumber && user.payMetID && user.expire_Date && user.ccv) {
       const payMetID = user.payMetID;
@@ -114,6 +142,8 @@ const User = ({ messageSetter }) => {
   return (
     <div>
       <Component
+        userAddress={userAddress}
+        setUserAddress={setUserAddress}
         user={user}
         setUser={setUser}
         curUser={curUser}

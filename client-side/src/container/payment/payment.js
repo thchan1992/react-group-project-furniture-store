@@ -16,33 +16,29 @@ const Payment = ({ userID, messageSetter }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [totalCost, setTotalCost] = useState(null);
   const [ship, setShip] = useState(5);
-  const [checkRe, setCheckRe] = useState(true);
-  const [checkEx, setCheckEx] = useState(false);
   const [userDetail, setUserDetail] = useState("");
   const [paymentDet, setPaymentDet] = useState("");
   const [deliv, setDeliv] = useState(null);
   const [showEdit, setShowEdit] = useState(false);
+  const history = useHistory();
+  const [checkRe, setCheckRe] = useState(true);
+  const [checkEx, setCheckEx] = useState(false);
   const [addr1, setAddr1] = useState(null);
   const [addr2, setAddr2] = useState(null);
   const [city, setCity] = useState(null);
   const [postcode, setPostcode] = useState(null);
-  const history = useHistory();
 
-  const handleCheckout = async () => {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "0");
-    var yyyy = today.getFullYear();
-    const orderDate = (yyyy + "-" + mm + "-" + dd).toString();
+  const setDate = (offset) => {
+    const today = new Date();
+    today.setDate(today.getDate() + offset);
+    var dd1 = String(today.getDate()).padStart(2, "0");
+    var mm1 = String(today.getMonth() + 1).padStart(2, "0");
+    var yyyy1 = today.getFullYear();
+    return (yyyy1 + "-" + mm1 + "-" + dd1).toString();
+  };
 
-    const shipDate = new Date(today);
-    shipDate.setDate(shipDate.getDate() + ship);
-    var dd1 = String(shipDate.getDate()).padStart(2, "0");
-    var mm1 = String(shipDate.getMonth() + 1).padStart(2, "0");
-    var yyyy1 = shipDate.getFullYear();
-    const deliveryDate = (yyyy1 + "-" + mm1 + "-" + dd1).toString();
+  const handleCheckout = () => {
     const checkFund = { totalCost, userID };
-
     checkFundAPI_Func(checkFund).then((response) => {
       authChecker(history, response, false);
       if (response.data.result == true) {
@@ -50,26 +46,7 @@ const Payment = ({ userID, messageSetter }) => {
           authChecker(history, response, false);
           // redirect(response);
           if (response.data.result == true) {
-            if (addr1 || addr2 || city || postcode) {
-              const delivAddress =
-                addr1 + " " + addr2 + " " + city + " " + postcode;
-              const finalisePay = {
-                userID,
-                deliveryDate,
-                orderDate,
-                delivAddress,
-              };
-              finalisePayAct(finalisePay);
-            } else {
-              const delivAddress = deliv;
-              const finalisePay = {
-                userID,
-                deliveryDate,
-                orderDate,
-                delivAddress,
-              };
-              finalisePayAct(finalisePay);
-            }
+            prepareOrder();
           } else {
             history.push("/Basket");
             messageSetter(
@@ -88,6 +65,30 @@ const Payment = ({ userID, messageSetter }) => {
         );
       }
     });
+  };
+
+  const prepareOrder = () => {
+    const deliveryDate = setDate(ship);
+    const orderDate = setDate(0);
+    if (addr1 || addr2 || city || postcode) {
+      const delivAddress = addr1 + " " + addr2 + " " + city + " " + postcode;
+      const finalisePay = {
+        userID,
+        deliveryDate,
+        orderDate,
+        delivAddress,
+      };
+      finalisePayAct(finalisePay);
+    } else {
+      const delivAddress = deliv;
+      const finalisePay = {
+        userID,
+        deliveryDate,
+        orderDate,
+        delivAddress,
+      };
+      finalisePayAct(finalisePay);
+    }
   };
 
   const finalisePayAct = (finalisePay) => {
@@ -124,6 +125,8 @@ const Payment = ({ userID, messageSetter }) => {
     <div>
       {" "}
       <Component
+        userID={userID}
+        history={history}
         paymentDet={paymentDet}
         userDetail={userDetail}
         deliv={deliv}

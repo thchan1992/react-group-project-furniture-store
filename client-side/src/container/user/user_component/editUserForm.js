@@ -16,6 +16,8 @@ const EditUserForm = ({
   verPass,
   setVerPass,
   setShowEd,
+  userAddress,
+  setUserAddress,
 }) => {
   return (
     <Card>
@@ -83,19 +85,78 @@ const EditUserForm = ({
           showEd={showEd}
           updateUser={updateUser}
         />
-        <EditUserTextbox
-          name={"Address"}
-          attriName={"userAddress"}
-          attribute={user.userAddress}
-          placeholder={"New Address"}
-          inputType={"text"}
-          setter={(e) => {
-            setUser({ ...user, userAddress: e.target.value });
-          }}
-          data={curUser.userAddress}
-          showEd={showEd}
-          updateUser={updateUser}
-        />{" "}
+        <ListGroup.Item>
+          <span className="user-attribute-text-style">Address</span>
+          <br />
+          <span className="user-detail-text-style">{curUser.userAddress}</span>
+        </ListGroup.Item>{" "}
+        {showEd == true && (
+          <ListGroup.Item>
+            <div className="flex-container">
+              <Form.Control
+                style={{ height: "40px", width: "200px" }}
+                className="user-detail-update-text-style"
+                type={"text"}
+                name={"userAddress.addr1"}
+                id={"userAddress.addr1"}
+                value={userAddress.addr1}
+                placeholder={"Address Line 1"}
+                onChange={(e) => {
+                  setUserAddress({ ...userAddress, addr1: e.target.value });
+                }}
+              />{" "}
+              <Button
+                className="user-detail-update-button-style"
+                size="sm"
+                variant="info"
+                onClick={() => {
+                  updateUser("userAddress", userAddress);
+                }}
+              >
+                Update
+              </Button>
+            </div>{" "}
+            <p />
+            <Form.Control
+              style={{ height: "40px", width: "200px" }}
+              className="user-detail-update-text-style"
+              type={"text"}
+              name={"userAddress.addr2"}
+              id={"userAddress.addr2"}
+              value={userAddress.addr2}
+              placeholder={"Address Line 2"}
+              onChange={(e) => {
+                setUserAddress({ ...userAddress, addr2: e.target.value });
+              }}
+            />{" "}
+            <p />
+            <Form.Control
+              style={{ height: "40px", width: "200px" }}
+              className="user-detail-update-text-style"
+              type={"text"}
+              name={"userAddress.city"}
+              id={"userAddress.city"}
+              value={userAddress.city}
+              placeholder={"city"}
+              onChange={(e) => {
+                setUserAddress({ ...userAddress, city: e.target.value });
+              }}
+            />{" "}
+            <p />
+            <Form.Control
+              style={{ height: "40px", width: "200px" }}
+              className="user-detail-update-text-style"
+              type={"text"}
+              name={"userAddress.postcode"}
+              id={"userAddress.postcode"}
+              value={userAddress.postcode}
+              placeholder={"Post Code"}
+              onChange={(e) => {
+                setUserAddress({ ...userAddress, postcode: e.target.value });
+              }}
+            />{" "}
+          </ListGroup.Item>
+        )}
         {showEd == true && (
           <>
             <ListGroup.Item>
@@ -105,39 +166,50 @@ const EditUserForm = ({
             </ListGroup.Item>
             <ListGroup.Item>
               {showEd == true && (
-                <div className="flex-container">
-                  <Form.Control
-                    style={{ height: "40px", width: "200px" }}
-                    type="password"
-                    name="verPass"
-                    id="verPass"
-                    placeholder="New password"
-                    value={verPass}
-                    onChange={(e) => {
-                      setVerPass(e.target.value);
-                    }}
-                  />{" "}
+                <div>
+                  <div className="flex-container">
+                    <Form.Control
+                      style={{ height: "40px", width: "200px" }}
+                      className="user-detail-update-text-style"
+                      type="password"
+                      name="verPass"
+                      id="verPass"
+                      placeholder="Verify your password"
+                      value={user.userPass}
+                      onChange={(e) => {
+                        setUser({ ...user, userPass: e.target.value });
+                      }}
+                    />{" "}
+                    <Button
+                      size="sm"
+                      variant="info"
+                      onClick={() => {
+                        updateUser("userPass", user.userPass);
+                      }}
+                    >
+                      <span className="user-detail-update-button-style">
+                        Update
+                      </span>
+                    </Button>
+                  </div>{" "}
+                  <p />
+                  <div>
+                    <Form.Control
+                      style={{ height: "40px", width: "200px" }}
+                      className="user-detail-update-text-style"
+                      type="password"
+                      name="verPass"
+                      id="verPass"
+                      placeholder="New password"
+                      value={verPass}
+                      onChange={(e) => {
+                        setVerPass(e.target.value);
+                      }}
+                    />{" "}
+                  </div>
                 </div>
               )}
             </ListGroup.Item>
-
-            <Form.Group as={Form.Row}>
-              <Col sm={10}>
-                <EditUserTextbox
-                  name={"Verify your new password"}
-                  attriName={"userPass"}
-                  attribute={user.userPass}
-                  inputType={"password"}
-                  placeholder={"Verify your password"}
-                  setter={(e) => {
-                    setUser({ ...user, userPass: e.target.value });
-                  }}
-                  data={""}
-                  showEd={showEd}
-                  updateUser={updateUser}
-                />
-              </Col>
-            </Form.Group>
           </>
         )}
       </Card.Body>
