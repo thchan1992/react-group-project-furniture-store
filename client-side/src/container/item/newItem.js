@@ -34,8 +34,16 @@ const NewItem = ({ messageSetter }) => {
   //use Effect to fetch item list.
   useEffect(() => {
     showCaterAPI_Func().then((response) => {
+      if (response.data.error) {
+        messageSetter(response.data.error, "danger", true);
+        return;
+      }
       setItemCatList(response.data.result);
       showSuppAPI_Func().then((response) => {
+        if (response.data.error) {
+          messageSetter(response.data.error, "danger", true);
+          return;
+        }
         authChecker(history, response, true);
         setSuppList(response.data.result);
         setIsLoading(false);
@@ -67,14 +75,12 @@ const NewItem = ({ messageSetter }) => {
       today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
 
     addItemAPIFunc(item).then((response) => {
-      if (response.data.auth == false) {
-        history.push("/error");
-        window.location.reload(false);
-      } else if (response.data.error) {
-        messageSetter(response.data.error, "warning", true);
-      } else {
-        uploadImage();
+      if (response.data.error) {
+        messageSetter(response.data.error, "danger", true);
+        return;
       }
+      authChecker(history, response, false);
+      uploadImage();
     });
   };
 
@@ -101,12 +107,11 @@ const NewItem = ({ messageSetter }) => {
   const updateImageUrl = (newData) => {
     setItemImageAPI_Func(newData).then((response) => {
       if (response.data.error) {
-        messageSetter(
-          "Image upload has been interrupted, please try it again later",
-          "warning",
-          true
-        );
+        messageSetter(response.data.error, "danger", true);
+        return;
       }
+      authChecker(history, response, false);
+
       setItem({
         itemThreshold: 0,
         itemQty: 0,

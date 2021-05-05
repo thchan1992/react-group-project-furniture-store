@@ -32,7 +32,7 @@ const User = ({
         setVerPass={setVerPass}
         setShowEd={setShowEd}
       />
-      {user.userType == "C" && (
+      {curUser.userType != "A" && (
         <EditCredCard
           setUser={setUser}
           user={user}

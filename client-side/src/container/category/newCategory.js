@@ -12,9 +12,13 @@ const NewCategory = ({ messageSetter }) => {
     if (!itemCatName) {
       messageSetter("No date was inserted", "danger", true);
     } else {
-      const itemCatID = pk;
+      const itemCatID = pk();
       const newCat = { itemCatName, itemCatID };
       addCatAPI_Func(newCat).then((response) => {
+        if (response.data.error) {
+          messageSetter(response.data.error, "danger", true);
+          return;
+        }
         authChecker(history, response, false);
         messageSetter(response.data.message, "success", true);
       });

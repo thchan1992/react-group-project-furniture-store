@@ -12,6 +12,10 @@ const SupplierOrd = () => {
   const history = useHistory();
   const fetchOrder = () => {
     showOrdHistoryAPI_Func(dateTo, dateFrom).then((response) => {
+      if (response.data.error) {
+        window.alert(response.data.error);
+        return;
+      }
       authChecker(history, response, true);
       console.log(response);
       setOrderList(response.data.result);

@@ -39,6 +39,10 @@ const SalesSummary = () => {
   //Function to fetch the daily revenue within the specified customer order dates
   const fetchSales = () => {
     showSalesSummaryAPI_Func(dateFrom, dateTo).then((response) => {
+      if (response.data.error) {
+        window.alert(response.data.error);
+        return;
+      }
       authChecker(history, response, true);
       setSalesList(response.data.result);
     });

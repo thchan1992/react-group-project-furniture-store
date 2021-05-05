@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from "react";
 import { showItemsAPI_Func, showSearchAPI_Func } from "../../api/api";
 import Component from "./component_itemPage/itemPage";
 import { showItemsAPI } from "../../api/api";
+import { authChecker } from "../../Utility/authChecker";
+import { useHistory } from "react-router-dom";
 
 const ItemPage = ({
   itemCatName,
@@ -10,6 +12,7 @@ const ItemPage = ({
   keyword,
   messageSetter,
 }) => {
+  const history = useHistory();
   const [sorting, setSorting] = useState("ASC");
   const [column, setColumn] = useState("itemName");
   const [itemList, setItemList] = useState([]);
@@ -20,23 +23,30 @@ const ItemPage = ({
   const fetchItem = () => {
     if (!keyword) {
       const cacheName = itemCatName + ":" + showSort;
-      console.log(cacheName);
       if (getCache.get(cacheName)) {
         const data = getCache.get(cacheName);
         setItemList(data);
-
         console.log("Use Cache");
       } else {
         showItemsAPI_Func(sorting, column, itemCatName).then((response) => {
+          if (response.data.error) {
+            messageSetter(response.data.error, "danger", true);
+            return;
+          }
+
           const data = response.data.result;
-          console.log("data", data);
-          getCache.set(cacheName, data, [100000]);
+          getCache.set(cacheName, data, [1]);
           filterList(response.data.result);
           console.log("Create Cache");
         });
       }
     } else {
       showSearchAPI_Func(sorting, column, keyword).then((response) => {
+        if (response.data.error) {
+          messageSetter(response.data.error, "danger", true);
+          return;
+        }
+
         setItemList(response.data.result);
       });
     }

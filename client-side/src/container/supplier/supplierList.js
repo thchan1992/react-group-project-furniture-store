@@ -11,6 +11,10 @@ const SupplierList = ({ messageSetter }) => {
 
   useEffect(() => {
     showSuppAPI_Func().then((response) => {
+      if (response.data.error) {
+        messageSetter(response.data.error, "danger", true);
+        return;
+      }
       authChecker(history, response, true);
       setSuppList(response.data.result);
       setIsLoading(false);

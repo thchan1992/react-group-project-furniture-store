@@ -17,6 +17,10 @@ const NewSupplier = ({ messageSetter }) => {
       const suppID = pk;
       const newSup = { suppEmail, suppName, suppID };
       addSupp_Func(newSup).then((response) => {
+        if (response.data.error) {
+          messageSetter(response.data.error, "danger", true);
+          return;
+        }
         authChecker(history, response, false);
         messageSetter(response.data.message, "success", true);
       });

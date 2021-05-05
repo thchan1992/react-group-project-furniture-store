@@ -22,7 +22,7 @@ const NavBar = ({
   // history,
 }) => {
   const history = useHistory();
-  const [searchMet, setSearchMet] = useState("search by ID");
+  const [searchMet, setSearchMet] = useState("search by name");
 
   return (
     <Navbar bg="dark" variant="dark">
@@ -112,7 +112,7 @@ const NavBar = ({
               />
             </Nav.Link>
           )}
-          {searchMet == "search by ID" && (
+          {searchMet == "search by ID" && userType == "A" && (
             <div>
               {" "}
               <FormControl
@@ -137,31 +137,33 @@ const NavBar = ({
               </Button>
             </div>
           )}
-          <DropdownButton
-            alignRight
-            variant="light"
-            title={<h7 className="search-met-style-search">{searchMet}</h7>}
-          >
-            {" "}
-            <Dropdown.Item
-              className="sort-text-style"
-              eventKey="Name"
-              onClick={() => {
-                setSearchMet("search by name");
-              }}
+          {userType == "A" && (
+            <DropdownButton
+              alignRight
+              variant="light"
+              title={<h7 className="search-met-style-search">{searchMet}</h7>}
             >
-              search by name
-            </Dropdown.Item>{" "}
-            <Dropdown.Item
-              className="sort-text-style"
-              eventKey="ID"
-              onClick={() => {
-                setSearchMet("search by ID");
-              }}
-            >
-              search by ID
-            </Dropdown.Item>
-          </DropdownButton>
+              {" "}
+              <Dropdown.Item
+                className="sort-text-style"
+                eventKey="Name"
+                onClick={() => {
+                  setSearchMet("search by name");
+                }}
+              >
+                search by name
+              </Dropdown.Item>{" "}
+              <Dropdown.Item
+                className="sort-text-style"
+                eventKey="ID"
+                onClick={() => {
+                  setSearchMet("search by ID");
+                }}
+              >
+                search by ID
+              </Dropdown.Item>
+            </DropdownButton>
+          )}
         </Form>
       </Navbar.Collapse>
     </Navbar>
