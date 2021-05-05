@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import LoginForm from "./component/login";
+import Component from "./component/login";
 import {
   loginAPI_Func,
   checkSessionAPI_Func,
   logoutAPI_Func,
 } from "../../api/api";
 
-const Login = ({ user, setUser, messageSetter, isLogin, setIsLogin }) => {
+const Login = ({ user, setUser, messageSetter }) => {
   const [userEmail, setEmail] = useState("");
   const [userPass, setUserPass] = useState("");
   axios.defaults.withCredentials = true;
@@ -24,14 +24,18 @@ const Login = ({ user, setUser, messageSetter, isLogin, setIsLogin }) => {
           return;
         }
         if (!response.data.auth) {
-          setIsLogin(false);
           messageSetter(response.data.message, "danger", true);
         } else {
-          // setUserID(response.data.result[0].userID);
           localStorage.setItem("token", response.data.token);
-          setIsLogin(true);
-          // setUserType(response.data.result[0].userType);
           setUser(response.data.result[0]);
+          if (response.data.result[0].userType == "A") {
+            try {
+              console.log("aaa");
+              localStorage.removeItem("recentViewItem");
+            } catch (err) {
+              console.log(err, "error");
+            }
+          }
           messageSetter("", "", false);
         }
       });
@@ -41,9 +45,9 @@ const Login = ({ user, setUser, messageSetter, isLogin, setIsLogin }) => {
   //API log out function
   const handleLogOut = async () => {
     await logoutAPI_Func();
-    window.localStorage.removeItem("token");
+    //clear the token in the broswer
+    localStorage.removeItem("token");
     window.location.reload(false);
-    setIsLogin(false);
   };
   //API call to see if the session is still vaild
   useEffect(() => {
@@ -53,7 +57,6 @@ const Login = ({ user, setUser, messageSetter, isLogin, setIsLogin }) => {
         return;
       }
       if (response.data.loggedIn == true) {
-        setIsLogin(true);
         setUser(response.data.user[0]);
       }
     });
@@ -62,17 +65,15 @@ const Login = ({ user, setUser, messageSetter, isLogin, setIsLogin }) => {
   return (
     <div>
       <div className={"right"}>
-        <LoginForm
+        <Component
           user={user}
           userID={user.userID}
           userEmail={userEmail}
           setEmail={setEmail}
           userPass={userPass}
           setUserPass={setUserPass}
-          isLogin={isLogin}
           handleLogin={handleLogin}
           handleLogOut={handleLogOut}
-          userType={user.userType}
           history={history}
         />{" "}
       </div>

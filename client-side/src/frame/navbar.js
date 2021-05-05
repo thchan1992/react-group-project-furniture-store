@@ -18,8 +18,6 @@ const NavBar = ({
   userID,
   setItemDetID,
   itemDetID,
-  messageSetter,
-  // history,
 }) => {
   const history = useHistory();
   const [searchMet, setSearchMet] = useState("search by name");

@@ -3,7 +3,6 @@ var app = express();
 app.use(require("../../configuration/corsConf"));
 const { adminJWT } = require("../../configuration/jwtConf");
 const { getOne, getAll, runCom } = require("../../configuration/generalFunc");
-var db = require("../../database/database.js");
 
 const {
   fetchSuppList_sql,
@@ -24,10 +23,12 @@ const {
 
 const { addNewSuppOrd } = require("./supplier_func");
 
+//get a list of supplier
 app.get(fetchSuppList_url, adminJWT, (req, res) => {
   getAll(fetchSuppList_sql, null, res);
 });
 
+//modify supplier detail
 app.put(editSupplier_url, adminJWT, (req, res) => {
   var column = req.body.column;
   var suppID = req.body.suppID;

@@ -1,8 +1,9 @@
 import Textbox from "../../../Utility/Textbox";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import "./newSupplier.css";
+
 const NewSupplier = ({
   suppName,
   setSuppName,
@@ -12,12 +13,10 @@ const NewSupplier = ({
 }) => {
   return (
     <Card>
-      {" "}
       <Card.Header>
         <div className="new-supplier-title-style">New Supplier</div>
       </Card.Header>
       <Card.Body>
-        {" "}
         <Textbox
           name={"Supplier Name"}
           attriName={"suppName"}
@@ -34,9 +33,8 @@ const NewSupplier = ({
           setter={setSuppEmail}
           placeholder={"Supplier Email"}
         />
-      </Card.Body>{" "}
+      </Card.Body>
       <Card.Footer>
-        {" "}
         <Button
           onClick={handleSubmit}
           className="category-edit-button-style"

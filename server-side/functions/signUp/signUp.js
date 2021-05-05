@@ -1,6 +1,5 @@
 var express = require("express");
 var app = express();
-var db = require("../../database/database.js");
 app.use(require("../../configuration/corsConf"));
 const { adminJWT } = require("../../configuration/jwtConf");
 const { showPayMet_sql, checkPayDet_sql } = require("./signUp_sql");

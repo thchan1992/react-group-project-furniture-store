@@ -8,13 +8,13 @@ const {
 
 //auto mail function
 const autoMail_func = (userID) => {
-  // sql to check which item is below the threshold
+  // sql to check which item is below the threshold and get the list of the products that need to be ordered
   db.all(checkThreshold_sql, userID, (err, result) => {
     if (err) {
       console.log(err);
     }
     if (result.length > 0) {
-      //get the list of the products that need to be ordered
+      //apply map function on the list
       result.map((item) => {
         //in each loop, call this function to send an item to the supplier
         sendAutoOrder(item.suppEmail, item.suppName, item.itemName, 100);
@@ -24,7 +24,6 @@ const autoMail_func = (userID) => {
         updateSuppOrd(item.suppID, item.itemDetID, item.itemCatID, 100);
       });
     }
-    //map function to send email to each supplier
   });
 };
 
@@ -50,6 +49,7 @@ const sendAutoOrder = (email, suppName, itemName, suppOrdQty) => {
   );
 };
 
+//function that make the order date
 const dateMaker = (date) => {
   var d = new Date(date),
     month = "" + (d.getMonth() + 1),

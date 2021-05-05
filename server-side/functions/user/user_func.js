@@ -3,10 +3,12 @@ var saltRounds = 10;
 const { runCom } = require("../../configuration/generalFunc");
 const { updateUserPass_sql, updateUserDet_sql } = require("./user_sql");
 
+//update user detail
 const updateUserDet = (req, res) => {
   var userID = req.body.userID;
   var column = req.body.column;
   var change = req.body.change;
+  //if user is updating the password, it will first convert the password into hash value before updating it to the database
   if (column == "userPass") {
     bcrypt.hash(change, saltRounds, (err, hash) => {
       if (err) {

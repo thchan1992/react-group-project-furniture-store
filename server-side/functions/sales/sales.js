@@ -30,6 +30,7 @@ app.get(salesRecord_url, regularJWT, (req, res) => {
   });
 });
 
+//get the total cost of the sales
 app.get(salesTotalCost_url, (req, res) => {
   const basketItemID = req.params.basketItemID;
   getOne(salesTotalCost_sql, basketItemID, res);
@@ -45,11 +46,11 @@ app.get(salesReport_url, adminJWT, (req, res) => {
   getAll(salesReport_sql(column, sorting), params, res);
 });
 
+//get a sales summary within a specified range of dates
 app.get(salesSummary_url, adminJWT, (req, res) => {
   var dateTo = req.params.dateTo;
   var dateFrom = req.params.dateFrom;
   var params = [dateTo, dateFrom];
-
   getAll(salesSummary_sql, params, res);
 });
 

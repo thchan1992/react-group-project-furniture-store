@@ -1,8 +1,10 @@
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 
+//get the jwt secret from the server configuration file: .env
 const jwtSecretKey = process.env.ACCESS_TOKEN_SECRET;
 
+//functions that make the jwt when users log in
 const jwtMaker = (userPass, req, res, result) => {
   //bcrypt decode the userPass and check whether it matches the password from the front end.
   bcrypt.compare(userPass, result[0].userPass, (error, response) => {
@@ -11,11 +13,8 @@ const jwtMaker = (userPass, req, res, result) => {
       const userEmail = result[0].userEmail;
       const userType = result[0].userType;
       //create the token by using the userID, userEmail and userType
-
-      // var jwtSecret = process.env.ACCESS_TOKEN_SECRET;
-
       const token = jwt.sign({ userID, userEmail, userType }, jwtSecretKey, {
-        // expiresIn: 15,
+        //token expires in 24 hours
         expiresIn: 60 * 60 * 24,
       });
       //create a session
@@ -45,6 +44,8 @@ const regularJWT = (req, res, next) => {
   }
 };
 
+//a function that checks whether the normal user is making a request for his own data.
+//if they are asking for someone else data, the request will be rejected
 const checkUserID = (req, res, userID, func) => {
   const token = req.headers["x-access-token"];
   console.log("token", req.headers["x-access-token"]);
@@ -53,7 +54,7 @@ const checkUserID = (req, res, userID, func) => {
       res.json({
         auth: false,
         message:
-          "you failed to authenticate, please do not pretend someone you are not.(err)",
+          "you failed to authenticate, you do not have access to someone else data.(err)",
       });
     } else {
       if (userID == decoded.userID) {
@@ -65,7 +66,7 @@ const checkUserID = (req, res, userID, func) => {
         res.json({
           auth: false,
           message:
-            "you failed to authenticate, please do not pretend someone you are not.",
+            "you failed to authenticate, you do not have access to someone else data.",
         });
       }
     }
@@ -86,6 +87,7 @@ const adminJWT = (req, res, next) => {
           error: err,
         });
       } else {
+        //it decoded with the userType - "A"
         if (decoded.userType == "A") {
           req.userID = decoded.userID;
           next();

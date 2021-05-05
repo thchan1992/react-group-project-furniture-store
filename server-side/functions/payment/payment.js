@@ -1,6 +1,5 @@
 var express = require("express");
 var app = express();
-var db = require("../../database/database.js");
 app.use(require("../../configuration/corsConf"));
 const { regularJWT, checkUserID } = require("../../configuration/jwtConf");
 const {
@@ -18,7 +17,7 @@ const {
   finalisePayment_url,
 } = require("./payment_url");
 
-//check fund
+//check if users fund is enough for the order
 app.post(checkPayment_url, regularJWT, (req, res) => {
   const userID = req.body.userID;
   const params = [req.body.totalCost, userID];
@@ -27,7 +26,7 @@ app.post(checkPayment_url, regularJWT, (req, res) => {
   });
 });
 
-//check stock
+//check if the stock is enough for users order
 app.get(checkStock_url, regularJWT, (req, res) => {
   const userID = req.params.userID;
   checkUserID(req, res, userID, () => {
@@ -35,6 +34,7 @@ app.get(checkStock_url, regularJWT, (req, res) => {
   });
 });
 
+//get the cost of the order and basket ID of the user
 app.get(getCostAndBaskID_url, regularJWT, (req, res) => {
   const userID = req.params.userID;
   checkUserID(req, res, userID, () => {
@@ -44,6 +44,7 @@ app.get(getCostAndBaskID_url, regularJWT, (req, res) => {
   });
 });
 
+//finalise the order and payment of the user
 app.put(finalisePayment_url, regularJWT, (req, res) => {
   //   const totalCost = req.body.totalCost;
   const userID = req.body.userID;
@@ -51,13 +52,7 @@ app.put(finalisePayment_url, regularJWT, (req, res) => {
   const orderDate = req.body.orderDate;
   const delivAddress = req.body.delivAddress;
   checkUserID(req, res, userID, () => {
-    //To finalise the order
-    //pass the totalCost, userID
-    //step 1, take the money
-    //          deduct the money
-    //      if yes, put the money back, if no, do nothing
-    //step 2, update the itemDetails itemQty
-    //step 3, convert the basket data into sales table
+    //the function that handles the request
     finalisePay(userID, deliveryDate, orderDate, delivAddress, res);
   });
 });

@@ -3,9 +3,10 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 import NewCategory from "./newCategory";
 import CategoryList from "./categoryList";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 const Category = ({ messageSetter, userType }) => {
   const history = useHistory();
+  //The category tab
   return (
     <div>
       {userType == "A" && (

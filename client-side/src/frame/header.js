@@ -1,16 +1,6 @@
 import React from "react";
-import Login from "./login/login";
-const Header = ({
-  userType,
-  userID,
-  user,
-  isLogin,
-  setIsLogin,
-  setUserID,
-  setUserType,
-  setUser,
-  messageSetter,
-}) => {
+import Login from "../container/login/login";
+const Header = ({ user, setUser, messageSetter }) => {
   return (
     <div className="footer">
       <h1 className="titleText">CHKMV Furniture</h1>{" "}
@@ -26,8 +16,6 @@ const Header = ({
         <Login
           user={user}
           setUser={setUser}
-          isLogin={isLogin}
-          setIsLogin={setIsLogin}
           setUser={setUser}
           messageSetter={messageSetter}
         />

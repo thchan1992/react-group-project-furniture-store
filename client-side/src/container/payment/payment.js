@@ -28,6 +28,7 @@ const Payment = ({ userID, messageSetter }) => {
   const [city, setCity] = useState(null);
   const [postcode, setPostcode] = useState(null);
 
+  //a function that makes a date with a format that can be recognised by the sqlite
   const setDate = (offset) => {
     const today = new Date();
     today.setDate(today.getDate() + offset);
@@ -37,8 +38,10 @@ const Payment = ({ userID, messageSetter }) => {
     return (yyyy1 + "-" + mm1 + "-" + dd1).toString();
   };
 
+  //handle the user when checking out
   const handleCheckout = () => {
     const checkFund = { totalCost, userID };
+    //API that checks if users have enough fund
     checkFundAPI_Func(checkFund).then((response) => {
       if (response.data.error) {
         messageSetter(response.data.error, "danger", true);
@@ -47,14 +50,15 @@ const Payment = ({ userID, messageSetter }) => {
       authChecker(history, response, false);
 
       if (response.data.result == true) {
+        //API that checks if stock level is enough for users order
         checkStockAPI_Func(userID).then((response) => {
           if (response.data.error) {
             messageSetter(response.data.error, "danger", true);
             return;
           }
           authChecker(history, response, false);
-
           if (response.data.result == true) {
+            //if both stock and funds are okay, function prepares the order detail
             prepareOrder();
           } else {
             history.push("/Basket");
@@ -76,6 +80,7 @@ const Payment = ({ userID, messageSetter }) => {
     });
   };
 
+  // a function that prepare users' order
   const prepareOrder = () => {
     const deliveryDate = setDate(ship);
     console.log("delivery", deliveryDate);
@@ -101,6 +106,7 @@ const Payment = ({ userID, messageSetter }) => {
     }
   };
 
+  //An API that finalise users' order and redirect to the confirmation.js
   const finalisePayAct = (finalisePay) => {
     finalisePayAPI_Func(finalisePay).then((response) => {
       if (response.data.error) {
@@ -119,7 +125,9 @@ const Payment = ({ userID, messageSetter }) => {
     });
   };
 
+  //fetch all these information before rendering
   useEffect(() => {
+    //get basket total cost
     getCostBaskAPI_Func(userID).then((response) => {
       if (response.data.error) {
         messageSetter(response.data.error, "danger", true);
@@ -127,6 +135,7 @@ const Payment = ({ userID, messageSetter }) => {
       }
       authChecker(history, response, false);
       setTotalCost(response.data.totalCost);
+      //get users' detail
       fetchUserDetAPI_Func(userID).then((response) => {
         if (response.data.error) {
           messageSetter(response.data.error, "danger", true);
@@ -135,6 +144,7 @@ const Payment = ({ userID, messageSetter }) => {
         authChecker(history, response, false);
         setUserDetail(response.data.result);
         setDeliv(response.data.result.userAddress);
+        //get user payment detail
         fetchUserPayDet_Func(userID).then((response) => {
           if (response.data.error) {
             messageSetter(response.data.error, "danger", true);

@@ -1,3 +1,5 @@
+//Configuration for the CORS
+
 var cors = require("cors");
 var express = require("express");
 var app = express();

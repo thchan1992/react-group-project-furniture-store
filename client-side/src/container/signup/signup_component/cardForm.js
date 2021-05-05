@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
@@ -51,7 +51,7 @@ const CardForm = ({ user, setUser, payMetList, updateCard }) => {
               attriName={"cardNumber"}
               attribute={user.cardNumber}
               inputType={"number"}
-              placeholder={"Card Number"}
+              placeholder={"Must be 16 digit long"}
               setter={(e) => {
                 setUser({ ...user, cardNumber: e });
               }}
@@ -72,7 +72,7 @@ const CardForm = ({ user, setUser, payMetList, updateCard }) => {
               attriName={"ccv"}
               attribute={user.ccv}
               inputType={"number"}
-              placeholder={"ccv"}
+              placeholder={"Must be 3 digit long"}
               setter={(e) => {
                 setUser({ ...user, ccv: e });
               }}

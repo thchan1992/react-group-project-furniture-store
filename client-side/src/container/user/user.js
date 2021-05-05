@@ -30,7 +30,7 @@ const User = ({ messageSetter }) => {
   const [showCard, setShowCard] = useState("");
   const [payMetList, setPayMetList] = useState([]);
   const { userID } = useParams();
-
+  const history = useHistory();
   const [userAddress, setUserAddress] = useState({
     addr1: null,
     addr2: null,
@@ -38,8 +38,7 @@ const User = ({ messageSetter }) => {
     postcode: null,
   });
 
-  const history = useHistory();
-
+  //handle the user detail modification
   const updateUser = (column, change) => {
     if (column && change) {
       if (column == "userEmail" && !change.includes("@")) {
@@ -70,7 +69,7 @@ const User = ({ messageSetter }) => {
 
       const userID = curUser.userID;
       const newData = { userID, change, column };
-      console.log(newData);
+      //api that updates user detail based on the table column, modification and userID
       updateUserDetAPI_Func(newData).then((response) => {
         if (response.data.error) {
           messageSetter(response.data.error, "danger", true);
@@ -97,6 +96,7 @@ const User = ({ messageSetter }) => {
     }
   };
 
+  //function that handle the updating user card detail
   const updateCard = () => {
     if (user.cardNumber && user.payMetID && user.expire_Date && user.ccv) {
       const payMetID = user.payMetID;
@@ -105,6 +105,7 @@ const User = ({ messageSetter }) => {
       const expire_Date = user.expire_Date;
       const ccv = user.ccv;
       const newCard = { payMetID, cardNumber, userID, expire_Date, ccv };
+      //api that modifies card detail
       modifyCardAPI_Func(newCard).then((response) => {
         if (response.data.error) {
           messageSetter(response.data.error, "danger", true);
@@ -130,9 +131,10 @@ const User = ({ messageSetter }) => {
     }
   };
 
+  //fetching few api before renderinf
   useEffect(() => {
+    //api that get users' detail
     fetchUserDetAPI_Func(userID).then((response) => {
-      //no user found will be back to the error page
       if (response.data.error) {
         messageSetter(response.data.error, "danger", true);
         return;
@@ -140,7 +142,7 @@ const User = ({ messageSetter }) => {
       authChecker(history, response, true);
       setCurUser(response.data.result);
       if (response.data.result.userType == "C") {
-        //no user card found will be back to the error page
+        //api that gets users' card detail
         fetchUserPayDet_Func(userID).then((response) => {
           if (response.data.error) {
             messageSetter(response.data.error, "danger", true);
@@ -148,6 +150,7 @@ const User = ({ messageSetter }) => {
           }
           authChecker(history, response, true);
           setShowCard(response.data.result.cardNumber);
+          //api that fetchs payment method
           fetchPayMetAPI_Func().then((response) => {
             if (response.data.error) {
               messageSetter(response.data.error, "danger", true);

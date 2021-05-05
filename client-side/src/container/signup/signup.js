@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
 import { pk } from "../../Utility/setPrimary";
 import Component from "./signup_component/signup";
 import { useHistory } from "react-router-dom";
@@ -32,8 +31,8 @@ const Signup = ({ userType, messageSetter }) => {
   const [payMetList, setPayMetList] = useState([]);
   const history = useHistory();
 
+  //handle user submission for the registration
   const handleSubmit = () => {
-    console.log(user);
     if (
       user.userEmail &&
       user.firstName &&
@@ -45,13 +44,14 @@ const Signup = ({ userType, messageSetter }) => {
       userPass &&
       verPass &&
       user.payMetID &&
-      user.cardNumber &&
+      user.cardNumber.length == 16 &&
       user.expire_Date &&
-      user.ccv &&
+      user.ccv.length == 3 &&
       userType != "A" &&
       user.userEmail.includes("@") &&
       userPass.length >= 6
     ) {
+      //check the exist pay
       checkExistPayDetAPI_Func(user.cardNumber).then((response) => {
         if (response.data.result) {
           messageSetter("Credit card already exists", "danger", true);
@@ -68,12 +68,18 @@ const Signup = ({ userType, messageSetter }) => {
       verPass &&
       userType == "A"
     ) {
+      //handle creating admin account function
       handleCreateAdmin();
     } else {
-      messageSetter("Make sure all field to be filled", "danger", true);
+      messageSetter(
+        "Make sure all field to be filled, also make sure all the details are in the right format",
+        "danger",
+        true
+      );
     }
   };
 
+  //this function will prepare all the info for creating normal user and send a api request
   const handleCreateAcc = () => {
     if (userPass == verPass) {
       user.userAddress = addr1 + " " + addr2 + " " + city + " " + postcode;
@@ -94,9 +100,10 @@ const Signup = ({ userType, messageSetter }) => {
     }
   };
 
+  //this function will prepare all the info for creating admin account and send a api request
   const handleCreateAdmin = () => {
     if (userPass == verPass) {
-      user.userID = pk;
+      user.userID = pk();
       user.userType = "A";
       user.userAddress = "N/A";
       user.userPass = userPass;
@@ -119,6 +126,7 @@ const Signup = ({ userType, messageSetter }) => {
     }
   };
 
+  //a api to fetch the payment method
   useEffect(() => {
     fetchPayMetAPI_Func().then((response) => {
       if (response.data.error) {

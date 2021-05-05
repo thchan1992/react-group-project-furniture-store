@@ -10,6 +10,7 @@ const CategoryList = ({ messageSetter }) => {
   const history = useHistory();
 
   useEffect(() => {
+    //Api to show the category list before the rendering
     showCaterAPI_Func().then((response) => {
       if (response.data.error) {
         messageSetter(response.data.error, "danger", true);

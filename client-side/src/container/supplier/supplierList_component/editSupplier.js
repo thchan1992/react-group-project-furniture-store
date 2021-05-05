@@ -1,10 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-
 import React, { useState } from "react";
-import axios from "axios";
 import { modifySuppAPI_Func } from "../../../api/api";
-
 import Card from "react-bootstrap/Card";
 import { authChecker } from "../../../Utility/authChecker";
 import { useHistory } from "react-router-dom";
@@ -16,9 +13,11 @@ const EditSupplier = ({ data, setIsLoading, messageSetter }) => {
   const [change, setChange] = useState("");
   const history = useHistory();
 
+  //handle the modification
   const handleSubmit = (suppID) => {
     if (column && change) {
       const newData = { column, change, suppID };
+      // modify supplier api
       modifySuppAPI_Func(newData).then((response) => {
         if (response.data.error) {
           messageSetter(response.data.error, "danger", true);

@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import { useHistory } from "react-router-dom";
 import "./item.css";
 import ListGroupItem from "./listGroupItem";
-const Items = ({
+const Item = ({
   newVal,
   setNewVal,
   item,
@@ -196,7 +196,7 @@ const Items = ({
                       addBasketItem();
                     } else {
                       messageSetter(
-                        "Please Sign Up before you shop",
+                        "Please Sign Up or Log In before you shop",
                         "warning",
                         true
                       );
@@ -217,4 +217,4 @@ const Items = ({
   );
 };
 
-export default Items;
+export default Item;
