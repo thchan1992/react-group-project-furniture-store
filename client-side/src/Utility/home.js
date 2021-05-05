@@ -16,8 +16,14 @@ const Home = () => {
   const history = useHistory();
 
   useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("recentViewItem"));
+
+    if ("value" in data == false || Object.keys(data.value).length === 0) {
+      setIsLoading(false);
+      return;
+    }
+
     try {
-      const data = JSON.parse(localStorage.getItem("recentViewItem"));
       setItem(data.value);
     } catch (err) {
       console.log(err);
