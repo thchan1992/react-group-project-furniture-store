@@ -21,6 +21,16 @@ const ItemPage = ({
     if (!keyword) {
       //create a name for the cache file
       const cacheName = itemCatName + ":" + showSort;
+      if (userType == "A") {
+        showItemsAPI_Func(sorting, column, itemCatName).then((response) => {
+          if (response.data.error) {
+            messageSetter(response.data.error, "danger", true);
+            return;
+          }
+          setItemList(response.data.result);
+        });
+        return;
+      }
       //if the same cache does exist
       if (getCache.get(cacheName)) {
         //take the product list from the cache file
