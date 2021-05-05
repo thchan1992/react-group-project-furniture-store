@@ -4,7 +4,7 @@ import { showOrdHistoryAPI_Func, updateStockAPI_Func } from "../../api/api";
 import { useHistory } from "react-router-dom";
 import { authChecker } from "../../Utility/authChecker";
 
-const SupplierOrd = () => {
+const SupplierOrd = ({ messageSetter }) => {
   const [orderList, setOrderList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [dateTo, setDateTo] = useState("-");
@@ -15,9 +15,8 @@ const SupplierOrd = () => {
   const fetchOrder = () => {
     console.log(dateTo, dateFrom, sorting);
     showOrdHistoryAPI_Func(dateTo, dateFrom, sorting).then((response) => {
-      console.log(response.data.result);
       if (response.data.error) {
-        window.alert(response.data.error);
+        messageSetter(response.data.error, "danger", true);
         return;
       }
       authChecker(history, response, true);

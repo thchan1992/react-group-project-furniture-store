@@ -11,7 +11,7 @@ import Component from "../payment/confirmation_component/confirmation";
 import { useHistory } from "react-router-dom";
 import { authChecker } from "../../Utility/authChecker";
 
-const ViewOrderDetail = ({ userID }) => {
+const OrderDetail = ({ userID, messageSetter }) => {
   const [orderList, setOrderList] = useState([]);
   const [totalCost, setTotalCost] = useState(null);
   const [deliveryDate, setDeliveryDate] = useState("");
@@ -24,7 +24,7 @@ const ViewOrderDetail = ({ userID }) => {
   useEffect(() => {
     fetchSalesAPI_Func(basketItemID, userID).then((response1) => {
       if (response1.data.error) {
-        window.alert(response1.data.error);
+        messageSetter(response1.data.error, "danger", true);
         return;
       }
       authChecker(history, response1, true);
@@ -34,7 +34,7 @@ const ViewOrderDetail = ({ userID }) => {
       setOrderRef(response1.data.result[0].basketItemID);
       fetchSalesCostAPI_Func(basketItemID, userID).then((response2) => {
         if (response2.data.error) {
-          window.alert(response2.data.error);
+          messageSetter(response2.data.error, "danger", true);
           return;
         }
         authChecker(history, response2, true);
@@ -61,4 +61,4 @@ const ViewOrderDetail = ({ userID }) => {
   );
 };
 
-export default ViewOrderDetail;
+export default OrderDetail;

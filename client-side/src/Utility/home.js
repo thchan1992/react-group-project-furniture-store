@@ -14,11 +14,15 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showCard, setShowCard] = useState(false);
   const history = useHistory();
+  const getCache = require("localstorage-ttl");
 
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("recentViewItem"));
-
-    if ("value" in data == false || Object.keys(data.value).length === 0) {
+    if (
+      !data ||
+      "value" in data == false ||
+      Object.keys(data.value).length === 0
+    ) {
       setIsLoading(false);
       return;
     }

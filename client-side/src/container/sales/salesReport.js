@@ -3,7 +3,7 @@ import Component from "./salesReport_component/salesReport";
 import { showSalesAPI_Func } from "../../api/api";
 import { useHistory } from "react-router-dom";
 import { authChecker } from "../../Utility/authChecker";
-const SalesReport = () => {
+const SalesReport = ({ messageSetter }) => {
   const [sorting, setSorting] = useState("ASC");
   const [column, setColumn] = useState("orderDate");
   const [salesList, setSalesList] = useState([]);
@@ -16,7 +16,7 @@ const SalesReport = () => {
   const fetchSales = () => {
     showSalesAPI_Func(sorting, column, dateFrom, dateTo).then((response) => {
       if (response.data.error) {
-        window.alert(response.data.error);
+        messageSetter(response.data.error, "danger", true);
         return;
       }
       authChecker(history, response, true);

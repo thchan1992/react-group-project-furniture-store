@@ -9,7 +9,7 @@ import {
 import { useHistory } from "react-router-dom";
 import { authChecker } from "../../Utility/authChecker";
 
-const Confirmation = ({ userID }) => {
+const Confirmation = ({ userID, messageSetter }) => {
   const [orderList, setOrderList] = useState([]);
   const [totalCost, setTotalCost] = useState(null);
   const [deliveryDate, setDeliveryDate] = useState("");
@@ -19,14 +19,14 @@ const Confirmation = ({ userID }) => {
   useEffect(async () => {
     await fetchBasketAPI_Func(userID).then((response) => {
       if (response.data.error) {
-        window.alert(response.data.error, "danger", true);
+        messageSetter(response.data.error, "danger", true);
         return;
       }
       authChecker(history, response, false);
       const basketItemID = response.data.result[0].basketItemID;
       fetchSalesAPI_Func(basketItemID, userID).then((response) => {
         if (response.data.error) {
-          window.alert(response.data.error, "danger", true);
+          messageSetter(response.data.error, "danger", true);
           return;
         }
         authChecker(history, response, true);
@@ -36,7 +36,7 @@ const Confirmation = ({ userID }) => {
         setOrderRef(response.data.result[0].basketItemID);
         fetchSalesCostAPI_Func(basketItemID, userID).then((response) => {
           if (response.data.error) {
-            window.alert(response.data.error, "danger", true);
+            messageSetter(response.data.error, "danger", true);
             return;
           }
           authChecker(history, response, true);
