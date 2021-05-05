@@ -4,7 +4,7 @@ import { getUserOrdAPI_Func } from "../../api/api";
 import Component from "./order_component/order";
 import { useHistory, useParams } from "react-router-dom";
 import { authChecker } from "../../Utility/authChecker";
-const Order = () => {
+const Order = ({ messageSetter }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [orderList, setOrderList] = useState([]);
   const history = useHistory();
@@ -13,7 +13,7 @@ const Order = () => {
   useEffect(() => {
     getUserOrdAPI_Func(userID).then((response) => {
       if (response.data.error) {
-        window.alert(response.data.error);
+        messageSetter(response.data.error, "danger", true);
         return;
       }
       authChecker(history, response, true);

@@ -4,7 +4,7 @@ import { showSalesSummaryAPI_Func } from "../../api/api";
 import Component from "./salesSummary_component/salesSummary";
 import { useHistory } from "react-router-dom";
 import { authChecker } from "../../Utility/authChecker";
-const SalesSummary = () => {
+const SalesSummary = ({ messageSetter }) => {
   const [salesList, setSalesList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [dateTo, setDateTo] = useState("-");
@@ -40,7 +40,7 @@ const SalesSummary = () => {
   const fetchSales = () => {
     showSalesSummaryAPI_Func(dateFrom, dateTo).then((response) => {
       if (response.data.error) {
-        window.alert(response.data.error);
+        messageSetter(response.data.error, "danger", true);
         return;
       }
       authChecker(history, response, true);

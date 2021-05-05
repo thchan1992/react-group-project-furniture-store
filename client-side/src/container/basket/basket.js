@@ -12,22 +12,23 @@ const Basket = ({ messageSetter }) => {
   const history = useHistory();
   const { userID } = useParams();
 
-  //load the basket
   useEffect(() => {
+    //fetch basket detail: basket list
     fetchBasketAPI_Func(userID).then((response) => {
+      //error handler
       if (response.data.error) {
         messageSetter(response.data.error, "danger", true);
         return;
-      }
+      } //error handler
       authChecker(history, response, true);
       setBasketList(response.data.result);
       checkReadyPay(response.data.result.length);
+      //fetch the total cost of the basket
       totalCostAPI_Func(userID).then((response) => {
         if (response.data.error) {
           messageSetter(response.data.error, "danger", true);
           return;
         }
-
         if (!response.data.result) {
           setTotalCost(0);
         } else {
@@ -38,6 +39,7 @@ const Basket = ({ messageSetter }) => {
     });
   }, [isLoading]);
 
+  // see if there is any item in the basket which is not avialble
   const checkReadyPay = (result) => {
     var isReady = true;
     if (result == 0) {

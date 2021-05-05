@@ -132,7 +132,7 @@ const Items = ({ userID, userType, messageSetter }) => {
         return;
       }
       authChecker(history, response, true);
-      getCache.set("recentViewItem", response.data.result, [100000]);
+      getCache.set("recentViewItem", response.data.result, []);
       setItem(response.data.result);
       setIsLoading(false);
     });
