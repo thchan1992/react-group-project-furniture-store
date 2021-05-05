@@ -10,6 +10,7 @@ const SupplierList = ({ messageSetter }) => {
   const history = useHistory();
 
   useEffect(() => {
+    //api that returns a list of suppliers
     showSuppAPI_Func().then((response) => {
       if (response.data.error) {
         messageSetter(response.data.error, "danger", true);

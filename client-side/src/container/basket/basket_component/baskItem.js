@@ -11,7 +11,10 @@ const BaskItem = ({ data, userID, setIsLoading, messageSetter }) => {
   const [itemBasketQty, setItemBasketQty] = useState(
     Number(data.itemBasketQty)
   );
-  const confData = (remove) => {
+
+  //handle user changes to the basket item qty
+  const handleChange = (remove) => {
+    //if the item qty below 0
     if (remove) {
       const itemBasketQty = 0;
       const itemDetID = data.itemDetID;
@@ -24,6 +27,7 @@ const BaskItem = ({ data, userID, setIsLoading, messageSetter }) => {
     }
   };
 
+  //API to modify basket item qty
   const editBasket = (newData) => {
     modifyBasketAPI_Func(newData).then((response) => {
       if (response.data.error) {
@@ -70,7 +74,7 @@ const BaskItem = ({ data, userID, setIsLoading, messageSetter }) => {
             className="edit-basket-button-style"
             variant="info"
             onClick={() => {
-              confData(false);
+              handleChange(false);
               messageSetter(null, null, false);
             }}
           >
@@ -80,7 +84,7 @@ const BaskItem = ({ data, userID, setIsLoading, messageSetter }) => {
             className="remove-basket-item-button-style"
             variant="danger"
             onClick={() => {
-              confData(true);
+              handleChange(true);
               messageSetter(null, null, false);
             }}
           >

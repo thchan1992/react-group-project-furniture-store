@@ -98,12 +98,10 @@ app.get(fetchSearchItemList_url, (req, res) => {
   getAll(fetchSearchItemList_sql(column, sorting), keyword, res);
 });
 
-//API request to add the item *
-
+//API request to add the item
 const { addNewSuppOrd } = require("../supplier/supplier_func");
-
+//function that add a new item
 app.post(addNewItem_url, adminJWT, (req, res) => {
-  console.log("pass");
   const itemDetID = req.body.itemDetID;
   const itemCatID = req.body.itemCatID;
   const itemPrice = req.body.itemPrice;
@@ -141,6 +139,7 @@ app.delete(fetchItemDetUrl_url, adminJWT, (req, res) => {
   deleteImg(fetchItemDetUrl_sql, params, res);
 });
 
+//update the url of the item in the table
 app.post(setImageUrl_url, adminJWT, (req, res) => {
   runCom(
     setImageUrl_sql,

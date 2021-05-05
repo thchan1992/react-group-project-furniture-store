@@ -1,6 +1,6 @@
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import EditSupplier from "./editSupplier";
 import Card from "react-bootstrap/Card";
 import "./supplierList.css";

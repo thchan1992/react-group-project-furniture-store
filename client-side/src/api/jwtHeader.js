@@ -1,3 +1,4 @@
+//create a jwt header
 export const jwt = () => {
   const config = {
     headers: {
@@ -7,6 +8,7 @@ export const jwt = () => {
   return config;
 };
 
+//create a jwt header with the content type: multipart
 export const jwt_img = () => {
   const config = {
     headers: {

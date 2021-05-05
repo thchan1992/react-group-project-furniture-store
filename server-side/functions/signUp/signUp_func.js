@@ -8,6 +8,7 @@ const {
 } = require("./signUp_sql");
 const { runCom } = require("../../configuration/generalFunc");
 
+//funciton that creates a new account
 const signUpNewAcc = (req, res, isAdmin) => {
   const userID = req.body.userID;
   const userType = req.body.userType;
@@ -20,6 +21,7 @@ const signUpNewAcc = (req, res, isAdmin) => {
   const cardNumber = req.body.cardNumber;
   const expire_Date = req.body.expire_Date;
   const ccv = req.body.ccv;
+  //bcrypt that converts the password into a hash value
   bcrypt.hash(userPass, saltRounds, (err, hash) => {
     if (err) {
       console.log(err);
@@ -33,6 +35,7 @@ const signUpNewAcc = (req, res, isAdmin) => {
             res.json({ error: err.message });
             return;
           }
+          //create a new account for normal user
           runCom(
             addNewPaymentDet_sql,
             [payMetID, cardNumber, userID, expire_Date, ccv, 10000],
@@ -42,6 +45,7 @@ const signUpNewAcc = (req, res, isAdmin) => {
         }
       );
     } else {
+      //create a new admin account
       runCom(
         signUpNewAdmin_sql,
         [userID, userType, userEmail, firstName, lastName, userAddress, hash],

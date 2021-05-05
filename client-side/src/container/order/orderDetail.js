@@ -1,12 +1,6 @@
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import {
-  fetchBasketAPI_Func,
-  fetchSalesAPI_Func,
-  fetchSalesCostAPI_Func,
-  deleteBaskAPI_Func,
-} from "../../api/api";
-import Button from "react-bootstrap/esm/Button";
+import { fetchSalesAPI_Func, fetchSalesCostAPI_Func } from "../../api/api";
 import Component from "../payment/confirmation_component/confirmation";
 import { useHistory } from "react-router-dom";
 import { authChecker } from "../../Utility/authChecker";
@@ -18,20 +12,23 @@ const OrderDetail = ({ userID, messageSetter }) => {
   const [orderDate, setOrderDate] = useState("");
   const [orderRef, setOrderRef] = useState("");
   const { basketItemID } = useParams();
-  const [orderDet, setOrderDet] = useState({});
+
   const history = useHistory();
 
   useEffect(() => {
+    //fetch the order detail
     fetchSalesAPI_Func(basketItemID, userID).then((response1) => {
       if (response1.data.error) {
         messageSetter(response1.data.error, "danger", true);
         return;
       }
       authChecker(history, response1, true);
+      //set all the order detail
       setOrderList(response1.data.result);
       setDeliveryDate(response1.data.result[0].deliveryDate);
       setOrderDate(response1.data.result[0].orderDate);
       setOrderRef(response1.data.result[0].basketItemID);
+      //api to get the total cost of the sales
       fetchSalesCostAPI_Func(basketItemID, userID).then((response2) => {
         if (response2.data.error) {
           messageSetter(response2.data.error, "danger", true);
@@ -39,13 +36,6 @@ const OrderDetail = ({ userID, messageSetter }) => {
         }
         authChecker(history, response2, true);
         setTotalCost(response2.data.result.totalCost);
-        setOrderDet({
-          totalCost: response2.data.result.totalCost,
-          deliveryDate: response1.data.result[0].deliveryDate,
-          orderDate: response1.data.result[0].orderDate,
-          orderRef: basketItemID,
-          orderList: response1.data.result,
-        });
       });
     });
   }, []);

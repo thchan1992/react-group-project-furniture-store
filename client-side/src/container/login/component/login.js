@@ -5,17 +5,15 @@ import logoutIcon from "../../../assets/logout.png";
 import loginIcon from "../../../assets/login.png";
 import "./login.css";
 
-const LoginForm = ({
+const Login = ({
   user,
   userID,
   userEmail,
   setEmail,
   userPass,
   setUserPass,
-
   handleLogin,
   handleLogOut,
-
   history,
 }) => {
   return (
@@ -71,6 +69,7 @@ const LoginForm = ({
             style={{ height: "40px" }}
             onClick={() => {
               handleLogOut();
+
               history.push("/Home");
             }}
           />
@@ -80,4 +79,4 @@ const LoginForm = ({
   );
 };
 
-export default LoginForm;
+export default Login;

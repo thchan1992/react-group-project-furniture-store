@@ -5,7 +5,6 @@ import { useHistory } from "react-router-dom";
 import Component from "./component_newItem/newItem";
 import {
   addItemAPIFunc,
-  addSuppOrderAPIFunc,
   uploadImageAPIFunc,
   showCaterAPI_Func,
   showSuppAPI_Func,
@@ -31,13 +30,14 @@ const NewItem = ({ messageSetter }) => {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(true);
 
-  //use Effect to fetch item list.
   useEffect(() => {
+    //use Effect to fetch item list.
     showCaterAPI_Func().then((response) => {
       if (response.data.error) {
         messageSetter(response.data.error, "danger", true);
         return;
       }
+      //set the category list for user to choose when creating a new item
       setItemCatList(response.data.result);
       showSuppAPI_Func().then((response) => {
         if (response.data.error) {
@@ -51,6 +51,20 @@ const NewItem = ({ messageSetter }) => {
     });
   }, [isLoading]);
 
+  //function that make the order date
+  const dateMaker = (date) => {
+    var d = new Date(date),
+      month = "" + (d.getMonth() + 1),
+      day = "" + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2) month = "0" + month;
+    if (day.length < 2) day = "0" + day;
+
+    return [year, month, day].join("-");
+  };
+
+  //handle submission of the new item
   const handleSubmit = () => {
     if (
       !item.itemThreshold ||
@@ -68,12 +82,10 @@ const NewItem = ({ messageSetter }) => {
     item.itemDetID = pk();
     item.suppOrdID = pk() + 1;
     item.suppOrdQty = item.itemQty;
-    const today = new Date();
-    item.orderDate =
-      today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
-    item.ordReceiveDate =
-      today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
+    item.orderDate = dateMaker(new Date());
+    item.ordReceiveDate = dateMaker(new Date());
 
+    //api to add the new item
     addItemAPIFunc(item).then((response) => {
       if (response.data.error) {
         messageSetter(response.data.error, "danger", true);
@@ -84,10 +96,13 @@ const NewItem = ({ messageSetter }) => {
     });
   };
 
+  //method to upload the picture after adding the new item to the database
   const uploadImage = () => {
     const fd = new FormData();
     fd.append("image", image);
+    //upload the image to the API function
     uploadImageAPIFunc(fd).then((response) => {
+      //get the url of image in the server
       if (response.data.fileName) {
         const itemUrl = host + "/" + response.data.fileName;
         const itemDetID = item.itemDetID;
@@ -104,6 +119,7 @@ const NewItem = ({ messageSetter }) => {
     });
   };
 
+  //use the url from the uploadImageAPIFunc to update the itemUrl in the database by using setItemImageAPI_Func
   const updateImageUrl = (newData) => {
     setItemImageAPI_Func(newData).then((response) => {
       if (response.data.error) {

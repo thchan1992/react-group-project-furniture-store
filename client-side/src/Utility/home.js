@@ -5,7 +5,6 @@ import homepage3 from "../assets/homepage3.jpg";
 import "./home.css";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
-
 import CardDeck from "react-bootstrap/CardDeck";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
@@ -14,19 +13,23 @@ const Home = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showCard, setShowCard] = useState(false);
   const history = useHistory();
-  const getCache = require("localstorage-ttl");
 
   useEffect(() => {
+    //get the file that stores recent view item from the local storage
     const data = JSON.parse(localStorage.getItem("recentViewItem"));
+    // if the data does not exist
+    // even if it does exist but without any value or "value" property does not exist in the object
     if (
       !data ||
       "value" in data == false ||
       Object.keys(data.value).length === 0
     ) {
+      //it will not load any thing to "item"
       setIsLoading(false);
       return;
     }
 
+    //set the item with the data from the localstorage
     try {
       setItem(data.value);
     } catch (err) {
@@ -34,9 +37,6 @@ const Home = () => {
       setIsLoading(false);
       return;
     }
-    // if (data == null || typeof data.value != "object") {
-    //   return;
-    // }
     setShowCard(true);
     setIsLoading(false);
   }, [isLoading]);

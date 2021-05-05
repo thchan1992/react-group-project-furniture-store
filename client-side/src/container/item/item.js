@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import Component from "./component_items/items";
+import Component from "./component_items/item";
 import { host } from "../../api/url";
 import { addBaskItemAPI_Func } from "../../api/api";
 import { authChecker } from "../../Utility/authChecker";
@@ -13,7 +13,7 @@ import {
   getItemDetAPI_Func,
 } from "../../api/api";
 
-const Items = ({ userID, userType, messageSetter }) => {
+const Item = ({ userID, userType, messageSetter }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [item, setItem] = useState({});
   const [newVal, setNewVal] = useState({
@@ -27,9 +27,9 @@ const Items = ({ userID, userType, messageSetter }) => {
   const [image, setImage] = useState(null);
   const [itemBasketQty, setItemBasketQty] = useState(0);
   const { itemDetID } = useParams();
-
   const getCache = require("localstorage-ttl");
 
+  //A method to deactivate an item so users cannot see it on the website
   const deactItem = (itemDetID) => {
     const column = "itemThreshold";
     const change = 0;
@@ -38,6 +38,7 @@ const Items = ({ userID, userType, messageSetter }) => {
       itemDetID,
       change,
     };
+    //An api to edit the item
     editItemAPI_Func(newData).then((response) => {
       if (response.data.error) {
         messageSetter(response.data.error, "danger", true);
@@ -48,7 +49,7 @@ const Items = ({ userID, userType, messageSetter }) => {
     });
   };
 
-  //
+  //update the item based on the table column and the new value and itemDetID
   const updateItem = (itemDetID, edColumn, change) => {
     if (change != "") {
       const column = edColumn;
@@ -57,7 +58,7 @@ const Items = ({ userID, userType, messageSetter }) => {
         itemDetID,
         change,
       };
-      //API that edits the attributes.
+      //API that edits the attributes of the item
       editItemAPI_Func(newData).then((response) => {
         if (response.data.error) {
           messageSetter(response.data.error, "danger", true);
@@ -99,6 +100,7 @@ const Items = ({ userID, userType, messageSetter }) => {
           }
           const itemUrl = host + "/" + response.data.fileName;
           const column = "itemUrl";
+          //update the itemUrl after getting the result from uploadImageAPIFunc
           updateItem(itemDetID, column, itemUrl);
         });
       });
@@ -107,13 +109,15 @@ const Items = ({ userID, userType, messageSetter }) => {
     }
   };
 
+  //handle the case where users add an item to their basket
   const addBasketItem = () => {
     if (itemBasketQty == 0) {
-      messageSetter("item quanty cannot be 0", "danger", true);
+      messageSetter("item QTY cannot be 0", "danger", true);
       return;
     }
     const itemDetID = item.itemDetID;
     const newData = { itemBasketQty, itemDetID, userID };
+    //API to add the item
     addBaskItemAPI_Func(newData).then((response) => {
       authChecker(history, response, false);
       if (response.data.error) {
@@ -126,6 +130,7 @@ const Items = ({ userID, userType, messageSetter }) => {
   };
 
   useEffect(() => {
+    //fetch the item detail
     getItemDetAPI_Func(itemDetID).then((response) => {
       if (response.data.error) {
         messageSetter(response.data.error, "danger", true);
@@ -157,4 +162,4 @@ const Items = ({ userID, userType, messageSetter }) => {
     </div>
   );
 };
-export default Items;
+export default Item;

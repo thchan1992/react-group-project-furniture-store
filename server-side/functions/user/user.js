@@ -76,6 +76,7 @@ app.get(orderConfirmation_url, (req, res) => {
   getAll(orderConfirmation_sql, basketItemID, res);
 });
 
+//get user order history
 app.get(getOrdHist_url, regularJWT, (req, res) => {
   const userID = req.params.userID;
   checkUserID(req, res, userID, () => {

@@ -1,5 +1,8 @@
 var db = require("../database/database.js");
 
+//the functions below will be called repeatedly in the server application
+
+//function that contains an express.all functions
 const getAll = (sql, param, res) => {
   if (param == null) {
     db.all(sql, (err, result) => {
@@ -22,6 +25,7 @@ const getAll = (sql, param, res) => {
   }
 };
 
+//function that contains an express.get functions
 const getOne = (sql, param, res) => {
   if (param == null) {
     db.get(sql, (err, result) => {
@@ -42,6 +46,7 @@ const getOne = (sql, param, res) => {
   }
 };
 
+//function that contains an express.run functions
 const runCom = (sql, params, res, text) => {
   db.run(sql, params, (err) => {
     if (err) {

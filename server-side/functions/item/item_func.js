@@ -3,17 +3,22 @@ var multer = require("multer");
 var fs = require("fs");
 const { getAll, getOne, runCom } = require("../../configuration/generalFunc");
 
+// multer to store the image uploaded from the front end
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+    //set the dictoary
     cb(null, "./image");
   },
+  //create the file name
   filename: (req, file, cb) => {
     cb(null, Date.now() + "_" + file.originalname);
   },
 });
 
+//create the upload function by using multer
 const uploadImg = multer({ storage: storage });
 
+//function that delete a picture from the server
 const deleteImg = (sql, params, res) => {
   db.get(sql, params, (err, result) => {
     if (err) {

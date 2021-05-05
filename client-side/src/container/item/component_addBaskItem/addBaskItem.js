@@ -41,7 +41,7 @@ const AddBaskItem = ({
                   } else {
                     history.push("/SignUp/");
                     messageSetter(
-                      "Please Sign Up before you shop",
+                      "Please Sign Up or Log In before you shop",
                       "warning",
                       true
                     );

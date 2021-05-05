@@ -12,19 +12,21 @@ const {
 } = require("./payment_sql");
 const { autoMail_func } = require("../email/email.js");
 
+//function that finalise the payment and order of the user
 const finalisePay = (userID, deliveryDate, orderDate, delivAddress, res) => {
   //get the total cost of the basket and basket ID
   getCostAndID(userID, res, (totalCost, basketItemID) => {
-    //reduce the fund
+    //reduce the funds from the user
     reduceFunds(totalCost, userID, res, (isAuthed) => {
       if (isAuthed == true) {
-        //update the itemQty in the stock
+        //update the itemQty in the stock according to the user's basket
         updateStockLevel(userID, totalCost, res, (isAuthed) => {
           if (isAuthed == true) {
-            //create sales
             const refund = totalCost;
+            //create sales: copy whatever users have in the basket to the sales table
             createSales(refund, basketItemID, userID, res, (isAuthed) => {
               if (isAuthed == true) {
+                //update order date in the sales table
                 updateBasketDate(
                   refund,
                   basketItemID,
@@ -35,6 +37,7 @@ const finalisePay = (userID, deliveryDate, orderDate, delivAddress, res) => {
                   res,
                   (isAuthed) => {
                     if (isAuthed == true) {
+                      //check if the item meets the item threshold, if yes, send email to the supplier
                       autoMail_func(userID);
                       res.json({
                         message: "Order has been completed",
@@ -53,9 +56,11 @@ const finalisePay = (userID, deliveryDate, orderDate, delivAddress, res) => {
   });
 };
 
+//functions that create the sales
 const createSales = (refund, basketItemID, userID, res, callback) => {
   db.run(createSales_sql, userID, (err) => {
     if (err) {
+      //error handler: refund the func to the users and reverse the stock level
       reverseStock(basketItemID, userID, res);
       reverFund(userID, refund, res);
       res.json({
@@ -74,6 +79,7 @@ const reverseStock = (basketItemID, userID, res) => {
   db.run(deleteBasket_sql, basketItemID);
 };
 
+//get the total cost and basket ID
 const getCostAndID = (userID, res, callback) => {
   db.get(getCostAndBaskID_sql, userID, (err, result) => {
     if (err) {
@@ -90,6 +96,7 @@ const getCostAndID = (userID, res, callback) => {
   });
 };
 
+//update the order date in the sales table
 const updateBasketDate = (
   refund,
   basketItemID,
@@ -103,6 +110,7 @@ const updateBasketDate = (
   const params = [orderDate, deliveryDate, delivAddress, basketItemID];
   db.run(updateBasketDate_sql, params, (err) => {
     if (err) {
+      //error handler: refund the func to the users and reverse the stock level, and delete the sales record
       reverseStock(basketItemID, userID, res);
       reverFund(userID, refund, res);
       reverSales(basketItemID, res);
@@ -116,6 +124,7 @@ const updateBasketDate = (
   });
 };
 
+//error handler that reverse the stocks to the item table
 const reverSales = (basketItemID, res) => {
   db.run(reverSales_sql, basketItemID, (err) => {
     if (err) {
@@ -125,6 +134,7 @@ const reverSales = (basketItemID, res) => {
   });
 };
 
+//functions that takes user fund
 const reduceFunds = (totalCost, userID, res, callback) => {
   db.run(reduceFunds_sql(totalCost), userID, (err) => {
     if (err) {
@@ -142,6 +152,7 @@ const reduceFunds = (totalCost, userID, res, callback) => {
   });
 };
 
+//update the stock level after taking money from the users
 const updateStockLevel = (userID, totalCost, res, callback) => {
   db.run(updateStockLevel_sql, userID, (err) => {
     if (err) {
@@ -164,11 +175,13 @@ const updateStockLevel = (userID, totalCost, res, callback) => {
   });
 };
 
+//error handle that return the money to the user account
 const reverFund = (userID, totalCost, res) => {
   db.run(reverFund_sql(totalCost), userID);
 };
 
-//----updated func
+//
+//check if users have enough money before finalising the order
 const checkFund = (sql, params, res) => {
   db.get(sql, params, (err, result) => {
     if (err) {
@@ -183,6 +196,7 @@ const checkFund = (sql, params, res) => {
   });
 };
 
+//check if the stock level is enough for user order before finalising the order
 const checkStock = (sql, userID, res) => {
   db.get(sql, userID, (err, result) => {
     if (err) {

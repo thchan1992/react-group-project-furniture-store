@@ -6,15 +6,17 @@ import { useHistory } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import { authChecker } from "../../../Utility/authChecker";
 
-const EditCategory = ({ data, setIsLoading, messageSetter }) => {
+const EditCategory = ({ data, messageSetter }) => {
   const [itemCatName, setItemCatName] = useState(null);
   const history = useHistory();
 
+  //handle the edit submission
   const handleSubmit = (itemCatID) => {
     if (itemCatName) {
       const column = "itemCatName";
       const change = itemCatName;
       const newData = { column, change, itemCatID };
+      //An API to modify the category detail
       modifyCatAPI_Func(newData).then((response) => {
         if (response.data.error) {
           messageSetter(response.data.error, "danger", true);

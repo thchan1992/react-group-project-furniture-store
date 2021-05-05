@@ -1,29 +1,24 @@
 import "./App.css";
-
-import { BrowserRouter, Link } from "react-router-dom";
-
+import { BrowserRouter } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import Containers from "./frame/containers";
 import NavBar from "./frame/navbar";
 import { showCaterAPI_Func } from "./api/api";
 import Header from "./frame/header";
-import Message from "./Utility/message";
+import Message from "./frame/message";
 
 const App = () => {
   const [itemDetID, setItemDetID] = useState(null);
-  const [userID, setUserID] = useState("");
-  const [userType, setUserType] = useState("");
   const [caterList, setCaterList] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [user, setUser] = useState({});
-  const [isLogin, setIsLogin] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
-
   const [messageCont, setMessageCont] = useState({
     text: "",
     theme: "",
   });
 
+  //bootstrap warning setter
   const messageSetter = (text, theme, show) => {
     setMessageCont({
       text: text,
@@ -32,6 +27,7 @@ const App = () => {
     setShowMessage(show);
   };
 
+  //api that gets the list of category for the nav bar
   useEffect(() => {
     showCaterAPI_Func().then((response) => {
       if (response.data.error) {
@@ -47,29 +43,18 @@ const App = () => {
       <BrowserRouter>
         <br />
         {/* Header */}
-        <Header
-          userType={user.userType}
-          userID={user.userID}
-          user={user}
-          isLogin={isLogin}
-          setIsLogin={setIsLogin}
-          setUserID={setUserID}
-          setUserType={setUserType}
-          setUser={setUser}
-          messageSetter={messageSetter}
-        />
+        <Header user={user} setUser={setUser} messageSetter={messageSetter} />
         {/*Nav bar*/}
         <NavBar
-          messageSetter={messageSetter}
-          itemDetID={itemDetID}
-          setItemDetID={setItemDetID}
           caterList={caterList}
           userType={user.userType}
           keyword={keyword}
           setKeyword={setKeyword}
           userID={user.userID}
+          setItemDetID={setItemDetID}
+          itemDetID={itemDetID}
         />
-        {/* Message */}
+        {/* bootstrap warning */}
         <Message
           messageCont={messageCont}
           showMessage={showMessage}
@@ -78,9 +63,6 @@ const App = () => {
         {/*Router Linking different component and container */}
         <Containers
           user={user}
-          isLogin={isLogin}
-          userType={user.userType}
-          userID={userID}
           keyword={keyword}
           caterList={caterList}
           messageSetter={messageSetter}

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Table from "react-bootstrap/Table";
 import { getUserOrdAPI_Func } from "../../api/api";
 import Component from "./order_component/order";
 import { useHistory, useParams } from "react-router-dom";
@@ -11,6 +10,7 @@ const Order = ({ messageSetter }) => {
   const { userID } = useParams();
 
   useEffect(() => {
+    //get user order lists
     getUserOrdAPI_Func(userID).then((response) => {
       if (response.data.error) {
         messageSetter(response.data.error, "danger", true);

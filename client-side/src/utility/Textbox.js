@@ -2,6 +2,7 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import React from "react";
 
+//text box to be called by many child component for data input from the user
 const Textbox = ({
   name,
   attriName,

@@ -10,12 +10,14 @@ const NewSupplier = ({ messageSetter }) => {
   const [suppEmail, setSuppEmail] = useState("");
   const history = useHistory();
 
+  //handle submission for adding a new supplier
   const handleSubmit = () => {
     if (!suppName && !suppEmail) {
       messageSetter("not enough data is inserted", "danger", true);
     } else {
-      const suppID = pk;
+      const suppID = pk();
       const newSup = { suppEmail, suppName, suppID };
+      //api that add a new supplier in the backend
       addSupp_Func(newSup).then((response) => {
         if (response.data.error) {
           messageSetter(response.data.error, "danger", true);

@@ -1,4 +1,3 @@
-import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import React from "react";
@@ -24,13 +23,6 @@ const ProductList = ({
       >
         <br />
         {itemList.map((data) => (
-          // <Col
-          //   xs={{ span: 6 }}
-          //   sm={{ span: 4 }}
-          //   md={{ span: 3 }}
-          //   lg={{ span: 2 }}
-          //   xl={{ span: 2 }}
-          // >
           <CardDeck>
             <Card
               bg="dark"
