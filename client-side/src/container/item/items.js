@@ -39,6 +39,11 @@ const Items = ({ userID, userType, messageSetter }) => {
       change,
     };
     editItemAPI_Func(newData).then((response) => {
+      if (response.data.error) {
+        messageSetter(response.data.error, "danger", true);
+        return;
+      }
+      authChecker(history, response, false);
       setIsLoading(true);
     });
   };
@@ -54,7 +59,11 @@ const Items = ({ userID, userType, messageSetter }) => {
       };
       //API that edits the attributes.
       editItemAPI_Func(newData).then((response) => {
-        messageSetter(response.data.message, "success", true);
+        if (response.data.error) {
+          messageSetter(response.data.error, "danger", true);
+          return;
+        }
+        authChecker(history, response, false);
         setImage(null);
         setNewVal({
           itemPrice: null,
@@ -75,11 +84,19 @@ const Items = ({ userID, userType, messageSetter }) => {
     if (image != null) {
       //API that deletes the current product image
       await delImageAPI_Func(itemDetID).then((response) => {
+        if (response.data.error) {
+          messageSetter(response.data.error, "danger", true);
+          return;
+        }
+        authChecker(history, response, false);
         //create a new FormData for storing the new image
         const fd = new FormData();
         //append the new image to the fd
         fd.append("image", image);
         uploadImageAPIFunc(fd).then((response) => {
+          if (response.data.error) {
+            messageSetter(response.data.error, "danger", true);
+          }
           const itemUrl = host + "/" + response.data.fileName;
           const column = "itemUrl";
           updateItem(itemDetID, column, itemUrl);
@@ -99,23 +116,25 @@ const Items = ({ userID, userType, messageSetter }) => {
     const newData = { itemBasketQty, itemDetID, userID };
     addBaskItemAPI_Func(newData).then((response) => {
       authChecker(history, response, false);
-      messageSetter(response.data.message, "secondary", true);
+      if (response.data.error) {
+        messageSetter(response.data.error, "danger", true);
+        return;
+      } else if (response.data.message) {
+        messageSetter(response.data.message, "success", true);
+      }
     });
   };
 
   useEffect(() => {
     getItemDetAPI_Func(itemDetID).then((response) => {
-      if (response.data.result == null) {
-        messageSetter("No item found", "warning", true);
-        setIsLoading(false);
-        setItem(null);
-      } else {
-        getCache.set("recentViewItem", response.data.result, []);
-        const data = getCache.get("recentViewItem");
-        console.log(data, "from item");
-        setItem(response.data.result);
-        setIsLoading(false);
+      if (response.data.error) {
+        messageSetter(response.data.error, "danger", true);
+        return;
       }
+      authChecker(history, response, true);
+      getCache.set("recentViewItem", response.data.result, [100000]);
+      setItem(response.data.result);
+      setIsLoading(false);
     });
   }, [isLoading]);
 

@@ -6,17 +6,25 @@ import axios from "axios";
 import { modifySuppAPI_Func } from "../../../api/api";
 
 import Card from "react-bootstrap/Card";
+import { authChecker } from "../../../Utility/authChecker";
+import { useHistory } from "react-router-dom";
 
 const EditSupplier = ({ data, setIsLoading, messageSetter }) => {
   const [suppName, setSuppName] = useState("");
   const [suppEmail, setSuppEmail] = useState("");
   const [column, setCol] = useState("");
   const [change, setChange] = useState("");
+  const history = useHistory();
 
   const handleSubmit = (suppID) => {
     if (column && change) {
       const newData = { column, change, suppID };
       modifySuppAPI_Func(newData).then((response) => {
+        if (response.data.error) {
+          messageSetter(response.data.error, "danger", true);
+          return;
+        }
+        authChecker(history, response, false);
         messageSetter(response.data.message, "success", true);
         setSuppName("");
         setSuppEmail("");

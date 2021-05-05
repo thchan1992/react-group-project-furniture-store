@@ -34,6 +34,10 @@ const App = () => {
 
   useEffect(() => {
     showCaterAPI_Func().then((response) => {
+      if (response.data.error) {
+        messageSetter(response.data.error, "danger", true);
+        return;
+      }
       setCaterList(response.data.result);
     });
   }, []);

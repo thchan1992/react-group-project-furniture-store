@@ -72,6 +72,10 @@ const User = ({ messageSetter }) => {
       const newData = { userID, change, column };
       console.log(newData);
       updateUserDetAPI_Func(newData).then((response) => {
+        if (response.data.error) {
+          messageSetter(response.data.error, "danger", true);
+          return;
+        }
         authChecker(history, response, false);
         messageSetter(response.data.message, "success", true);
         setIsLoading(true);
@@ -102,6 +106,10 @@ const User = ({ messageSetter }) => {
       const ccv = user.ccv;
       const newCard = { payMetID, cardNumber, userID, expire_Date, ccv };
       modifyCardAPI_Func(newCard).then((response) => {
+        if (response.data.error) {
+          messageSetter(response.data.error, "danger", true);
+          return;
+        }
         authChecker(history, response, false);
         setIsLoading(true);
         setUser({
@@ -124,13 +132,27 @@ const User = ({ messageSetter }) => {
 
   useEffect(() => {
     fetchUserDetAPI_Func(userID).then((response) => {
+      //no user found will be back to the error page
+      if (response.data.error) {
+        messageSetter(response.data.error, "danger", true);
+        return;
+      }
       authChecker(history, response, true);
       setCurUser(response.data.result);
       if (response.data.result.userType == "C") {
+        //no user card found will be back to the error page
         fetchUserPayDet_Func(userID).then((response) => {
+          if (response.data.error) {
+            messageSetter(response.data.error, "danger", true);
+            return;
+          }
           authChecker(history, response, true);
           setShowCard(response.data.result.cardNumber);
           fetchPayMetAPI_Func().then((response) => {
+            if (response.data.error) {
+              messageSetter(response.data.error, "danger", true);
+              return;
+            }
             setPayMetList(response.data.result);
           });
         });

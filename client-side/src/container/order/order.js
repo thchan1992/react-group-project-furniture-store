@@ -12,6 +12,10 @@ const Order = () => {
 
   useEffect(() => {
     getUserOrdAPI_Func(userID).then((response) => {
+      if (response.data.error) {
+        window.alert(response.data.error);
+        return;
+      }
       authChecker(history, response, true);
       setOrderList(response.data.result);
     });

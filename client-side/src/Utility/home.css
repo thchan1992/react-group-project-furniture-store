@@ -1,9 +1,10 @@
 .centered {
   position: absolute;
-  top: 70%;
-  left: 20%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 100px;
+  font-size: 30px;
+  color: rgb(241, 241, 241);
 }
 
 .back-ground {

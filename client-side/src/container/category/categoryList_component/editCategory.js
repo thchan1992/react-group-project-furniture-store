@@ -8,7 +8,6 @@ import { authChecker } from "../../../Utility/authChecker";
 
 const EditCategory = ({ data, setIsLoading, messageSetter }) => {
   const [itemCatName, setItemCatName] = useState(null);
-
   const history = useHistory();
 
   const handleSubmit = (itemCatID) => {
@@ -17,10 +16,17 @@ const EditCategory = ({ data, setIsLoading, messageSetter }) => {
       const change = itemCatName;
       const newData = { column, change, itemCatID };
       modifyCatAPI_Func(newData).then((response) => {
-        authChecker(history, response, true);
-        messageSetter(response.data.message, "success", true);
-        setItemCatName(null);
-        setIsLoading(true);
+        if (response.data.error) {
+          messageSetter(response.data.error, "danger", true);
+          return;
+        }
+        authChecker(history, response, false);
+        messageSetter(
+          response.data.message +
+            ", please refresh your browser to see the changes",
+          "success",
+          true
+        );
       });
     } else {
       messageSetter("No data was inserted", "danger", true);

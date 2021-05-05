@@ -23,12 +23,20 @@ const ViewOrderDetail = ({ userID }) => {
 
   useEffect(() => {
     fetchSalesAPI_Func(basketItemID, userID).then((response1) => {
+      if (response1.data.error) {
+        window.alert(response1.data.error);
+        return;
+      }
       authChecker(history, response1, true);
       setOrderList(response1.data.result);
       setDeliveryDate(response1.data.result[0].deliveryDate);
       setOrderDate(response1.data.result[0].orderDate);
       setOrderRef(response1.data.result[0].basketItemID);
       fetchSalesCostAPI_Func(basketItemID, userID).then((response2) => {
+        if (response2.data.error) {
+          window.alert(response2.data.error);
+          return;
+        }
         authChecker(history, response2, true);
         setTotalCost(response2.data.result.totalCost);
         setOrderDet({

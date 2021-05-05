@@ -5,15 +5,14 @@ import homepage3 from "../assets/homepage3.jpg";
 import "./home.css";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
+
 import CardDeck from "react-bootstrap/CardDeck";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
 const Home = () => {
-  const getCache = require("localstorage-ttl");
-  const [item, setItem] = useState("");
+  const [item, setItem] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showCard, setShowCard] = useState(true);
+  const [showCard, setShowCard] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
@@ -21,8 +20,14 @@ const Home = () => {
       const data = JSON.parse(localStorage.getItem("recentViewItem"));
       setItem(data.value);
     } catch (err) {
-      setShowCard(false);
+      console.log(err);
+      setIsLoading(false);
+      return;
     }
+    // if (data == null || typeof data.value != "object") {
+    //   return;
+    // }
+    setShowCard(true);
     setIsLoading(false);
   }, [isLoading]);
 
@@ -32,28 +37,30 @@ const Home = () => {
         backgroundColor: "white",
       }}
     >
+      <p />
       <CardDeck>
+        <Card bg="dark">
+          <Card.Img variant="bottom" src={homepage3} />
+          <Card.Body>
+            <h5 className="product-text-style"> CHKMV Furniture</h5>
+          </Card.Body>
+        </Card>
         {showCard && (
           <Card bg="secondary">
-            <Card.Header>
+            <Card.Img variant="top" src={item.itemUrl} />
+            <Card.Body>
               <Card.Title>
                 <span className="home-page-product-title-style">
                   Your Recent Viewed Product
                 </span>
               </Card.Title>
-            </Card.Header>
-            <Card.Body>
               <span className="home-page-product-detail-style">
                 {" "}
                 {item.itemName}
               </span>{" "}
-              <img src={item.itemUrl} className="product-align-center" />
               <h1 className="home-page-product-detail-style">
                 Price: {item.itemPrice}
               </h1>{" "}
-              <h5 className="home-page-product-detail-style">
-                Take it before it is too late!
-              </h5>
               <p />
               <Button
                 variant="info"
@@ -63,18 +70,14 @@ const Home = () => {
                 }}
               >
                 check it out
-              </Button>
+              </Button>{" "}
+              <p />
+              <h5 className="home-page-product-detail-style">
+                Take it before it is too late!
+              </h5>
             </Card.Body>
           </Card>
         )}
-
-        <Card bg="dark">
-          <Card.Img variant="bottom" src={homepage3} />
-          <Card.Body>
-            <h5 className="product-text-style"> CHKMV Furniture</h5>
-          </Card.Body>
-        </Card>
-
         <Card bg="dark">
           <Card.Body>
             <div className="card-text-style">All our products are amazing!</div>
@@ -97,21 +100,3 @@ const Home = () => {
 };
 
 export default Home;
-
-//  <Row>
-//         <Col>
-//           <Card>
-//             <Card.Header>Header</Card.Header>
-//             <Card.Body>{item.itemName}</Card.Body>
-//           </Card>
-
-//           <h1 className="centered">Let's Shop!</h1>
-//           <img className="back-ground" src={homepage} />
-//         </Col>
-//         <Col>s</Col>
-//       </Row>
-//       <Row>
-//         {" "}
-//         <Col>s</Col>
-//         <Col>s</Col>
-//       </Row>

@@ -16,6 +16,10 @@ const AddBaskItem = ({ userType, userID, itemDetID, messageSetter }) => {
     const newData = { itemBasketQty, itemDetID, userID };
 
     addBaskItemAPI_Func(newData).then((response) => {
+      if (response.data.error) {
+        messageSetter(response.data.error, "danger", true);
+        return;
+      }
       authChecker(history, response, false);
       messageSetter(response.data.message, "success", true);
     });

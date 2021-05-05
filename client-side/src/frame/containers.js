@@ -4,7 +4,7 @@ import AddItem from "../container/item/newItem";
 import SuppOrderList from "../container/supplier/supplierOrd";
 import Sales from "../container/sales/salesReport";
 import SalesSummary from "../container/sales/salesSummary";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import React from "react";
 
 import Supplier from "../container/supplier/supplier";
@@ -22,6 +22,9 @@ import ViewOrderDetail from "../container/order/orderDetail";
 const Component = ({ user, keyword, caterList, messageSetter }) => {
   return (
     <Switch>
+      <Route exact path="/">
+        <Redirect to="/home" />
+      </Route>
       {caterList.map((data) => (
         <Route exact path={"/item/" + data.itemCatName} key={data.itemCatID}>
           <Item

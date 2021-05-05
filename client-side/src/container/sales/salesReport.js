@@ -15,6 +15,10 @@ const SalesReport = () => {
   //Function to fetch the sorted items
   const fetchSales = () => {
     showSalesAPI_Func(sorting, column, dateFrom, dateTo).then((response) => {
+      if (response.data.error) {
+        window.alert(response.data.error);
+        return;
+      }
       authChecker(history, response, true);
       setSalesList(response.data.result);
     });

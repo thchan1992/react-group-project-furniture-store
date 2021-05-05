@@ -121,6 +121,10 @@ const Signup = ({ userType, messageSetter }) => {
 
   useEffect(() => {
     fetchPayMetAPI_Func().then((response) => {
+      if (response.data.error) {
+        messageSetter(response.data.error, "danger", true);
+        return;
+      }
       setPayMetList(response.data.result);
     });
   }, []);

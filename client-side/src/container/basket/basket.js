@@ -2,6 +2,7 @@ import { useHistory, useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import Component from "./basket_component/basket";
 import { fetchBasketAPI_Func, totalCostAPI_Func } from "../../api/api";
+import { authChecker } from "../../Utility/authChecker";
 
 const Basket = ({ messageSetter }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,13 +15,19 @@ const Basket = ({ messageSetter }) => {
   //load the basket
   useEffect(() => {
     fetchBasketAPI_Func(userID).then((response) => {
-      if (!response.data.result || response.data.auth == false) {
-        history.push("/error");
-        window.location.reload(false);
+      if (response.data.error) {
+        messageSetter(response.data.error, "danger", true);
+        return;
       }
-      checkReadyPay(response.data.result.length);
+      authChecker(history, response, true);
       setBasketList(response.data.result);
+      checkReadyPay(response.data.result.length);
       totalCostAPI_Func(userID).then((response) => {
+        if (response.data.error) {
+          messageSetter(response.data.error, "danger", true);
+          return;
+        }
+
         if (!response.data.result) {
           setTotalCost(0);
         } else {

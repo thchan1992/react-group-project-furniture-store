@@ -40,11 +40,20 @@ const Payment = ({ userID, messageSetter }) => {
   const handleCheckout = () => {
     const checkFund = { totalCost, userID };
     checkFundAPI_Func(checkFund).then((response) => {
+      if (response.data.error) {
+        messageSetter(response.data.error, "danger", true);
+        return;
+      }
       authChecker(history, response, false);
+
       if (response.data.result == true) {
         checkStockAPI_Func(userID).then((response) => {
+          if (response.data.error) {
+            messageSetter(response.data.error, "danger", true);
+            return;
+          }
           authChecker(history, response, false);
-          // redirect(response);
+
           if (response.data.result == true) {
             prepareOrder();
           } else {
@@ -69,6 +78,7 @@ const Payment = ({ userID, messageSetter }) => {
 
   const prepareOrder = () => {
     const deliveryDate = setDate(ship);
+    console.log("delivery", deliveryDate);
     const orderDate = setDate(0);
     if (addr1 || addr2 || city || postcode) {
       const delivAddress = addr1 + " " + addr2 + " " + city + " " + postcode;
@@ -93,8 +103,12 @@ const Payment = ({ userID, messageSetter }) => {
 
   const finalisePayAct = (finalisePay) => {
     finalisePayAPI_Func(finalisePay).then((response) => {
+      if (response.data.error) {
+        messageSetter(response.data.error, "danger", true);
+        return;
+      }
       authChecker(history, response, false);
-      // redirect(response);
+
       if (response.data.result == true) {
         history.push("/Basket/Payment/Confirmation");
         messageSetter(response.data.message, "success", true);
@@ -107,13 +121,25 @@ const Payment = ({ userID, messageSetter }) => {
 
   useEffect(() => {
     getCostBaskAPI_Func(userID).then((response) => {
+      if (response.data.error) {
+        messageSetter(response.data.error, "danger", true);
+        return;
+      }
       authChecker(history, response, false);
       setTotalCost(response.data.totalCost);
       fetchUserDetAPI_Func(userID).then((response) => {
+        if (response.data.error) {
+          messageSetter(response.data.error, "danger", true);
+          return;
+        }
         authChecker(history, response, false);
         setUserDetail(response.data.result);
         setDeliv(response.data.result.userAddress);
         fetchUserPayDet_Func(userID).then((response) => {
+          if (response.data.error) {
+            messageSetter(response.data.error, "danger", true);
+            return;
+          }
           authChecker(history, response, false);
           setPaymentDet(response.data.result);
         });
