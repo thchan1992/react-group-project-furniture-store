@@ -21,6 +21,7 @@ const ItemPage = ({
     if (!keyword) {
       //create a name for the cache file
       const cacheName = itemCatName + ":" + showSort;
+      //ignore the cache file when user is admin
       if (userType == "A") {
         showItemsAPI_Func(sorting, column, itemCatName).then((response) => {
           if (response.data.error) {
