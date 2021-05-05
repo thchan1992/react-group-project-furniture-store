@@ -238,26 +238,34 @@
 
 --
 
-update itemDetails set itemQty = 101 where itemDetID = 1619178801447;
+-- update itemDetails set itemQty = 101 where itemDetID = 1619178801447;
 
-update itemDetails set itemQty = 3 where itemDetID = 1619546468323;
-select * from itemDetails where itemDetID = 1619178801447; 
-select * from itemDetails where itemDetID = 1619546468323;
-select * from suppliers;
-
-select * from itemDetails;
-select * from userDetail;
-select * from paymentDetail;
-select * from suppOrder;
--- Select itemDetails.itemDetID, itemName, suppliers.suppID, suppName, suppEmail from itemDetails INNER JOIN suppliers ON suppliers.suppID = itemDetails.suppID INNER JOIN basket ON itemDetails.itemDetID = basket.itemDetID where itemQTY <= itemThreshold AND userID = 1619001836630;
-
+-- update itemDetails set itemQty = 3 where itemDetID = 1619546468323;
+-- select * from itemDetails where itemDetID = 1619178801447; 
+-- select * from itemDetails where itemDetID = 1619546468323;
 -- select * from suppliers;
-SELECT * FROM suppOrder;
 
-update itemDetails set itemQty = 0 where itemDetID = 2;
+-- select * from itemDetails;
+-- select * from userDetail;
+-- select * from paymentDetail;
+-- select * from suppOrder;
+-- -- Select itemDetails.itemDetID, itemName, suppliers.suppID, suppName, suppEmail from itemDetails INNER JOIN suppliers ON suppliers.suppID = itemDetails.suppID INNER JOIN basket ON itemDetails.itemDetID = basket.itemDetID where itemQTY <= itemThreshold AND userID = 1619001836630;
 
-select * from suppOrder where suppOrdID = 1619911948078;
+-- -- select * from suppliers;
+-- SELECT * FROM suppOrder;
 
-select * from itemDetails where itemDetID =1619911948077;
+-- update itemDetails set itemQty = 0 where itemDetID = 2;
 
-INSERT INTO suppOrder (suppOrdID, suppID, itemDetID, itemCatID, suppOrdQty, orderDate, ordReceiveDate) VALUES (1619911675698, '1', 1619911675698, '1', '1', '2021-4-2', '2021-4-2');
+-- select * from suppOrder where suppOrdID = 1619911948078;
+
+-- select * from itemDetails where itemDetID =1619911948077;
+
+-- INSERT INTO suppOrder (suppOrdID, suppID, itemDetID, itemCatID, suppOrdQty, orderDate, ordReceiveDate) VALUES (1619911675698, '1', 1619911675698, '1', '1', '2021-4-2', '2021-4-2');
+
+
+
+select * from suppOrder WHERE orderDate BETWEEN 2021-04-30 AND 2021-05-21  ORDER BY orderDate DESC;
+
+select * from suppOrder;
+
+insert into suppOrder (suppOrdID, suppID, itemDetID, itemCatID, suppOrdQty, orderDate, ordReceiveDate) VALUES (21619911675698, '1', 21619911675698, '1', '1', '2021-04-20', '2021-04-20');

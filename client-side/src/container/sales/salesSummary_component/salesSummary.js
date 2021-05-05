@@ -36,6 +36,7 @@ const SalesSummary = ({
                 type="date"
                 placeholder="From:"
                 name="dateFrom"
+                className="placeholder-style-search"
                 id="dateFrom"
                 value={dateFrom}
                 onChange={(e) => {
@@ -50,6 +51,7 @@ const SalesSummary = ({
                 type="date"
                 placeholder="To:"
                 name="dateTo"
+                className="placeholder-style-search"
                 id="dateTo"
                 value={dateTo}
                 onChange={(e) => {

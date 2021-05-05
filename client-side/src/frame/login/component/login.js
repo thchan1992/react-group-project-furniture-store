@@ -4,7 +4,6 @@ import basketIcon from "../../../assets/basket.png";
 import logoutIcon from "../../../assets/logout.png";
 import loginIcon from "../../../assets/login.png";
 import "./login.css";
-import { useHistory } from "react-router-dom";
 
 const LoginForm = ({
   user,
@@ -13,10 +12,10 @@ const LoginForm = ({
   setEmail,
   userPass,
   setUserPass,
-  isLogin,
+
   handleLogin,
   handleLogOut,
-  userType,
+
   history,
 }) => {
   return (
@@ -37,7 +36,7 @@ const LoginForm = ({
             <Form.Control
               className="placeholder-style-login-form"
               style={{ width: "150px" }}
-              type="text"
+              type="password"
               placeholder="Password"
               id="userPass"
               name="userPass"
@@ -47,6 +46,7 @@ const LoginForm = ({
             <img
               src={loginIcon}
               style={{ height: "40px" }}
+              type="button"
               onClick={() => {
                 handleLogin();
                 history.push("/Home");
@@ -59,12 +59,14 @@ const LoginForm = ({
         <div>
           {user.userType == "C" && (
             <img
+              type="button"
               onClick={() => history.push("/Basket/" + userID)}
               src={basketIcon}
               style={{ height: "40px" }}
             />
           )}
           <img
+            type="button"
             src={logoutIcon}
             style={{ height: "40px" }}
             onClick={() => {

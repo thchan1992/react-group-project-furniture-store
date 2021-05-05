@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import SortItem from "./sortItem";
 import ProductList from "./productList";
 import "./itemPage.css";
+
 const ItemPage = ({
   setColumn,
   setSorting,

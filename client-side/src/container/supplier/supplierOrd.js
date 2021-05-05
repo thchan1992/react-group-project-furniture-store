@@ -10,14 +10,18 @@ const SupplierOrd = () => {
   const [dateTo, setDateTo] = useState("-");
   const [dateFrom, setDateFrom] = useState("-");
   const history = useHistory();
+  const [sorting, setSorting] = useState("DESC");
+  const [showSort, setShowSort] = useState("Order Date (Latest)");
   const fetchOrder = () => {
-    showOrdHistoryAPI_Func(dateTo, dateFrom).then((response) => {
+    console.log(dateTo, dateFrom, sorting);
+    showOrdHistoryAPI_Func(dateTo, dateFrom, sorting).then((response) => {
+      console.log(response.data.result);
       if (response.data.error) {
         window.alert(response.data.error);
         return;
       }
       authChecker(history, response, true);
-      console.log(response);
+
       setOrderList(response.data.result);
     });
   };
@@ -35,6 +39,9 @@ const SupplierOrd = () => {
       dateFrom={dateFrom}
       setDateFrom={setDateFrom}
       setIsLoading={setIsLoading}
+      showSort={showSort}
+      setSorting={setSorting}
+      setShowSort={setShowSort}
     />
   );
 };

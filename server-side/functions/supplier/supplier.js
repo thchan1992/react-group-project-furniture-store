@@ -68,7 +68,7 @@ app.post(addNewSuppOrd_url, adminJWT, (req, res) => {
 app.post(getOrdHistory_url, adminJWT, (req, res) => {
   const params = [req.body.dateFrom, req.body.dateTo];
   console.log(params);
-  getAll(getOrdHistory_sql, params, res);
+  getAll(getOrdHistory_sql(req.body.sorting), params, res);
 });
 
 module.exports = app;

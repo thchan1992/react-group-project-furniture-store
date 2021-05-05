@@ -5,7 +5,7 @@ import React from "react";
 import AddBaskItem from "../addBaskItem";
 import { useHistory } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-
+import CardDeck from "react-bootstrap/CardDeck";
 const ProductList = ({
   itemList,
   userID,
@@ -18,20 +18,20 @@ const ProductList = ({
   return (
     <div>
       <Row
-        gutter={40}
         style={{
           backgroundColor: "white",
         }}
       >
         <br />
         {itemList.map((data) => (
-          <Col
-            xs={{ span: 6 }}
-            sm={{ span: 4 }}
-            md={{ span: 3 }}
-            lg={{ span: 2 }}
-            xl={{ span: 2 }}
-          >
+          // <Col
+          //   xs={{ span: 6 }}
+          //   sm={{ span: 4 }}
+          //   md={{ span: 3 }}
+          //   lg={{ span: 2 }}
+          //   xl={{ span: 2 }}
+          // >
+          <CardDeck>
             <Card
               bg="dark"
               style={{ width: "18rem" }}
@@ -96,7 +96,8 @@ const ProductList = ({
                 </Card.Text>
               </Card.Body>
             </Card>
-          </Col>
+          </CardDeck>
+          // </Col>
         ))}
       </Row>
     </div>

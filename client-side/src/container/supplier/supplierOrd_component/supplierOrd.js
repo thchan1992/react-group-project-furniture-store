@@ -5,6 +5,9 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import "./supplierOrd.css";
+import Dropdown from "react-bootstrap/Dropdown";
+import DropdownButton from "react-bootstrap/DropdownButton";
+import { useHistory } from "react-router-dom";
 
 const SupplierOrd = ({
   orderList,
@@ -13,7 +16,11 @@ const SupplierOrd = ({
   setDateTo,
   setDateFrom,
   setIsLoading,
+  showSort,
+  setSorting,
+  setShowSort,
 }) => {
+  const history = useHistory();
   return (
     <div>
       <Card>
@@ -41,7 +48,6 @@ const SupplierOrd = ({
             </ListGroup.Item>
             <ListGroup.Item>
               <span className="date-range-style"> Date To:</span>
-
               <Form.Control
                 style={{ height: "30px", width: "200px" }}
                 className="placeholder-style-search"
@@ -57,16 +63,49 @@ const SupplierOrd = ({
             </ListGroup.Item>{" "}
             <ListGroup.Item>
               {" "}
-              <Button
-                size="sm"
-                variant="info"
-                onClick={() => {
-                  setIsLoading(true);
-                }}
-                className="supplier-order-search-button-style"
-              >
-                Search
-              </Button>
+              <div className="flex-container">
+                <Button
+                  size="sm"
+                  variant="info"
+                  className="supplier-order-search-button-style"
+                  onClick={() => {
+                    setIsLoading(true);
+                  }}
+                >
+                  Search
+                </Button>
+                <DropdownButton
+                  variant="warning"
+                  title={
+                    <span className="sales-report-search-button-style">
+                      {showSort}
+                    </span>
+                  }
+                >
+                  <Dropdown.Item
+                    className="sales-report-search-button-style"
+                    eventKey="Date"
+                    onClick={() => {
+                      setSorting("DESC");
+                      setIsLoading(true);
+                      setShowSort("Order Date (Latest)");
+                    }}
+                  >
+                    Delivery Date(Latest)
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    className="sales-report-search-button-style"
+                    eventKey="Date"
+                    onClick={() => {
+                      setSorting("ASC");
+                      setIsLoading(true);
+                      setShowSort("Order Date (Oldest)");
+                    }}
+                  >
+                    Delivery Date(Oldest)
+                  </Dropdown.Item>
+                </DropdownButton>
+              </div>
             </ListGroup.Item>{" "}
           </Card.Body>
         </ListGroup>{" "}
@@ -83,11 +122,12 @@ const SupplierOrd = ({
                 <th>Supplier Order Quantity</th>
                 <th>Order Date</th>
                 <th>Recieve Date</th>
+                <th>Product Details</th>
               </tr>
             </thead>
             {orderList.map((data) => (
               <tbody key={data.suppOrdID}>
-                <tr>
+                <tr className="supplier-order-row-style">
                   <td>{data.suppOrdID}</td>
                   <td>{data.suppID}</td>
                   <td>{data.itemDetID}</td>
@@ -95,6 +135,16 @@ const SupplierOrd = ({
                   <td>{data.suppOrdQty}</td>
                   <td>{data.orderDate}</td>
                   <td>{data.ordReceiveDate}</td>
+                  <td>
+                    <Button
+                      variant="info"
+                      onClick={() => {
+                        history.push("/item_detail/" + data.itemDetID);
+                      }}
+                    >
+                      Product Details
+                    </Button>
+                  </td>
                 </tr>
               </tbody>
             ))}

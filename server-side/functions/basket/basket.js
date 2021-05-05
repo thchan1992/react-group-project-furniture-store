@@ -61,6 +61,12 @@ app.put(editBasket_url, regularJWT, (req, res) => {
   });
 });
 
+app.get("/basket/getBaskItemQty/:userID", regularJWT, (req, res) => {
+  checkUserID(req, res, userID, () => {
+    getAll;
+  });
+});
+
 //Add an item to the basket
 // get itemDetID, userID,itemBasketQty
 //step 1: use itemDetID to get all the item detail
