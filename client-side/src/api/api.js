@@ -195,8 +195,8 @@ export const addBaskItemAPI_Func = (newData) => {
 };
 
 //SuppOrderList.js
-export const showOrdHistoryAPI_Func = (dateTo, dateFrom) => {
-  const dateRange = { dateTo, dateFrom };
+export const showOrdHistoryAPI_Func = (dateTo, dateFrom, sorting) => {
+  const dateRange = { dateTo, dateFrom, sorting };
   return axios.post(showOrdHistoryAPI, dateRange, jwt());
 };
 

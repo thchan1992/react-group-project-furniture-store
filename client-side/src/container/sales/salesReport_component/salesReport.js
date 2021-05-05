@@ -7,6 +7,7 @@ import Table from "react-bootstrap/Table";
 import ListGroup from "react-bootstrap/ListGroup";
 import Card from "react-bootstrap/Card";
 import "./salesReport.css";
+import { useHistory } from "react-router-dom";
 
 const SalesReport = ({
   dateFrom,
@@ -21,6 +22,7 @@ const SalesReport = ({
   showSort,
   setShowSort,
 }) => {
+  const history = useHistory();
   return (
     <div>
       <Card>
@@ -39,6 +41,7 @@ const SalesReport = ({
                 style={{ height: "30px", width: "200px" }}
                 type="date"
                 placeholder="From:"
+                className="placeholder-style-search"
                 name="dateFrom"
                 id="dateFrom"
                 value={dateFrom}
@@ -53,6 +56,7 @@ const SalesReport = ({
                 style={{ height: "30px", width: "200px" }}
                 type="date"
                 placeholder="To:"
+                className="placeholder-style-search"
                 name="dateTo"
                 id="dateTo"
                 value={dateTo}
@@ -65,8 +69,8 @@ const SalesReport = ({
               <div className="flex-container">
                 <Button
                   size="sm"
+                  className="supplier-order-search-button-style"
                   variant="info"
-                  className="sales-report-search-button-style"
                   onClick={() => {
                     fetchSales();
                   }}
@@ -76,12 +80,13 @@ const SalesReport = ({
                 <DropdownButton
                   variant="warning"
                   title={
-                    <span className="sales-report-search-button-style">
+                    <h7 className="sales-report-search-button-style">
                       {showSort}
-                    </span>
+                    </h7>
                   }
                 >
                   <Dropdown.Item
+                    className="sales-report-search-button-style"
                     eventKey="Date"
                     onClick={() => {
                       setColumn("orderDate");
@@ -93,6 +98,7 @@ const SalesReport = ({
                     orderDate(A to Z)
                   </Dropdown.Item>
                   <Dropdown.Item
+                    className="sales-report-search-button-style"
                     eventKey="Date"
                     onClick={() => {
                       setColumn("orderDate");
@@ -104,6 +110,7 @@ const SalesReport = ({
                     orderDate (Z to A)
                   </Dropdown.Item>
                   <Dropdown.Item
+                    className="sales-report-search-button-style"
                     eventKey="Price"
                     onClick={() => {
                       setColumn("itemPrice");
@@ -115,6 +122,7 @@ const SalesReport = ({
                     Price (Low to High)
                   </Dropdown.Item>
                   <Dropdown.Item
+                    className="sales-report-search-button-style"
                     eventKey="Price"
                     onClick={() => {
                       setColumn("itemPrice");
@@ -126,6 +134,7 @@ const SalesReport = ({
                     Price (High to Low)
                   </Dropdown.Item>
                   <Dropdown.Item
+                    className="sales-report-search-button-style"
                     eventKey="Date"
                     onClick={() => {
                       setColumn("deliveryDate");
@@ -137,6 +146,7 @@ const SalesReport = ({
                     Delivery Date(early to late)
                   </Dropdown.Item>
                   <Dropdown.Item
+                    className="sales-report-search-button-style"
                     eventKey="Date"
                     onClick={() => {
                       setColumn("deliveryDate");
@@ -167,21 +177,32 @@ const SalesReport = ({
                   <th>Order Date</th>
                   <th>Delivery Date</th>
                   <th>Delivery Address</th>
+                  <th>Product Detail</th>
                 </tr>
               </thead>
 
               {salesList.map((data) => (
-                <tbody key={data.ID}>
-                  <tr>
+                <tbody>
+                  <tr className="sales-report-row-style">
                     <td>{data.userID}</td>
                     <td>{data.basketItemID}</td>
                     <td>{data.itemDetID}</td>
                     <td>{data.itemCatID}</td>
                     <td>{data.itemPrice}</td>
                     <td>{data.itemBasketQty}</td>
-                    <td className="text-style-item">{data.orderDate}</td>
-                    <td className="text-style-item">{data.deliveryDate}</td>
+                    <td>{data.orderDate}</td>
+                    <td>{data.deliveryDate}</td>
                     <td>{data.delivAddress}</td>
+                    <td>
+                      <Button
+                        variant="info"
+                        onClick={() => {
+                          history.push("/item_detail/" + data.itemDetID);
+                        }}
+                      >
+                        Product Detail
+                      </Button>
+                    </td>
                   </tr>
                 </tbody>
               ))}

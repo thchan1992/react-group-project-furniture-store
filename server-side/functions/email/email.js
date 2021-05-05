@@ -50,12 +50,22 @@ const sendAutoOrder = (email, suppName, itemName, suppOrdQty) => {
   );
 };
 
+const dateMaker = (date) => {
+  var d = new Date(date),
+    month = "" + (d.getMonth() + 1),
+    day = "" + d.getDate(),
+    year = d.getFullYear();
+
+  if (month.length < 2) month = "0" + month;
+  if (day.length < 2) day = "0" + day;
+
+  return [year, month, day].join("-");
+};
+
 //add new supplier order
 const updateSuppOrd = (suppID, itemDetID, itemCatID, suppOrdQty) => {
   const suppOrdID = new Date().getTime();
-  const today = new Date();
-  const orderDate =
-    today.getFullYear() + "-" + today.getMonth() + "-" + today.getDate();
+  const orderDate = dateMaker(new Date());
   const ordReceiveDate = orderDate;
   const param = [
     suppOrdID,
