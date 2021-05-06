@@ -38,7 +38,6 @@ const Signup = ({ userType, messageSetter }) => {
       user.firstName &&
       user.lastName &&
       addr1 &&
-      addr2 &&
       city &&
       postcode &&
       userPass &&
@@ -82,7 +81,7 @@ const Signup = ({ userType, messageSetter }) => {
   //this function will prepare all the info for creating normal user and send a api request
   const handleCreateAcc = () => {
     if (userPass == verPass) {
-      user.userAddress = addr1 + " " + addr2 + " " + city + " " + postcode;
+      user.userAddress = addr1 + ", " + addr2 + ", " + city + ", " + postcode;
       user.userID = pk();
       user.userType = "C";
       user.userPass = userPass;
