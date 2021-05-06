@@ -111,6 +111,13 @@ const User = ({ messageSetter }) => {
       const newCard = { payMetID, cardNumber, userID, expire_Date, ccv };
       //api that modifies card detail
       modifyCardAPI_Func(newCard).then((response) => {
+        if (
+          response.data.error ==
+          "SQLITE_CONSTRAINT: UNIQUE constraint failed: paymentDetail.cardNumber"
+        ) {
+          messageSetter("Credit card already exists", "danger", true);
+          return;
+        }
         if (response.data.error) {
           messageSetter(response.data.error, "danger", true);
           return;
