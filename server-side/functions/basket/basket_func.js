@@ -21,7 +21,7 @@ const {
 const addBasketItem = (itemDetID, userID, itemBasketQty, res) => {
   //all user cannot order more than 10 same items
   if (itemBasketQty > 10) {
-    res.json({ message: "quanity cannot be greater than 10" });
+    res.json({ message: "QTY cannot be greater than 10" });
     return;
   }
   //get the item detail
