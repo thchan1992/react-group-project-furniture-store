@@ -123,7 +123,7 @@ const Payment = ({
             <ListGroup.Item>
               <span className="payment-attribute-text-style">
                 {" "}
-                Would like to change your personal detail before check in?
+                Would like to change your personal details before check out?
               </span>
 
               <div className="align-edit-switch">

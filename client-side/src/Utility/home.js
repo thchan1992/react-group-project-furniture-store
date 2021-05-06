@@ -8,13 +8,17 @@ import Col from "react-bootstrap/Col";
 import CardDeck from "react-bootstrap/CardDeck";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
-const Home = () => {
+
+const Home = ({ userType }) => {
   const [item, setItem] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showCard, setShowCard] = useState(false);
   const history = useHistory();
 
   useEffect(() => {
+    if (userType == "A") {
+      return;
+    }
     //get the file that stores recent view item from the local storage
     const data = JSON.parse(localStorage.getItem("recentViewItem"));
     // if the data does not exist

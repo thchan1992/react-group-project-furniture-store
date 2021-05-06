@@ -28,14 +28,6 @@ const Login = ({ user, setUser, messageSetter }) => {
         } else {
           localStorage.setItem("token", response.data.token);
           setUser(response.data.result[0]);
-          if (response.data.result[0].userType == "A") {
-            try {
-              console.log("aaa");
-              localStorage.removeItem("recentViewItem");
-            } catch (err) {
-              console.log(err, "error");
-            }
-          }
           messageSetter("", "", false);
         }
       });

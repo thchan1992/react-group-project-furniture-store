@@ -82,7 +82,7 @@ const Component = ({ user, keyword, caterList, messageSetter }) => {
         <Order messageSetter={messageSetter} />
       </Route>
       <Route exact path="/Home">
-        <Home />
+        <Home userType={user.userType} />
       </Route>
       <Route exact path="/Item_detail/:itemDetID">
         <Item
