@@ -48,7 +48,7 @@ const AddBaskItem = ({
                   }
                 }}
               >
-                <h7 className="add-product-basket-button-style"> ➡️🧺 </h7>
+                <h7 className="add-product-basket-button-style"> ADD</h7>
               </Button>
             </div>
           }
