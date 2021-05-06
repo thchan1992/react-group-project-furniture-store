@@ -124,7 +124,7 @@ const EditUserForm = ({
               name={"userAddress.addr2"}
               id={"userAddress.addr2"}
               value={userAddress.addr2}
-              placeholder={"Address Line 2"}
+              placeholder={"Address Line 2 (Optional)"}
               onChange={(e) => {
                 setUserAddress({ ...userAddress, addr2: e.target.value });
               }}

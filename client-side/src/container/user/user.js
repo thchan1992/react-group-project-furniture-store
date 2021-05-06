@@ -57,13 +57,17 @@ const User = ({ messageSetter }) => {
         return;
       }
       if (column == "userAddress") {
+        if (!change.addr1 || !change.city || !change.postcode) {
+          messageSetter("Address format is not correct", "danger", true);
+          return;
+        }
         change =
           change.addr1 +
-          " " +
+          ", " +
           change.addr2 +
-          " " +
+          ", " +
           change.city +
-          " " +
+          ", " +
           change.postcode;
       }
 
