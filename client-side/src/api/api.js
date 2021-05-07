@@ -231,8 +231,8 @@ export const getItemDetAPI_Func = (itemDetID) => {
 };
 
 //vieworder.js
-export const getUserOrdAPI_Func = (userID) => {
-  return axios.get(getUserOrdAPI + userID, jwt());
+export const getUserOrdAPI_Func = (userID, sorting) => {
+  return axios.get(getUserOrdAPI + userID + "/" + sorting, jwt());
 };
 
 export const setItemImageAPI_Func = (newData) => {

@@ -79,8 +79,9 @@ app.get(orderConfirmation_url, (req, res) => {
 //get user order history
 app.get(getOrdHist_url, regularJWT, (req, res) => {
   const userID = req.params.userID;
+  const sorting = req.params.sorting;
   checkUserID(req, res, userID, () => {
-    getAll(getOrdHist_sql, userID, res);
+    getAll(getOrdHist_sql(sorting), userID, res);
   });
 });
 
