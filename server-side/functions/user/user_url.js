@@ -12,7 +12,7 @@ const getUserOrdList_url = user + "/orderHistory/:userID";
 
 const orderConfirmation_url = user + "/order/History/:basketItemID/:userID";
 
-const getOrdHist_url = user + "/userOrder/:userID";
+const getOrdHist_url = user + "/userOrder/:userID/:sorting";
 
 module.exports = {
   fetchUserDet_url,

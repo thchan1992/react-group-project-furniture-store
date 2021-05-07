@@ -17,8 +17,12 @@ const getUserOrdList_sql =
 const orderConfirmation_sql =
   "SELECT sales.itemDetID, sales.itemPrice, itemBasketQty, deliveryDate, orderDate, basketItemID, itemName, itemUrl from sales INNER JOIN itemDetails ON sales.itemDetID = itemDetails.itemDetID WHERE basketItemID = ?";
 
-const getOrdHist_sql =
-  "SELECT userID, basketItemID, SUM(sales.itemPrice*itemBasketQty) AS totalCost, deliveryDate, orderDate from sales INNER JOIN itemDetails ON itemDetails.itemDetID = sales.itemDetID group by basketItemID having userID=? ORDER BY orderDate DESC";
+const getOrdHist_sql = (sorting) => {
+  return (
+    "SELECT userID, basketItemID, SUM(sales.itemPrice*itemBasketQty) AS totalCost, deliveryDate, orderDate from sales INNER JOIN itemDetails ON itemDetails.itemDetID = sales.itemDetID group by basketItemID having userID=? ORDER BY orderDate " +
+    sorting
+  );
+};
 
 module.exports = {
   fetchUserDet_sql,
