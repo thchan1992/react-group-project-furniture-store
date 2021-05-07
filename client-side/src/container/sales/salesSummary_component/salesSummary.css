@@ -5,3 +5,17 @@
   font-size: 30px;
   text-transform: uppercase;
 }
+
+.sales-summary-column-style {
+  color: rgb(119, 189, 89);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 20px;
+  text-transform: uppercase;
+}
+
+.sales-summary-row-style {
+  color: rgb(255, 255, 255);
+  font-family: "Titillium Web", sans-serif;
+  font-size: 18px;
+  text-transform: uppercase;
+}

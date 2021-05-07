@@ -17,7 +17,6 @@ const Item = ({
   itemBasketQty,
   setItemBasketQty,
   addBasketItem,
-
   deactItem,
   messageSetter,
 }) => {

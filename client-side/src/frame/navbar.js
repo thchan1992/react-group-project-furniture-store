@@ -83,7 +83,7 @@ const NavBar = ({
               </NavDropdown.Item>
               <NavDropdown.Divider />{" "}
               <NavDropdown.Item as={Link} to="/Sales">
-                <h7 className="linkText"> Sales Report</h7>
+                <h7 className="linkText"> Sales Transaction Details</h7>
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/SalesSummary">
                 <h7 className="linkText"> Sales Summary Report</h7>

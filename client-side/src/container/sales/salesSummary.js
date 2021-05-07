@@ -13,6 +13,8 @@ const SalesSummary = ({ messageSetter }) => {
 
   defaults.global.tooltips.enabled = false;
   defaults.global.legend.position = "bottom";
+  defaults.global.defaultFontColor = "rgb(255,255,255)";
+
   var labels = salesList.map(function (e) {
     return JSON.stringify(e.orderDate);
   });
@@ -25,12 +27,13 @@ const SalesSummary = ({ messageSetter }) => {
     labels: labels,
     datasets: [
       {
-        label: "salesAmount",
-        borderWidth: 1,
-        backgroundColor: "rgb(255, 255, 255)",
-        borderColor: "rgb(255, 255, 255)",
-        hoverBackgroundColor: "rgb(255, 255, 255)",
-        hoverBorderColor: "rgb(255, 255, 255)",
+        scaleFontColor: "f00",
+        label: "Sales Amount",
+        borderWidth: 3,
+        backgroundColor: "rgb(119, 189, 89)",
+        borderColor: "rgb(255,255,255)",
+        hoverBackgroundColor: "rgb(119, 189, 89)",
+        hoverBorderColor: "rgb(119, 189, 89)",
         data: values,
       },
     ],
@@ -51,7 +54,6 @@ const SalesSummary = ({ messageSetter }) => {
   //use Effect to fetch Sales list.
   useEffect(() => {
     fetchSales();
-
     setIsLoading(false);
   }, [isLoading]);
 

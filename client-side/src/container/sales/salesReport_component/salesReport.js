@@ -30,7 +30,7 @@ const SalesReport = ({
           <Card.Header>
             <ListGroup.Item>
               <div className="sales-reports-title-style">
-                Product Sales Report
+                Sales Transaction Details
               </div>
             </ListGroup.Item>
           </Card.Header>{" "}
