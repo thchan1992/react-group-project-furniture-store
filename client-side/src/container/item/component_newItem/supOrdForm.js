@@ -1,9 +1,7 @@
 import Form from "react-bootstrap/Form";
-import Col from "react-bootstrap/Col";
 import DropdownButton from "react-bootstrap/DropdownButton";
 import Dropdown from "react-bootstrap/Dropdown";
-import React, { useEffect, useState } from "react";
-import Textbox from "../../../Utility/Textbox";
+import React from "react";
 
 const SupOrdForm = ({ suppList, item, setItem }) => {
   return (

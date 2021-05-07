@@ -79,7 +79,7 @@ const SalesSummary = ({
         <Card.Body>
           <Table striped bordered hover variant="dark">
             <thead>
-              <tr>
+              <tr className="sales-summary-column-style">
                 <th>Total Sales in pounds</th>
                 <th>Order Date</th>
               </tr>
@@ -87,8 +87,8 @@ const SalesSummary = ({
 
             {salesList.map((data) => (
               <tbody key={data.ID}>
-                <tr>
-                  <td>{data.sales}</td>
+                <tr className="sales-summary-row-style">
+                  <td>£{data.sales}</td>
                   <td>{data.orderDate}</td>
                 </tr>
               </tbody>

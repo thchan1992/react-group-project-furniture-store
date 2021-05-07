@@ -27,6 +27,11 @@ const NewItem = ({
           <Row>
             {" "}
             <Col>
+              {" "}
+              {/* product detail form */}
+              <NewItemForm item={item} setItem={setItem} setImage={setImage} />
+            </Col>{" "}
+            <Col>
               {/*Drop down button to select item category */}
               <ItemCatList
                 setItem={setItem}
@@ -36,11 +41,6 @@ const NewItem = ({
               {/*Supplier order form */}
               <SupOrdForm item={item} setItem={setItem} suppList={suppList} />
             </Col>{" "}
-            <Col>
-              {" "}
-              {/* product detail form */}
-              <NewItemForm item={item} setItem={setItem} setImage={setImage} />
-            </Col>
           </Row>
         </Card.Body>{" "}
         <Card.Footer>
