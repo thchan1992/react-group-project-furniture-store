@@ -4,14 +4,27 @@ import React from "react";
 import EditCategory from "./editCategory";
 import Card from "react-bootstrap/Card";
 import "./categoryList.css";
+import Button from "react-bootstrap/Button";
 
-const CategoryList = ({ catList, setIsLoading, messageSetter }) => {
+const CategoryList = ({ catList, setIsLoading, messageSetter, history }) => {
   return (
     <Card>
       <Card.Header>
-        <div className="category-title-style ">Category</div>
+        <div className="category-title-style">Category</div>
       </Card.Header>
       <Card.Body>
+        <Card.Title>
+          <Button
+            variant="info"
+            className="category-edit-button-style"
+            onClick={() => {
+              history.push("/home");
+              window.location.reload(false);
+            }}
+          >
+            Reload
+          </Button>
+        </Card.Title>
         <Row
           gutter={40}
           style={{

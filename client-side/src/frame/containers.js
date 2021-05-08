@@ -45,26 +45,30 @@ const Component = ({ user, keyword, caterList, messageSetter }) => {
           messageSetter={messageSetter}
         />
       </Route>
-      <Route exact path="/AddItem">
-        <NewItem messageSetter={messageSetter} />
-      </Route>
-      <Route exact path="/SuppOrderList">
-        <SupplierOrd messageSetter={messageSetter} />
-      </Route>
-      <Route exact path="/Sales">
-        <SalesReport messageSetter={messageSetter} />
-      </Route>
-      <Route exact path="/SalesSummary">
-        <SalesSummary messageSetter={messageSetter} />
-      </Route>
+      {user.userType == "A" && (
+        <div>
+          <Route exact path="/Category">
+            <Category messageSetter={messageSetter} userType={user.userType} />
+          </Route>
+          <Route exact path="/AddItem">
+            <NewItem messageSetter={messageSetter} />
+          </Route>
+          <Route exact path="/Supplier">
+            <Supplier messageSetter={messageSetter} />
+          </Route>
+          <Route exact path="/SuppOrderList">
+            <SupplierOrd messageSetter={messageSetter} />
+          </Route>
+          <Route exact path="/Sales">
+            <SalesReport messageSetter={messageSetter} />
+          </Route>
+          <Route exact path="/SalesSummary">
+            <SalesSummary messageSetter={messageSetter} />
+          </Route>
+        </div>
+      )}
       <Route exact path="/SignUp">
         <SignUp userType={user.userType} messageSetter={messageSetter} />
-      </Route>
-      <Route exact path="/Supplier">
-        <Supplier messageSetter={messageSetter} />
-      </Route>
-      <Route exact path="/Category">
-        <Category messageSetter={messageSetter} userType={user.userType} />
       </Route>
       <Route exact path="/ShowUser/:userID">
         <User messageSetter={messageSetter} />

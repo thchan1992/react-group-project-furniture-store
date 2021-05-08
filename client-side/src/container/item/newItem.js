@@ -44,6 +44,7 @@ const NewItem = ({ messageSetter }) => {
           messageSetter(response.data.error, "danger", true);
           return;
         }
+        console.log(response);
         authChecker(history, response, true);
         setSuppList(response.data.result);
         setIsLoading(false);

@@ -16,7 +16,7 @@ const ItemPage = ({
 }) => {
   return (
     <div>
-      {itemList != [] && (
+      {itemList && (
         <div>
           {" "}
           {/*Sorting button*/}
@@ -36,7 +36,7 @@ const ItemPage = ({
             messageSetter={messageSetter}
           />
         </div>
-      )}
+      )}{" "}
     </div>
   );
 };

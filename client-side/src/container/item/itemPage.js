@@ -80,6 +80,7 @@ const ItemPage = ({
   //use Effect to fetch item list.
   useEffect(() => {
     fetchItem();
+
     setIsLoading(false);
   }, [isLoading]);
 
@@ -87,6 +88,7 @@ const ItemPage = ({
   //Admin can update any Item's Name, Price, Description, Quantity, Threshold and Image.
   return (
     <div>
+      {" "}
       <Component
         setColumn={setColumn}
         setSorting={setSorting}

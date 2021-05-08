@@ -7,7 +7,7 @@ import Card from "react-bootstrap/Card";
 const Error = () => {
   return (
     <div className="text-error-colour">
-      <h7 className="centered">
+      <div className="centered">
         <Card bg="dark">
           <Card.Title> Reason why you are here? 🙁</Card.Title>
           <Card.Body>
@@ -18,7 +18,7 @@ const Error = () => {
             of service, please contact our IT department. ☎️
           </Card.Body>
         </Card>
-      </h7>
+      </div>
       <img width="100%" src={homepage} />
     </div>
   );
