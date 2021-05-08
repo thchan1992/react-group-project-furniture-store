@@ -56,7 +56,11 @@ const Home = ({ userType }) => {
         <Card bg="dark">
           <Card.Img variant="bottom" src={homepage3} />
           <Card.Body>
-            <h5 className="product-text-style"> CHKMV Furniture</h5>
+            <h5 className="product-text-style">
+              {" "}
+              CHKMV Furniture
+              <br /> <h7 className="card-text-style">Ver.1</h7>
+            </h5>
           </Card.Body>
         </Card>
         {showCard && (
