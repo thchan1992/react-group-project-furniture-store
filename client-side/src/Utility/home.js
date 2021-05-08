@@ -59,7 +59,7 @@ const Home = ({ userType }) => {
             <h5 className="product-text-style">
               {" "}
               CHKMV Furniture
-              <br /> <h7 className="card-text-style">Ver.1</h7>
+              <br /> <h7 className="version-text-style">Ver.1</h7>
             </h5>
           </Card.Body>
         </Card>
