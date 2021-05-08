@@ -24,6 +24,7 @@ const CategoryList = ({ messageSetter }) => {
 
   return (
     <Component
+      history={history}
       catList={catList}
       setIsLoading={setIsLoading}
       messageSetter={messageSetter}

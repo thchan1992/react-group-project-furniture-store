@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import { authChecker } from "../../../Utility/authChecker";
 
-const EditCategory = ({ data, messageSetter }) => {
+const EditCategory = ({ data, messageSetter, setIsLoading }) => {
   const [itemCatName, setItemCatName] = useState(null);
   const history = useHistory();
 
@@ -25,10 +25,11 @@ const EditCategory = ({ data, messageSetter }) => {
         authChecker(history, response, false);
         messageSetter(
           response.data.message +
-            ", please refresh your browser to see the changes",
+            ", please press reload button to see the changes",
           "success",
           true
         );
+        setIsLoading(true);
       });
     } else {
       messageSetter("No data was inserted", "danger", true);

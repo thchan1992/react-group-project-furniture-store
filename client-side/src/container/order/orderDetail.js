@@ -11,6 +11,7 @@ const OrderDetail = ({ userID, messageSetter }) => {
   const [deliveryDate, setDeliveryDate] = useState("");
   const [orderDate, setOrderDate] = useState("");
   const [orderRef, setOrderRef] = useState("");
+  const [delivAddress, setdelivAddress] = useState("");
   const { basketItemID } = useParams();
 
   const history = useHistory();
@@ -28,6 +29,8 @@ const OrderDetail = ({ userID, messageSetter }) => {
       setDeliveryDate(response1.data.result[0].deliveryDate);
       setOrderDate(response1.data.result[0].orderDate);
       setOrderRef(response1.data.result[0].basketItemID);
+      setdelivAddress(response1.data.result[0].delivAddress);
+
       //api to get the total cost of the sales
       fetchSalesCostAPI_Func(basketItemID, userID).then((response2) => {
         if (response2.data.error) {
@@ -47,6 +50,8 @@ const OrderDetail = ({ userID, messageSetter }) => {
       orderDate={orderDate}
       orderRef={orderRef}
       orderList={orderList}
+      isOrdDet={true}
+      delivAddress={delivAddress}
     />
   );
 };

@@ -15,6 +15,7 @@ const Confirmation = ({ userID, messageSetter }) => {
   const [deliveryDate, setDeliveryDate] = useState("");
   const [orderDate, setOrderDate] = useState("");
   const [orderRef, setOrderRef] = useState("");
+  const [delivAddress, setdelivAddress] = useState("");
   const history = useHistory();
 
   //fetch all these data before rendering
@@ -40,6 +41,7 @@ const Confirmation = ({ userID, messageSetter }) => {
         setDeliveryDate(response.data.result[0].deliveryDate);
         setOrderDate(response.data.result[0].orderDate);
         setOrderRef(response.data.result[0].basketItemID);
+        setdelivAddress(response.data.result[0].delivAddress);
         //get the total order cost
         fetchSalesCostAPI_Func(basketItemID, userID).then((response) => {
           if (response.data.error) {
@@ -64,6 +66,7 @@ const Confirmation = ({ userID, messageSetter }) => {
       orderDate={orderDate}
       orderRef={orderRef}
       orderList={orderList}
+      delivAddress={delivAddress}
     />
   );
 };

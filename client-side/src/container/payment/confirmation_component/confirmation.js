@@ -3,13 +3,18 @@ import Table from "react-bootstrap/Table";
 import ListGroup from "react-bootstrap/ListGroup";
 import "./confirmation.css";
 import Card from "react-bootstrap/Card";
+import Button from "react-bootstrap/Button";
+import { useHistory } from "react-router-dom";
 const Confirmation = ({
   totalCost,
   deliveryDate,
   orderDate,
   orderRef,
   orderList,
+  isOrdDet,
+  delivAddress,
 }) => {
+  const history = useHistory();
   return (
     <Card>
       <Card.Header>
@@ -51,6 +56,16 @@ const Confirmation = ({
               {orderDate}
             </span>
           </ListGroup.Item>
+          <ListGroup.Item>
+            <span className="order-attribute-text-style">
+              Delivery Address:
+            </span>{" "}
+            <br />
+            <span className="order-attribute-detail-text-style">
+              {" "}
+              {delivAddress}
+            </span>
+          </ListGroup.Item>
         </ListGroup>
         <Card>
           <Card.Body>
@@ -78,7 +93,20 @@ const Confirmation = ({
           </Card.Body>
         </Card>
       </Card.Body>
-      <Card.Footer></Card.Footer>
+      <Card.Footer>
+        {" "}
+        {isOrdDet && (
+          <Button
+            variant="info"
+            className="order-list-detail-text-style"
+            onClick={() => {
+              history.goBack();
+            }}
+          >
+            Back to Order List
+          </Button>
+        )}
+      </Card.Footer>
     </Card>
   );
 };

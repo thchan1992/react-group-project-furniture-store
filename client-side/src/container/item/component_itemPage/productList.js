@@ -5,13 +5,7 @@ import AddBaskItem from "../addBaskItem";
 import { useHistory } from "react-router-dom";
 import Card from "react-bootstrap/Card";
 import CardDeck from "react-bootstrap/CardDeck";
-const ProductList = ({
-  itemList,
-  userID,
-  userType,
-  setIsLoading,
-  messageSetter,
-}) => {
+const ProductList = ({ itemList, userID, userType, messageSetter }) => {
   const history = useHistory();
 
   return (
@@ -23,13 +17,8 @@ const ProductList = ({
       >
         <br />
         {itemList.map((data) => (
-          <CardDeck>
-            <Card
-              bg="dark"
-              style={{ width: "18rem" }}
-              key={data.itemDetID}
-              border="secondary"
-            >
+          <CardDeck key={data.itemDetID}>
+            <Card bg="dark" style={{ width: "18rem" }} border="secondary">
               <Card.Header className="product-title-text-style">
                 {data.itemDetID}
               </Card.Header>

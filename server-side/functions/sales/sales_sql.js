@@ -1,5 +1,5 @@
 const salesRecord_sql =
-  "SELECT sales.itemDetID, sales.itemPrice, itemBasketQty, deliveryDate, orderDate, basketItemID, itemName, itemUrl from sales INNER JOIN itemDetails ON sales.itemDetID = itemDetails.itemDetID WHERE basketItemID = ?";
+  "SELECT sales.delivAddress, sales.itemDetID, sales.itemPrice, itemBasketQty, deliveryDate, orderDate, basketItemID, itemName, itemUrl from sales INNER JOIN itemDetails ON sales.itemDetID = itemDetails.itemDetID WHERE basketItemID = ?";
 
 const salesTotalCost_sql =
   "SELECT SUM(itemPrice*itemBasketQty) AS totalCost FROM sales GROUP BY basketItemID HAVING basketItemID = ?";

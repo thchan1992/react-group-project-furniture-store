@@ -69,31 +69,31 @@ const NavBar = ({
               id="basic-nav-dropdown"
             >
               <NavDropdown.Item as={Link} to="/Category">
-                <h7 className="linkText"> Manage Category</h7>
+                <div className="linkText"> Manage Category</div>
               </NavDropdown.Item>{" "}
               <NavDropdown.Item as={Link} to="/AddItem">
-                <h7 className="linkText"> Add a new Product</h7>
+                <div className="linkText"> Add a new Product</div>
               </NavDropdown.Item>
               <NavDropdown.Divider />{" "}
               <NavDropdown.Item as={Link} to="/Supplier">
-                <h7 className="linkText"> Manage Supplier</h7>
+                <div className="linkText"> Manage Supplier</div>
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/SuppOrderList">
-                <h7 className="linkText"> Supplier Order List</h7>
+                <div className="linkText"> Supplier Order List</div>
               </NavDropdown.Item>
               <NavDropdown.Divider />{" "}
               <NavDropdown.Item as={Link} to="/Sales">
-                <h7 className="linkText"> Sales Transaction Details</h7>
+                <div className="linkText"> Sales Transaction Details</div>
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/SalesSummary">
-                <h7 className="linkText"> Sales Summary Report</h7>
+                <div className="linkText"> Sales Summary Report</div>
               </NavDropdown.Item>
               <NavDropdown.Divider />{" "}
               <NavDropdown.Item as={Link} to="/SignUp">
-                <h7 className="linkText"> Create an Admin Account</h7>
+                <div className="linkText"> Create an Admin Account</div>
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to={"/ShowUser/" + userID}>
-                <h7 className="linkText">Manage Account</h7>
+                <div className="linkText">Manage Account</div>
               </NavDropdown.Item>
             </NavDropdown>
           )}
