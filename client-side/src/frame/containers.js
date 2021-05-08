@@ -45,28 +45,48 @@ const Component = ({ user, keyword, caterList, messageSetter }) => {
           messageSetter={messageSetter}
         />
       </Route>
-      {user.userType == "A" && (
-        <div>
-          <Route exact path="/Category">
-            <Category messageSetter={messageSetter} userType={user.userType} />
-          </Route>
-          <Route exact path="/AddItem">
-            <NewItem messageSetter={messageSetter} />
-          </Route>
-          <Route exact path="/Supplier">
-            <Supplier messageSetter={messageSetter} />
-          </Route>
-          <Route exact path="/SuppOrderList">
-            <SupplierOrd messageSetter={messageSetter} />
-          </Route>
-          <Route exact path="/Sales">
-            <SalesReport messageSetter={messageSetter} />
-          </Route>
-          <Route exact path="/SalesSummary">
-            <SalesSummary messageSetter={messageSetter} />
-          </Route>
-        </div>
-      )}
+      <Route exact path="/Category">
+        {user.userType == "A" ? (
+          <Category messageSetter={messageSetter} userType={user.userType} />
+        ) : (
+          <Redirect to="/error" />
+        )}
+      </Route>
+      <Route exact path="/AddItem">
+        {user.userType == "A" ? (
+          <NewItem messageSetter={messageSetter} />
+        ) : (
+          <Redirect to="/error" />
+        )}
+      </Route>
+      <Route exact path="/Supplier">
+        {user.userType == "A" ? (
+          <Supplier messageSetter={messageSetter} />
+        ) : (
+          <Redirect to="/error" />
+        )}
+      </Route>
+      <Route exact path="/SuppOrderList">
+        {user.userType == "A" ? (
+          <SupplierOrd messageSetter={messageSetter} />
+        ) : (
+          <Redirect to="/error" />
+        )}
+      </Route>
+      <Route exact path="/Sales">
+        {user.userType == "A" ? (
+          <SalesReport messageSetter={messageSetter} />
+        ) : (
+          <Redirect to="/error" />
+        )}
+      </Route>
+      <Route exact path="/SalesSummary">
+        {user.userType == "A" ? (
+          <SalesSummary messageSetter={messageSetter} />
+        ) : (
+          <Redirect to="/error" />
+        )}
+      </Route>
       <Route exact path="/SignUp">
         <SignUp userType={user.userType} messageSetter={messageSetter} />
       </Route>
