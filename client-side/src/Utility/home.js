@@ -107,8 +107,21 @@ const Home = ({ userType }) => {
           <Card.Img variant="top" src={homepage} />
           <Card.Body>
             {" "}
-            <div className="card-text-style">
-              Let's do some shopping together!
+            <div className="card-contact-text-style">
+              Contact us:
+              <div className="card-contact-email-text-style">
+                <br /> Group 47
+                <br />
+                21415763@student.uwl.ac.uk
+                <br />
+                21363937@student.uwl.ac.uk
+                <br />
+                21421981@student.uwl.ac.uk
+                <br />
+                21407269@student.uwl.ac.uk
+                <br />
+                21422443@student.uwl.ac.uk
+              </div>
             </div>
           </Card.Body>
         </Card>
