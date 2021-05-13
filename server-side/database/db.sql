@@ -1,3 +1,4 @@
+-- Draft
 -- CREATE TABLE userCategory
 -- (
 --     userType TEXT PRIMARY KEY NOT NULL,
