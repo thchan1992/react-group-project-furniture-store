@@ -61,7 +61,7 @@ const Payment = ({ userID, messageSetter }) => {
             //if both stock and funds are okay, function prepares the order detail
             prepareOrder();
           } else {
-            history.push("/Basket");
+            history.push("/Basket/" + userID);
             messageSetter(
               "Some of the items are out of stock, please remove this item",
               "warning",
@@ -70,7 +70,7 @@ const Payment = ({ userID, messageSetter }) => {
           }
         });
       } else {
-        history.push("/Basket");
+        history.push("/Basket/" + userID);
         messageSetter(
           "You do not have enough money for the order",
           "warning",
@@ -119,7 +119,7 @@ const Payment = ({ userID, messageSetter }) => {
         history.push("/Basket/Payment/Confirmation");
         messageSetter(response.data.message, "success", true);
       } else {
-        history.push("/Basket");
+        history.push("/Basket/" + userID);
         messageSetter(response.data.message, "warning", true);
       }
     });
