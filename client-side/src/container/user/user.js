@@ -83,16 +83,17 @@ const User = ({ messageSetter }) => {
         messageSetter(response.data.message, "success", true);
         setIsLoading(true);
         setUser({
-          firstName: null,
-          lastName: null,
-          userEmail: null,
-          userAddress: null,
-          userPass: null,
-          payMetID: null,
-          expire_Date: null,
-          cardNumber: null,
-          ccv: null,
+          firstName: "",
+          lastName: "",
+          userEmail: "",
+          userAddress: "",
+          userPass: "",
+          payMetID: "",
+          expire_Date: "",
+          cardNumber: "",
+          ccv: "",
         });
+        setVerPass("");
         setIsLoading(true);
       });
     } else {

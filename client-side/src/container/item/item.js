@@ -51,7 +51,13 @@ const Item = ({ userID, userType, messageSetter }) => {
 
   //update the item based on the table column and the new value and itemDetID
   const updateItem = (itemDetID, edColumn, change) => {
-    if (change != "") {
+    if (
+      (change != "" && newVal.itemPrice) ||
+      newVal.itemQty ||
+      newVal.itemName ||
+      newVal.itemDesp ||
+      newVal.itemThreshold
+    ) {
       const column = edColumn;
       const newData = {
         column,
@@ -65,14 +71,15 @@ const Item = ({ userID, userType, messageSetter }) => {
           return;
         }
         authChecker(history, response, false);
-        setImage(null);
+        setImage("");
         setNewVal({
-          itemPrice: null,
-          itemQty: null,
-          itemName: null,
-          itemDesp: null,
-          itemThreshold: null,
+          itemPrice: "",
+          itemQty: "",
+          itemName: "",
+          itemDesp: "",
+          itemThreshold: "",
         });
+
         setIsLoading(true);
       });
     } else {
